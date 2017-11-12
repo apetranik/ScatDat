@@ -1,10 +1,10 @@
-#search
-{
-	width: 300px;
-	text-align: left;
-}
-
-.navbar .navbar-expand-lg .navbar-dark .bg-dark .fixed-top
-{
-	margin-bottom: 100px;
+@media (min-width: 768px) {
+.navbar-brand.abs
+    {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        text-align: center;
+        margin:0 auto;
+    }
 }
