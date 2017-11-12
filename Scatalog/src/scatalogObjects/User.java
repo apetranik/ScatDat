@@ -1,7 +1,8 @@
 package scatalogObjects;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.Vector;
+
+import tools.ScoreMap;
 
 public class User {
 	private Name name;

@@ -2,6 +2,8 @@ package scatalogObjects;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import tools.ScoreMap;
+
 public class Course {
 	private String courseName; 
 	private int courseId; 
@@ -36,7 +38,7 @@ public class Course {
 		//// UPDATE IN DATABASE ////
 	}
 	
-	public addReview(Review review) {
+	public void addReview(Review review) {
 		reviews.add(review); 
 		Name profName = review.getProfessor(); 
 		
