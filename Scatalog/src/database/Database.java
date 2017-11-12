@@ -45,4 +45,6 @@ public class Database {
 	public int queryNumberOfRatings(int classID) {
 		
 	}
+	
+	public 
 }
