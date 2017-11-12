@@ -8,7 +8,6 @@ import java.util.concurrent.ConcurrentSkipListSet;
 import scatalogObjects.Course;
 import tools.ScoreMap;
 
-
 public class Database {
 	
 	public String queryPassword(String username) {
