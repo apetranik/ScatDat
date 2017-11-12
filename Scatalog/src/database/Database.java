@@ -1,5 +1,10 @@
 package database;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -9,6 +14,21 @@ import scatalogObjects.Course;
 import tools.ScoreMap;
 
 public class Database {
+	Connection conn = null;
+	Statement st = null;
+	ResultSet rs = null;
+	
+	public Database() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost/studentgrades?user=root&password=root&useSSL=false");
+			st = conn.createStatement();
+		}catch(SQLException sqle) {
+			System.out.println (sqle.getMessage());
+		}catch(ClassNotFoundException cnfe) {
+			System.out.println (cnfe.getMessage());
+		}
+	}
 	
 	public String queryPassword(String username) {
 		
