@@ -1,6 +1,6 @@
+package scatalogObjects;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.jar.Attributes.Name;
 
 public class Course {
 	private String courseName; 
@@ -40,6 +40,8 @@ public class Course {
 		reviews.add(review); 
 		Name profName = review.getProfessor(); 
 		
+		//// ADD TO DATABASE ////
+		
 		if(profCourses.containsKey(profName)) {
 			ProfCourse reviewCourse = profCourses.get(profName);
 			reviewCourse.addReview(review);
@@ -52,7 +54,7 @@ public class Course {
 			profCourses.get(profName).addReview(review);
 		}
 			
-		//// ADD TO DATABASE ////
+	
 		
 		updateOverallScore();
 	}
