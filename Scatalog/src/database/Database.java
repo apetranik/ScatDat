@@ -1,6 +1,7 @@
 package database;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
@@ -46,5 +47,24 @@ public class Database {
 		
 	}
 	
-	public 
+	public int queryPrefix(int classID) {
+		
+	}
+	
+	public double queryOverallscore(int classID) {
+		
+	}
+	
+	public List<Review> queryReviews(int classID){
+		
+	}
+	
+	public int queryType(int classID) {
+		
+	}
+	
+	public Map<Name, ProfCourse> queryProfCourse(){
+		
+	}
+	
 }
