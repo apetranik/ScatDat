@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.jar.Attributes.Name;
 
 public class Course {
 	private String courseName; 
@@ -31,12 +32,29 @@ public class Course {
 		overallScore.setDifficulty(difficulty/((double) reviews.size()));
 		ScoreMap calculator = new ScoreMap(); 
 		overallScore.setOverallRating(calculator.computeOverallScore(overallScore)); 
+		
+		//// UPDATE IN DATABASE ////
 	}
 	
 	public addReview(Review review) {
 		reviews.add(review); 
+		Name profName = review.getProfessor(); 
 		
+		if(profCourses.containsKey(profName)) {
+			ProfCourse reviewCourse = profCourses.get(profName);
+			reviewCourse.addReview(review);
+		}
+		else {
+			profCourses.put(profName, new ProfCourse(profName)); 
+			
+			//// UPDATE IN DATABASE ////
+			
+			profCourses.get(profName).addReview(review);
+		}
+			
 		//// ADD TO DATABASE ////
+		
+		updateOverallScore();
 	}
 
 	public String getCourseName() {
@@ -45,6 +63,8 @@ public class Course {
 
 	public void setCourseName(String courseName) {
 		this.courseName = courseName;
+		
+		//// DATABASE ////
 	}
 
 	public int getCourseId() {
@@ -53,6 +73,8 @@ public class Course {
 
 	public void setCourseId(int courseId) {
 		this.courseId = courseId;
+		
+		//// DATABASE ////
 	}
 
 	public String getDescription() {
@@ -61,6 +83,8 @@ public class Course {
 
 	public void setDescription(String description) {
 		this.description = description;
+		
+		//// DATABASE ////
 	}
 
 	public int getNumRatings() {
@@ -69,6 +93,8 @@ public class Course {
 
 	public void setNumRatings(int numRatings) {
 		this.numRatings = numRatings;
+		
+		//// DATABASE ////
 	}
 
 	public String getPrefix() {
@@ -77,6 +103,8 @@ public class Course {
 
 	public void setPrefix(String prefix) {
 		this.prefix = prefix;
+		
+		//// DATABASE ////
 	}
 
 	public Score getOverallScore() {
@@ -85,6 +113,8 @@ public class Course {
 
 	public void setOverallScore(Score overallScore) {
 		this.overallScore = overallScore;
+		
+		//// DATABASE ////
 	}
 
 	public HashMap<Name, ProfCourse> getProfCourses() {
@@ -93,6 +123,8 @@ public class Course {
 
 	public void setProfCourses(HashMap<Name, ProfCourse> profCourses) {
 		this.profCourses = profCourses;
+		
+		//// DATABASE ////
 	}
 
 	public ArrayList<Review> getReviews() {
@@ -101,6 +133,8 @@ public class Course {
 
 	public void setReviews(ArrayList<Review> reviews) {
 		this.reviews = reviews;
+		
+	//// DATABASE ////
 	}
 
 	public int getType() {
@@ -109,6 +143,8 @@ public class Course {
 
 	public void setType(int type) {
 		this.type = type;
+		
+	//// DATABASE ////
 	}
 
 	public int getNumUsers() {
@@ -117,6 +153,8 @@ public class Course {
 
 	public void setNumUsers(int numUsers) {
 		this.numUsers = numUsers;
+		
+	//// DATABASE ////
 	}
 	
 	
