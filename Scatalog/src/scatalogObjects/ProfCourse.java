@@ -1,7 +1,7 @@
 package scatalogObjects;
 import java.util.ArrayList;
 
-import javax.xml.bind.SchemaOutputResolver;
+import tools.ScoreMap;
 
 
 
@@ -17,7 +17,7 @@ public class ProfCourse {
 	
 	public ProfCourse(Name professor) {
 		name = professor; 
-		overallScore = 0;
+		overallScore = new Score();
 		reviews = new ArrayList<Review>(); 
 	}
 	
@@ -43,7 +43,7 @@ public class ProfCourse {
 		//// UPDATE IN DATABASE ////
 	}
 	
-	public addReview(Review review) {
+	public void addReview(Review review) {
 		reviews.add(review); 
 		
 		//// ADD TO DATABASE ////
@@ -72,11 +72,11 @@ public class ProfCourse {
 	}
 
 	public ArrayList<Review> getReviews() {
-		return Reviews;
+		return reviews;
 	}
 
 	public void setReviews(ArrayList<Review> reviews) {
-		Reviews = reviews;
+		this.reviews = reviews;
 		
 	//// DATABASE ////
 	}
