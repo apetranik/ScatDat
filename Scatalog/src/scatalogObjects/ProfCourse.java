@@ -12,6 +12,7 @@ public class ProfCourse {
 	
 	public ProfCourse() {
 		//// DATABASE CONSTRUCTOR ////
+		
 	}
 	
 	public ProfCourse(Name professor) {
