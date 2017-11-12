@@ -1,3 +1,4 @@
+package scatalogObjects;
 
 public class Score {
 	double overallRating; 

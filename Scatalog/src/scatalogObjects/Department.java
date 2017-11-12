@@ -1,3 +1,4 @@
+package scatalogObjects;
 import java.util.Vector;
 
 public class Department {

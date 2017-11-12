@@ -1,3 +1,4 @@
+package scatalogObjects;
 
 public class Review {
 	private String review;
