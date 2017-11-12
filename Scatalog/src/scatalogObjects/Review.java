@@ -1,8 +1,6 @@
-<<<<<<< HEAD:Scatalog/src/scatalogObjects/Review.java
+
 package scatalogObjects;
-=======
 import java.util.Date;
->>>>>>> 1842f616eb91082964688e1bf5e66c63deea2686:Scatalog/src/Review.java
 
 public class Review {
 	private String review;

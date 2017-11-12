@@ -25,7 +25,7 @@ public class ScoreMap{
 	//it does not include workload and difficulty in the rating
 	//except in the case when workload or difficulty are rated as 5
 	//In this case the workload/difficulty are weighted as 0.8
-	ScoreMap() {
+	public ScoreMap() {
 		for(int i = 0; i < 4; i++) {
 			value.addElement(1.);
 			enjoyment.addElement(1.);
