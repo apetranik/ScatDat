@@ -14,8 +14,27 @@ public class Course {
 	private HashMap<Name, ProfCourse> profCourses; 
 	private ArrayList<Review> reviews; 
 	private int type; 
-	private int numUsers; 
+	private int numUsers;
 	
+	public Course() {
+		
+	}
+	
+	public Course(String courseName, int courseId, String description, int numRatings, String prefix,
+			Score overallScore, HashMap<Name, ProfCourse> profCourses, ArrayList<Review> reviews, int type,
+			int numUsers) {
+		this.courseName = courseName;
+		this.courseId = courseId;
+		this.description = description;
+		this.numRatings = numRatings;
+		this.prefix = prefix;
+		this.overallScore = overallScore;
+		this.profCourses = profCourses;
+		this.reviews = reviews;
+		this.type = type;
+		this.numUsers = numUsers;
+	}
+
 	public void updateOverallScore() { 
 		long enjoyment = 0; 
 		long value = 0; 

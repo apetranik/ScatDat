@@ -5,16 +5,17 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Vector;
 
-import com.mysql.jdbc.Driver;
 import com.mysql.jdbc.PreparedStatement;
 
 import scatalogObjects.Course;
-import tools.ScoreMap;
+import scatalogObjects.Name;
+import scatalogObjects.ProfCourse;
+import scatalogObjects.Review;
+import scatalogObjects.Score;
 
 
 public class Database {
@@ -136,6 +137,47 @@ public class Database {
 //		
 //	}
 //	
+	
+//	public Course(String courseName, int courseId, String description, int numRatings, String prefix,
+//			Score overallScore, HashMap<Name, ProfCourse> profCourses, ArrayList<Review> reviews, int type,
+//			int numUsers) {
+//		this.courseName = courseName;
+//		this.courseId = courseId;
+//		this.description = description;
+//		this.numRatings = numRatings;
+//		this.prefix = prefix;
+//		this.overallScore = overallScore;
+//		this.profCourses = profCourses;
+//		this.reviews = reviews;
+//		this.type = type;
+//		this.numUsers = numUsers;
+//	}
+	
+	
+	// IN PROGRESS
+	public Vector<Course> returnCourses() {
+		Vector<Course> courses = new Vector<Course>();
+		
+		PreparedStatement ps = null; 
+		try {
+			ps = (PreparedStatement) conn.prepareStatement("SELECT * FROM course");
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				String courseName = rs.getString("name");
+				int courseID = rs.getInt("number");
+				String description = rs.getString("description");
+				String prefix = rs.getString("prefix");
+				
+				int numRatings;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // set first variable in prepared statement
+		
+		return courses;
+	}
 	public static void main(String [] args) {
 		Database db = new Database();
 		String cs1 = db.queryClassStanding("gopalk");
