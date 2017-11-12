@@ -36,37 +36,53 @@ public class Database {
 	
 	public String queryPassword(String username) {
 		String name = username;
-		// rs = st.executeQuery("SELECT * from Student where fname='" + name + "'");
 		PreparedStatement ps = null; 
-		String fullName = "";
+		String password = "";
 		try {
 			ps = (PreparedStatement) conn.prepareStatement("SELECT * FROM user WHERE username=?");
 			ps.setString(1, name);
 			rs = ps.executeQuery();
 			
 			while (rs.next()) {
-				fullName += rs.getString("fname");
-				fullName += " ";
-				fullName += rs.getString("lname");
+				password += rs.getString("password");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} // set first variable in prepared statement
-		return fullName;
+		return password;
 		
 	}
-	public static void main(String [] args) {
-		Database db = new Database();
-		String name = db.queryPassword("gopalk");
-		System.out.println(name);
-		String otherName = db.queryPassword("petranik");
-		System.out.println(otherName);
-	}
 	
-//	public String queryClassStanding(String username) {
-//		
-//	}
+	public String queryClassStanding(String username) {
+		String name = username;
+		PreparedStatement ps = null; 
+		int classStanding = 0;
+		try {
+			ps = (PreparedStatement) conn.prepareStatement("SELECT * FROM user WHERE username=?");
+			ps.setString(1, name);
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				classStanding = rs.getInt("classstanding");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // set first variable in prepared statement
+		if(classStanding == 0) {
+			return "Freshman";
+		}
+		else if(classStanding == 1) {
+			return "Sophomore";
+		}
+		else if(classStanding == 2) {
+			return "Junior";
+		}
+		else {
+			return "Senior";
+		}
+	}
 //	
 //	public List<Course> queryCourseTaken(String username) {
 //		// get the list of classID that this student has taken from the CourseTaken table
@@ -120,4 +136,13 @@ public class Database {
 //		
 //	}
 //	
+	public static void main(String [] args) {
+		Database db = new Database();
+		String cs1 = db.queryClassStanding("gopalk");
+		System.out.println(cs1);
+		String cs2 = db.queryClassStanding("petranik");
+		System.out.println(cs2);
+		String cs3 = db.queryClassStanding("apurvaga");
+		System.out.println(cs3);
+	}
 }
