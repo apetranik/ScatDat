@@ -1,15 +1,13 @@
 package database;
 
 import java.util.List;
-<<<<<<< HEAD
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
-=======
 
 import scatalogObjects.Course;
 import tools.ScoreMap;
->>>>>>> fb4119479ce16b9f0c8818e3df9932edbda1ad78
+
 
 public class Database {
 	
