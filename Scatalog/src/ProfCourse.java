@@ -9,7 +9,7 @@ public class ProfCourse {
 	private Score overallScore; 
 	private ArrayList<Review> reviews; 
 	
-	public Professor() {
+	public ProfCourse() {
 		//// DATABASE CONSTRUCTOR ////
 	}
 	
