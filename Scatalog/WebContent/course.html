@@ -92,8 +92,75 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-3" id="info">
-			<button type="button" class="btn btn-default btn-sm">Submit Review</button>
+			<button type="button" class="btn btn-default btn-sm"  data-toggle="modal" data-target="#myModal">Submit Review</button>	
+			
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  				<div class="modal-dialog modal-lg" role="document">
+    					<div class="modal-content">
+      					 <div class="modal-header">
+      					    <h4 class="modal-title" id="myModalLabel">Write your review</h4>
+        						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        						
+     					 </div>
+      					 <div class="modal-body">
+       					 	<form>
+       					 		<div class="radio"> 
+       					 			<label>Overall Rating:</label>    					 			
+  									<label><input type="radio" name="optradio">1</label>
+  									<label><input type="radio" name="optradio">2</label>
+  									<label><input type="radio" name="optradio">3</label>
+  									<label><input type="radio" name="optradio">4</label>
+  									<label><input type="radio" name="optradio">5</label>
+								</div>
+								<div class="radio"> 
+       					 			<label>Difficulty:</label>    					 			
+  									<label><input type="radio" name="optradio1">1</label>
+  									<label><input type="radio" name="optradio1">2</label>
+  									<label><input type="radio" name="optradio1">3</label>
+  									<label><input type="radio" name="optradio1">4</label>
+  									<label><input type="radio" name="optradio1">5</label>
+								</div>
+								<div class="radio"> 
+       					 			<label>Value:</label>    					 			
+  									<label><input type="radio" name="optradio2">1</label>
+  									<label><input type="radio" name="optradio2">2</label>
+  									<label><input type="radio" name="optradio2">3</label>
+  									<label><input type="radio" name="optradio2">4</label>
+  									<label><input type="radio" name="optradio2">5</label>
+								</div>
+								<div class="radio"> 
+       					 			<label>Enjoyment:</label>    					 			
+  									<label><input type="radio" name="optradio3">1</label>
+  									<label><input type="radio" name="optradio3">2</label>
+  									<label><input type="radio" name="optradio3">3</label>
+  									<label><input type="radio" name="optradio3">4</label>
+  									<label><input type="radio" name="optradio3">5</label>
+								</div>
+								<div class="radio"> 
+       					 			<label>Workload:</label>    					 			
+  									<label><input type="radio" name="optradio4">1</label>
+  									<label><input type="radio" name="optradio4">2</label>
+  									<label><input type="radio" name="optradio4">3</label>
+  									<label><input type="radio" name="optradio4">4</label>
+  									<label><input type="radio" name="optradio4">5</label>
+								</div>
+       					 	
+       					 	
+       					 	</form>
+       					 
+     					 </div>
+     					 <div class="modal-footer">
+        					 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       					 <button type="button" class="btn btn-primary">Submit</button>
+      				</div>
+   				 </div>
+  			</div>
 			</div>
+		</div>
+			
+		
+			
+			
 		</div>
 		<div class="row" id= "description">
 			<div class="col-lg-12" id="info">
@@ -120,7 +187,7 @@
 		
 		<div class="row" id= "reviewSection">
 			<div class="col-lg-3" id="points">
-				<p class="text-right">Diffculty:  5.0</p>
+				<p class="text-right">Difficulty:  5.0</p>
 				<p class="text-right">Value:      4.0</p>
 				<p class="text-right">Enjoyment:  3.0</p>
 				<p class="text-right">Workload:   2.0</p>			

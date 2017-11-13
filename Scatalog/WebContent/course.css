@@ -25,7 +25,6 @@ div.panel {
 .container {
   position: absolute;
   top: 50px;
-  z-index: 1;
   margin: 75px;
 }
 
@@ -44,6 +43,7 @@ div.panel {
 	margin-top: 5px;
 	width:95%
 }
+
 
 
 
