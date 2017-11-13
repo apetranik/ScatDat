@@ -11,23 +11,26 @@
     <title>Scatalog</title>
 
     <!-- Bootstrap core CSS -->
+    
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
+    
     <script type="text/javascript" src="search.js"></script>
 
     <!-- Custom styles for this template -->
-    <style>
-      body {
-        padding-top: 54px;
-      }
-      @media (min-width: 992px) {
-        body {
-          padding-top: 56px;
-        }
-      }
 
-    </style>
-   
+   <script>
+		function srch() {
+			var xhttp = new XMLHttpRequest(); 
+  			xhttp.open("GET", "homeSearch.jsp?searchText=" +  document.getElementById("searchText").value, true); 
+  			xhttp.send(); 
+  			xhttp.onreadystatechange = function updateResults() {
+  				if(this.readyState == 4 && this.status == 200) {
+  					document.getElementById("cards").innerHTML = xhttp.responseText; 
+  				}
+  			};
+		}
+	</script>
 
   </head>
 
@@ -62,62 +65,28 @@
         </ul>
     </div>
     </nav>
-    
+ 
 
     <!-- Page Content -->
-    <div class="container center-div">
-    
-    <div class="row">
-    <div class="col-md-4 col-md-offset-4">
-            
-        </div>
-        <div class="col-md-4 col-md-offset-4 justify-content-center">
-            <form action="" class="search-form">
-            		<label for="main_search"></label>
-            		<input class="form-control" type="text" name="search" id="search" placeholder="" >
-              		<span class="glyphicon glyphicon-search form-control-feedback"></span>
-            </form>
-        </div>
-        <div class="col-md-4 col-md-offset-4">
-            
-        </div>
-        
-    </div>
-    
+<div class="row">
+	<div class="col-md-2"></div>
+	<div class="col-md-8">
+		<form name="search">
+  			<div class="form-group">
+   				<label for="search"></label>
+    				<input id="searchText" type="text" class="form-control" aria-describedby="search" placeholder="" oninput="srch();"/>
+  			</div>
+  		</form>
+
+		<div id="cards" class="container h4">
+	
+  		</div>
+  	</div>
+  	
+  	<div class="col-md-2"></div>
 </div>
-<!-- This is the first course -->
-<div class="card">
-	<button class="accordion text-left">
-		CS201 - num stars
-	</button>
-	<div class="panel">
-  		<p>our destroyer jeffery miller</p>
-	</div>
-</div>
-<div class="card">
-<button class="accordion text-left">CS104</button>
-<div class="panel">
-  <p>Redekopp blessed</p>
-</div>
-</div>
-<div class="card">
-<button class="accordion text-left">CS103</button>
-<div class="panel">
-  <p>ew</p>
-</div>
-</div>
-   <section id="search text-left">
-      <div class="container text-left">
-      	<h2>CS201</h2>
-        <div class="row">
-          <div class="col-lg-12 mx-center">          
-            <p class="lead">Taught by jeffrey miller phd</p>
-           
-          </div>
-        </div>
-      </div>
-    </section>
- 
+
+
   </body>
   
 
