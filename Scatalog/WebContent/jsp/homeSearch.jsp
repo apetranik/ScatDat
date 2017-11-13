@@ -32,8 +32,9 @@
 		String name = course.getCourseName().toLowerCase(); 
 		if((searchText != null) && (searchText.length() > 0) && (abbreviated.contains(searchText) || name.contains(searchText))) {
 %>
+			
 			<div class="card-header">
-				      		<a class="card-link" id="cards" data-toggle="collapse" data-parent="#accordion<%=count%>" href="#collapse<%=count%>">
+				      		<a class="card-link" id="cards" data-toggle="collapse" data-parent="#accordion<%=count%>"  href="#collapse<%=count%>">
 								<%=course.getPrefix() + " " + course.getCourseId() + ": " + course.getCourseName()  %>
 				      		</a>
 				      		<a class="card-link" id="cards-stars" data-toggle="collapse" data-parent="#accordion<%=count%>" href="#collapse<%=count%>">
