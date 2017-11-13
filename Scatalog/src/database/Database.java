@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,6 +22,7 @@ import com.mysql.jdbc.PreparedStatement;
 
 import scatalogObjects.Badge;
 import scatalogObjects.Course;
+import scatalogObjects.CourseTime;
 import scatalogObjects.Name;
 import scatalogObjects.ProfCourse;
 import scatalogObjects.Review;
@@ -120,6 +122,7 @@ public class Database {
 	
 //	
 	public List<Course> queryCourseTaken(String username) {
+		List<Course> courses = new ArrayList<Course>();
 		try {
 			Statement st = conn.createStatement();
 			ResultSet rs;
@@ -129,6 +132,7 @@ public class Database {
 				int courseID = rs.getInt("courseID");
 //				System.out.println(courseID);
 				String courseName = rs.getString("name");
+				int number = Integer.parseInt(rs.getString("number"));
 //				System.out.println(courseName);
 				String description = rs.getString("description");
 //				System.out.println(description);
@@ -140,43 +144,46 @@ public class Database {
 				double value = rs.getDouble("value");
 				double workload = rs.getDouble("workload");
 				//Score score = new Score(enjoyment, difficulty, value, workload);
-				
-				
+				Score overallScore = new Score(enjoyment, difficulty, value, workload);
+				HashMap<Name, ProfCourse> profCourses = queryProfCourseMap(courseID);
+				ArrayList<Review> reviews = queryAllReview(courseID);
+				int type = Integer.parseInt(rs.getString("type"));
+				int numUsers = rs.getInt("numRegistered");
+				courses.add(new Course(courseName, number, description, numRatings, prefix, overallScore, profCourses, reviews, type, numUsers));
 			}
 			
 		}catch(SQLException sqle) {
 			System.out.println(sqle.getMessage());
 		}
-		
-		
-		// get the list of classID that this student has taken from the CourseTaken table
-			
-		// instantiate each class using queryCourse(int classID)
-		
-		// return the list of Course
+		return courses;
 	}
 
-	private Map<Name, ProfCourse> queryProfCourseMap(int courseID){
+	private HashMap<Name, ProfCourse> queryProfCourseMap(int courseID){
+		HashMap<Name, ProfCourse> result = new HashMap<Name, ProfCourse>();
 		try {
-			Map<Integer, ProfCourse> buffer = new HashMap<Integer, ProfCourse>();
+			Set<Integer> finishedProfessor = new HashSet<Integer>();
 			Statement st = conn.createStatement();
 			ResultSet rs;
 			rs = st.executeQuery("SELECT * FROM review r, professor p WHERE courseID='" + courseID + "' AND r.professorID=p.professorID");
 			while(rs.next()) {
-				if(!buffer.containsKey(rs.getInt("professorID"))) {
-					
+				int professorID = rs.getInt("professorID");
+				if(!finishedProfessor.contains(professorID)) {
+					String fname = rs.getString("fname");
+					String lname = rs.getString("lname");
+					Name name = new Name(fname, lname);
+					ProfCourse singleProfCourse = querySingleProfCourse(professorID, courseID);
+					result.put(name, singleProfCourse);
+					finishedProfessor.add(professorID);
 				}
-				String fname = rs.getString("fname");
-				String lname = rs.getString("lname");
-				Name name = new Name(fname, lname);
 			}
 		}catch(SQLException sqle) {
 			System.out.println(sqle.getMessage());
 		}
-	
+		return result;
 	}
 	
 	private ProfCourse querySingleProfCourse(int professorID, int courseID) {
+		ProfCourse profCourse = null;
 		try {
 			Statement st = conn.createStatement();
 			// get the name of the professor
@@ -185,9 +192,9 @@ public class Database {
 			Name name = new Name(rs1.getString("fname"), rs1.getString("lname"));
 			// get all reviews
 			ResultSet rs;
-			rs = st.executeQuery("SELECT * FROM review r, user u WHERE courseID='" + courseID + "' AND professorID=" + professorID + "'");
-			Score overallScore = new Score();
-			List<Review> reviews = new ArrayList<Review>();
+			rs = st.executeQuery("SELECT * FROM review r, user u WHERE courseID='" + courseID + "' AND professorID=" + professorID + 
+					"' AND r.userID=u.userID");
+			ArrayList<Review> reviews = new ArrayList<Review>();
 			long enjoyment = 0; 
 			long value = 0; 
 			long difficulty = 0; 
@@ -201,19 +208,24 @@ public class Database {
 				workload += rs.getInt("workload");
 				count++;
 				// construct review
-				reviews.add(new Review(rs.getString("comment"), score, rs.getDate("date"), , courseTime, emoji, syllabus, professor))
+				reviews.add(new Review(rs.getString("comment"),
+						new Score(rs.getInt("enjoyment"),rs.getInt("difficulty"), rs.getInt("value"), rs.getInt("workload")), 
+						rs.getDate("date"), rs.getString("username"), new CourseTime(rs.getString("term"), rs.getString("year")),
+						rs.getString("emoji"), name));
 			}
+			Score overallScore = new Score();
 			overallScore.setEnjoyment(enjoyment/((double) count));
 			overallScore.setValue(value/((double) count));
 			overallScore.setDifficulty(difficulty/((double) count));
 			overallScore.setWorkload(workload/((double) count));
 			ScoreMap calculator = new ScoreMap(); 
 			overallScore.setOverallRating(calculator.computeOverallScore(overallScore)); 
+			profCourse = new ProfCourse(name, overallScore, reviews);
 			
 		}catch(SQLException sqle) {
 			System.out.println(sqle.getMessage());
 		}
-		
+		return profCourse;
 		
 	}
 	
@@ -229,6 +241,25 @@ public class Database {
 			System.out.println(sqle.getMessage());
 		}
 		return num;
+	}
+	
+	private ArrayList<Review> queryAllReview(int classID){
+		ArrayList<Review> reviews = new ArrayList<Review>();
+		try {
+			Statement st = conn.createStatement();
+			ResultSet rs;
+			rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID=" + classID + 
+					"' AND r.userID=u.userID AND r.professorID=p.professorID" );
+			while(rs.next()) {
+				reviews.add(new Review(rs.getString("comment"),
+						new Score(rs.getInt("enjoyment"),rs.getInt("difficulty"), rs.getInt("value"), rs.getInt("workload")), 
+						rs.getDate("date"), rs.getString("username"), new CourseTime(rs.getString("term"), rs.getString("year")),
+						rs.getString("emoji"), new Name(rs.getString("fname"), rs.getString("lname"))));
+			}
+		}catch(SQLException sqle) {
+			System.out.println(sqle.getMessage());
+		}
+		return reviews;
 	}
 	
 	
