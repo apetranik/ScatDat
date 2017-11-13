@@ -24,28 +24,29 @@
 	}*/
 	
 	String searchText = request.getParameter("searchText").trim().toLowerCase(); 
+	int count = 0; 
 	for(Course course : courses) {
+		count++; 
 		String abbreviated = course.getPrefix() + " " + course.getCourseId(); 
 		abbreviated = abbreviated.toLowerCase(); 
 		String name = course.getCourseName().toLowerCase(); 
 		if((searchText != null) && (searchText.length() > 0) && (abbreviated.contains(searchText) || name.contains(searchText))) {
 %>
-		
-		<div class="card-header">
-			      		<a class="card-link" id="cards" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-							<%=course.getPrefix() + " " + course.getCourseId() + ": " + course.getCourseName()  %>
-			      		</a>
-			      		<a class="card-link" id="cards-stars" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-						<!-- This is where the stars goes -->
-							<%=" Score: " + course.getOverallScore().getOverallRating() %>
-			      		</a>
-			    		</div>
-			  		<div id="collapseOne" class="collapse">
-			    			<div class="card-body">
-			        		<!-- Description goes here -->
-			        			<%=course.getDescription() %>
-			    			</div>
-			    		</div>
+			<div class="card-header">
+				      		<a class="card-link" id="cards" data-toggle="collapse" data-parent="#accordion<%=count%>" href="#collapse<%=count%>">
+								<%=course.getPrefix() + " " + course.getCourseId() + ": " + course.getCourseName()  %>
+				      		</a>
+				      		<a class="card-link" id="cards-stars" data-toggle="collapse" data-parent="#accordion<%=count%>" href="#collapse<%=count%>">
+							<!-- This is where the stars goes -->
+								<%=" Score: " + course.getOverallScore().getOverallRating() %>
+				      		</a>
+		   </div>
+				  		<div id="collapse<%=count%>" class="collapse">
+				    			<div class="card-body">
+				        		<!-- Description goes here -->
+				        			<%=course.getDescription() %>
+				    			</div>
+				    		</div>
 		
 <% 
 		}

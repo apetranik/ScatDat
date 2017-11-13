@@ -34,7 +34,7 @@
   			xhttp.send(); 
   			xhttp.onreadystatechange = function updateResults() {
   				if(this.readyState == 4 && this.status == 200) {
-  					document.getElementById("card").innerHTML = xhttp.responseText; 
+  					document.getElementById("accordion").innerHTML = xhttp.responseText; 
   				}
   			};
 		}
@@ -115,10 +115,13 @@
 	    				<input id="searchText" type="text" class="form-control" aria-describedby="search" placeholder="" oninput="srch();"/>
 	  			</div>
 	  		</form>
+	  	<!--<div id = "results"> -->
 		<!-- Course Item -->	
-			<div id="accordion">
+			<div id="accordion" role="tablist" aria-multiselectable="true"> 
 				<div id="card" class="card"></div>
+				
 			</div>
+		<!-- </div> -->
 		</div>
 		<!-- Side Col Right -->
 		<div class="col-md-2"></div>	
