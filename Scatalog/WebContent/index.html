@@ -12,10 +12,15 @@
 
     <!-- Bootstrap core CSS -->
     
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
     <link href="style.css" rel="stylesheet">
     
-    <script type="text/javascript" src="search.js"></script>
+    
+
+  <script type="text/javascript" src="search.js"></script>
 
     <!-- Custom styles for this template -->
 
@@ -66,28 +71,45 @@
     </div>
     </nav>
  
-
-    <!-- Page Content -->
-<div class="row">
-	<div class="col-md-2"></div>
-	<div class="col-md-8">
-		<form name="search">
-  			<div class="form-group">
-   				<label for="search"></label>
-    				<input id="searchText" type="text" class="form-control" aria-describedby="search" placeholder="" oninput="srch();"/>
-  			</div>
-  		</form>
-
-		<div id="cards" class="container h4">
 	
-  		</div>
-  	</div>
-  	
-  	<div class="col-md-2"></div>
-</div>
-
-
-  </body>
+	<!-- Page Content -->
+	<div class="row">
+		<!-- Side Col Left -->
+		<div class="col-md-2"></div>
+		
+		<!-- Search Bar -->
+		<div class="col-md-8">
+			<form name="search">
+	  			<div class="form-group">
+	   				<label for="search"></label>
+	    				<input id="searchText" type="text" class="form-control" aria-describedby="search" placeholder="" oninput="srch();"/>
+	  			</div>
+	  		</form>
+		<!-- Course Item -->	
+			<div id="accordion">
+				<div class="card">
+			    		<div class="card-header">
+			      		<a class="card-link" id="cards" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+						<!-- This is where the title goes -->
+						
+			      		</a>
+			      		<a class="card-link" id="cards-stars" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+						<!-- This is where the stars goes -->
+						
+			      		</a>
+			    		</div>
+			  		<div id="collapseOne" class="collapse show">
+			    			<div class="card-body">
+			        		<!-- Description goes here -->
+			    			</div>
+			    		</div>
+			 	</div>
+			</div>
+		</div>
+		<!-- Side Col Right -->
+		<div class="col-md-2"></div>	
+	</div>
+</body>
   
 
 </html>
