@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
+	<head>
 
-    <meta charset="utf-8">
+ 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -14,20 +14,13 @@
 
     <!-- Bootstrap core CSS -->
     
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+     <!-- Custom styles for this template -->
     <link href="style.css" rel="stylesheet">
-
-    
-
-  <!--<script type="text/javascript" src="search.js"></script> -->
-
-
-    <!-- Custom styles for this template -->
-
-   <script>
+   	<script>
 		function srch() {
 			var xhttp = new XMLHttpRequest(); 
   			xhttp.open("GET", "homeSearch.jsp?searchText=" +  document.getElementById("searchText").value, true); 
@@ -57,49 +50,42 @@
 		    }
 		
 	</script>
-	  <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
-	
+	<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
 
   </head>
 
 <body>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top justify-content-center ">
-        <a href="/" class="navbar-brand d-flex w-20 mr-auto">Scatalog</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="navbar-collapse collapse" id="collapsingNavbar3">
-        <ul class="navbar-nav mr-auto w-100 justify-content-center">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">HOME</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="explore.html">EXPLORE</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="department.html">BY DEPARTMENT</a>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
-            <li class="nav-item">
-                <a class="nav-link" href="dashboard.html">User Dashboard</a>
-            </li>
-            
-            <li class="nav-item">
-             <div class="my-signin2">
-             <a class="nav-link" >
-              Sign-In
-              </a>
-             </div>
-      
-  
-            </li>
-            
-        </ul>
-    </div>
-    </nav>
+    <div class = "nav-bar">
+    		<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top justify-content-center ">
+        		<a href="/" class="navbar-brand d-flex w-20 mr-auto">Scatalog</a>
+    			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
+        			<span class="navbar-toggler-icon"></span>
+    			</button>
+    			<div class="navbar-collapse collapse" id="collapsingNavbar3">
+        			<ul class="navbar-nav mr-auto w-100 justify-content-center">
+            			<li class="nav-item active">
+                			<a class="nav-link" href="#">HOME</a>
+            			</li>
+            			<li class="nav-item">
+                			<a class="nav-link" href="explore.html">EXPLORE</a>
+            			</li>
+            			<li class="nav-item">
+               			<a class="nav-link" href="department.html">BY DEPARTMENT</a>
+            			</li>
+        			</ul>
+        			<ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+           			<li class="nav-item">
+                			<a class="nav-link" href="login.html">User Dashboard</a>
+           			</li>
+            			<li class="nav-item">
+                			<a class="nav-link" href="login.html">Sign-In</a>
+            			</li>  
+        			</ul>
+    			</div>
+    		</nav>
+	</div>
  
 	
 	<!-- Page Content -->
