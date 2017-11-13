@@ -16,6 +16,22 @@ public class User {
 	private Set<Course> coursesTaken;
 	private Vector<Course> courseList;
 	private ScoreMap preferredRatingStyle;
+	public User(Name name, String password, String classStanding, String email, Vector<Badge> badges,
+			Vector<Course> wishlist, Vector<Course> coursesEvaluate, String username, Set<Course> coursesTaken,
+			Vector<Course> courseList, ScoreMap preferredRatingStyle) {
+		super();
+		this.name = name;
+		this.password = password;
+		this.classStanding = classStanding;
+		this.email = email;
+		this.badges = badges;
+		this.wishlist = wishlist;
+		this.coursesEvaluate = coursesEvaluate;
+		this.username = username;
+		this.coursesTaken = coursesTaken;
+		this.courseList = courseList;
+		this.preferredRatingStyle = preferredRatingStyle;
+	}
 	public User() {
 		// DATA BASE
 	}
