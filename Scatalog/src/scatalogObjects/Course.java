@@ -16,6 +16,22 @@ public class Course {
 	private int type; 
 	private int numUsers;
 	
+	
+	public Course(String courseName, int courseId, String description, String prefix,
+			double enjoyment, double value, double workload, double difficulty, int type){
+		this.courseName = courseName; 
+		this.courseId = courseId; 
+		this.description = description; 
+		this.numRatings = 0;  
+		this.prefix = prefix; 
+		overallScore = new Score(enjoyment, difficulty, value, workload); 
+		profCourses = new HashMap<Name, ProfCourse>(); 
+		reviews = new ArrayList<Review>(); 
+		this.type = type; 
+		this.numUsers = 0; 
+		
+	}
+	
 	public Course() {
 		
 	}

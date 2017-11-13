@@ -1,5 +1,7 @@
 package scatalogObjects;
 
+import tools.ScoreMap;
+
 public class Score {
 	double overallRating; 
 	double enjoyment; 
@@ -8,6 +10,18 @@ public class Score {
 	double workload;
 	
 	//// DATABASE FOR SETTERS ////
+	
+	Score() {
+		//// DATABASE ////
+	}
+	
+	Score(double enjoyment, double difficulty, double value, double workload) {
+		this.enjoyment = enjoyment; 
+		this.difficulty = difficulty; 
+		this.value = value; 
+		this.workload = workload; 
+		overallRating = 	(new ScoreMap()).computeOverallScore(this); 
+	}
 	
 	public double getOverallRating() {
 		return overallRating;
