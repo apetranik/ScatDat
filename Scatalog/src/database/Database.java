@@ -10,17 +10,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
 import javax.naming.spi.DirStateFactory.Result;
 
 import com.mysql.jdbc.PreparedStatement;
 
+import scatalogObjects.Badge;
 import scatalogObjects.Course;
 import scatalogObjects.Name;
 import scatalogObjects.ProfCourse;
 import scatalogObjects.Review;
 import scatalogObjects.Score;
+import scatalogObjects.User;
+import tools.ScoreMap;
 
 
 public class Database {
@@ -33,6 +37,30 @@ public class Database {
 			System.out.println (sqle.getMessage());
 		}catch(ClassNotFoundException cnfe) {
 			System.out.println (cnfe.getMessage());
+		}
+	}
+	
+	public void insertUser(User user) {
+		PreparedStatement ps = null;
+		//int rs;
+		try {
+			ps = (PreparedStatement) conn.prepareStatement("INSERT INTO user (email, password, username, classstanding, fname, lname) VALUES (?,?,?,?,?,?)");
+			String email = user.getEmail();
+			String username = user.getUsername();
+			String password = user.getUsername();
+			String classstanding = user.getClassStanding();
+			Name name = user.getName();
+			String fname = name.getFname();
+			String lname = name.getLname();
+			ps.setString(1, email);
+			ps.setString(2, password);
+			ps.setString(3, username);
+			ps.setString(4, classstanding);
+			ps.setString(5, fname);
+			ps.setString(6, lname);
+			ps.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -88,46 +116,47 @@ public class Database {
 		}
 	}
 	
-	public List<Course> queryCourseTaken(String username) {
-		try {
-			Statement st = conn.createStatement();
-			ResultSet rs;
-			rs = st.executeQuery("SELECT * FROM user u, coursetaken ct, course c WHERE username='" + username + 
-					"' AND u.userID=ct.userID AND ct.courseID=c.courseID");
-			while(rs.next()) {
-				int courseID = rs.getInt("courseID");
-//				System.out.println(courseID);
-				String courseName = rs.getString("name");
-//				System.out.println(courseName);
-				String description = rs.getString("description");
-//				System.out.println(description);
-				int numRatings = queryNumOfRatings(courseID);
-//				System.out.println(numRatings);
-				String prefix = rs.getString("prefix");
-				double enjoyment = rs.getDouble("enjoyment");
-				double difficulty = rs.getDouble("difficulty");
-				double value = rs.getDouble("value");
-				double workload = rs.getDouble("workload");
-				Score score = new Score(enjoyment, difficulty, value, workload);
-				
-				
-			}
-			
-		}catch(SQLException sqle) {
-			System.out.println(sqle.getMessage());
-		}
-		
-		
-		// get the list of classID that this student has taken from the CourseTaken table
-			
-		// instantiate each class using queryCourse(int classID)
-		
-		// return the list of Course
-	}
+//	
+//	public List<Course> queryCourseTaken(String username) {
+//		try {
+//			Statement st = conn.createStatement();
+//			ResultSet rs;
+//			rs = st.executeQuery("SELECT * FROM user u, coursetaken ct, course c WHERE username='" + username + 
+//					"' AND u.userID=ct.userID AND ct.courseID=c.courseID");
+//			while(rs.next()) {
+//				int courseID = rs.getInt("courseID");
+////				System.out.println(courseID);
+//				String courseName = rs.getString("name");
+////				System.out.println(courseName);
+//				String description = rs.getString("description");
+////				System.out.println(description);
+//				int numRatings = queryNumOfRatings(courseID);
+////				System.out.println(numRatings);
+//				String prefix = rs.getString("prefix");
+//				double enjoyment = rs.getDouble("enjoyment");
+//				double difficulty = rs.getDouble("difficulty");
+//				double value = rs.getDouble("value");
+//				double workload = rs.getDouble("workload");
+//				//Score score = new Score(enjoyment, difficulty, value, workload);
+//				
+//				
+//			}
+//			
+//		}catch(SQLException sqle) {
+//			System.out.println(sqle.getMessage());
+//		}
+//		
+//		
+//		// get the list of classID that this student has taken from the CourseTaken table
+//			
+//		// instantiate each class using queryCourse(int classID)
+//		
+//		// return the list of Course
+//	}
 	
-	private Map<Name, ProfCourse> queryProfCourse(int courseID){
-		
-	}
+//	private Map<Name, ProfCourse> queryProfCourse(int courseID){
+//		
+//	}
 	
 	private int queryNumOfRatings(int classID) {
 		int num = 0;
@@ -142,6 +171,8 @@ public class Database {
 		}
 		return num;
 	}
+	
+	
 //	
 //	public ScoreMap queryScoreMap(String username) {
 //		// get the 20 scores of the user
@@ -227,12 +258,17 @@ public class Database {
 	}
 	public static void main(String [] args) {
 		Database db = new Database();
-		String cs1 = db.queryClassStanding("gopalk");
-		System.out.println(cs1);
-		String cs2 = db.queryClassStanding("petranik");
-		System.out.println(cs2);
-		String cs3 = db.queryClassStanding("apurvaga");
-		System.out.println(cs3);
-		db.queryCourseTaken("gopalk");
+//		String cs1 = db.queryClassStanding("gopalk");
+//		System.out.println(cs1);
+//		String cs2 = db.queryClassStanding("petranik");
+//		System.out.println(cs2);
+//		String cs3 = db.queryClassStanding("apurvaga");
+//		System.out.println(cs3);
+		Name name = new Name("Quisi", "Li");
+		User user = new User(name, "abcde", "2", "quisili@usc.edu", null,
+				null, null, "quisili", null,
+				null, null);
+		db.insertUser(user);
+		//db.queryCourseTaken("gopalk");
 	}
 }
