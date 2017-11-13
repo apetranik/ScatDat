@@ -8,7 +8,7 @@
 			4, 5, 3, 3, 0);  
 	Course course2 = new Course("Probability Theory", 407, "Discrete probability, distributions, random vairables, stochastic processes, law of large numbers", "MATH",
 			5, 5, 1, 3, 0); 
-	Course course3 = new Course("Data Structures", 407, "Redekopp stuff", "CSCI",
+	Course course3 = new Course("Data Structures", 104, "Redekopp stuff", "CSCI",
 			5, 5, 1, 1, 0); 
 	ArrayList<Course> courses = new ArrayList<Course>(); 
 	courses.add(course1);
@@ -28,8 +28,10 @@
 		String abbreviated = course.getPrefix() + " " + course.getCourseId(); 
 		abbreviated = abbreviated.toLowerCase(); 
 		String name = course.getCourseName().toLowerCase(); 
-		if(abbreviated.contains(searchText) || name.contains(searchText)) {
-			
+		if((searchText != null) && (searchText.length() > 0) && (abbreviated.contains(searchText) || name.contains(searchText))) {
+%>
+		<span><%=course.getPrefix() + " " + course.getCourseId() + ": " + course.getCourseName() + " Score: " + course.getOverallScore().getOverallRating()  %></span><br/>
+<% 
 		}
 	}
 %>

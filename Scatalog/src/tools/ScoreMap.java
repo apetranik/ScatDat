@@ -26,7 +26,11 @@ public class ScoreMap{
 	//except in the case when workload or difficulty are rated as 5
 	//In this case the workload/difficulty are weighted as 0.8
 	public ScoreMap() {
-		for(int i = 0; i < 4; i++) {
+		value = new Vector<Double>(); 
+		enjoyment = new Vector<Double>(); 
+		workload = new Vector<Double>(); 
+		difficulty = new Vector<Double>(); 
+		for(int i = 0; i < 5; i++) {
 			value.addElement(1.);
 			enjoyment.addElement(1.);
 			if(i <= 3) 
@@ -63,7 +67,7 @@ public class ScoreMap{
 		//this configuration weighs value and enjoyment normally 
 		//but does not weigh in workload and difficulty
 		if(choice == 1) {
-			for(int i = 0; i < 4; i++) {
+			for(int i = 0; i < 5; i++) {
 				value.addElement(1.);
 				enjoyment.addElement(1.);
 				workload.addElement(0.);
@@ -73,7 +77,7 @@ public class ScoreMap{
 
 		//this configuration weighs all attributes normally
 		else if(choice == 2) {
-			for(int i = 0; i < 4; i++) {
+			for(int i = 0; i < 5; i++) {
 				value.addElement(1.);
 				enjoyment.addElement(1.);
 				workload.addElement(1.);
@@ -83,7 +87,7 @@ public class ScoreMap{
 
 		//default ScoreMap
 		else {  
-			for(int i = 0; i < 4; i++) {
+			for(int i = 0; i < 5; i++) {
 				value.addElement(1.);
 				enjoyment.addElement(1.);
 				if(i <= 3) 
