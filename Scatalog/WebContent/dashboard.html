@@ -2,92 +2,101 @@
 <html lang="en">
 
   <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
+	
     <title>Scatalog</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+
     <!-- <link href="style.css" rel="stylesheet"> -->
 	<link href="dashboard.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    
 
   </head>
 <body>
 <!-- Navigation -->
-<div class = "nav-bar">
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top justify-content-center ">
-        <a href="/" class="navbar-brand d-flex w-20 mr-auto">Scatalog</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="navbar-collapse collapse" id="collapsingNavbar3">
-        <ul class="navbar-nav mr-auto w-100 justify-content-center">
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">HOME</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="explore.html">EXPLORE</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="department.html">BY DEPARTMENT</a>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
-            <li class="nav-item">
-                <a class="nav-link active" href="#">User Dashboard</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="login.html">Sign-In</a>
-            </li>
-            
-        </ul>
-    </div>
-    </nav>
- </div>
-    
-    <section id="about">
-      <div class="container">
-      	<h2>Aliya Petranik</h2><button type="button" class="btn btn-link">Edit</button>
-        <div class="row">
-          <div class="col-lg-12 mx-center">          
-            <p class="lead">Sophmore, CECS |
-            petranik@usc.edu</p>
-            <table class="table">
-			  <thead>
-			    <tr>
-			      <th></th>
-			      <th>Courses Taken</th>
-			      <th>Wishlist</th>
-			      			      
-			    </tr>
-			  </thead>
-			  <tbody>
-			    <tr>
-			      <th scope="row"></th>
-			      <td>CS104</td>
-			      <td>CS201</td>
-			      
-			    </tr>
-			    <tr>
-			      <th scope="row"></th>
-			      <td>CS356</td>
-			      <td>CS310</td>			      
-			    </tr>
-			   
-			  </tbody>
-			</table>
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-
+	<div class = "nav-bar">
+    		<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top justify-content-center ">
+        		<a href="/" class="navbar-brand d-flex w-20 mr-auto">Scatalog</a>
+    			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
+        			<span class="navbar-toggler-icon"></span>
+    			</button>
+    			<div class="navbar-collapse collapse" id="collapsingNavbar3">
+        			<ul class="navbar-nav mr-auto w-100 justify-content-center">
+            			<li class="nav-item">
+                			<a class="nav-link" href="index.html">HOME</a>
+            			</li>
+            			<li class="nav-item">
+                			<a class="nav-link" href="explore.html">EXPLORE</a>
+            			</li>
+            			<li class="nav-item">
+               			<a class="nav-link" href="department.html">BY DEPARTMENT</a>
+            			</li>
+        			</ul>
+        			<ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+           			<li class="nav-item">
+                			<a class="nav-link active" href="#">User Dashboard</a>
+           			</li>
+            			<li class="nav-item">
+                			<a class="nav-link" href="login.html">Sign-In</a>
+            			</li>  
+        			</ul>
+    			</div>
+    		</nav>
+	</div>
+	
+	<!-- User Information -->
+ 	<section id="about">
+ 		<div class="container">
+      		<h2>Aliya Petranik</h2><button type="button" class="btn btn-link"></button>
+        		<div class="row">
+          		<div class="col-lg-12 mx-center">          
+            			<p class="lead">Sophmore, CECS | petranik@usc.edu</p>
+            			<table class="table">
+			  			<thead>
+			    				<tr>
+			      				<th></th>
+			      				<th>Courses Taken</th>
+			      				<th>Wishlist</th>
+			      				<th>test</th>
+							</tr>
+			  			</thead>
+			 	 		<tbody>
+			    				<tr>
+			      				<th scope="row"></th>
+			      				<td>CS104</td>
+			      				<td>CS201</td>
+			    				</tr>
+			    				<tr>
+			      				<th scope="row"></th>
+			      				<td>CS356</td>
+			     		 		<td>CS310</td>			      
+			   				</tr>
+			  			</tbody>
+					</table>
+          		</div>
+        		</div>
+    			<!-- Search Users -->
+	    		<div class="row">
+	    			<!-- Main section -->
+				<div class="col-md-8">
+					<form name="search">
+			  			<div class="form-group row">
+			  				<div class="col-xs-4">
+			   					<label for="search"></label>
+			    					<input id="searchText" type="text" class="form-control" aria-describedby="search" placeholder="Search Users" oninput="srch();"/>
+			  				</div>
+			  			</div>
+			  		</form>	
+				</div>
+				<!-- Side Col Right -->
+				<div class="col-md-4"></div>	
+			</div>
+		</div>
+	</section>
 </body>
 </html>
