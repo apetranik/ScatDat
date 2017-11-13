@@ -34,6 +34,14 @@ section {
   padding: 8% 0 0;
   margin: auto;
 }
+.search-form
+{
+	margin-bottom: 100px;
+}
+.form-control
+{
+	margin-bottom: 100px;
+}
 .form {
   position: relative;
   z-index: 1;
@@ -43,6 +51,7 @@ section {
   padding: 45px;
   text-align: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  margin-bottom: 100px;
 }
 .form input {
   font-family: "Roboto", sans-serif;
@@ -120,9 +129,41 @@ section {
 body {
 
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;      
+  -moz-osx-font-smoothing: grayscale;  
+  margin-left: 10px;    
 }
 
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 100px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+}
 
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+button.accordion.active, button.accordion:hover {
+    background-color: #ccc;
+}
 
+/* Style the accordion panel. Note: hidden by default */
+div.panel {
+	text-align: left;
+	width: 100px;
+    padding-left: 10px;
+    margin-left: 10px;
+    background-color: white;
+    display: none;
+}
+
+.card
+{
+	text-align: left;
+	padding: 10px 10px;
+	margin-left: 10px;
+}
 
