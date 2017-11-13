@@ -6,7 +6,6 @@ public class Name {
 	private String lname;
 	
 	public Name(String fname, String lname) {
-		super();
 		this.fname = fname;
 		this.lname = lname;
 	}
@@ -23,11 +22,6 @@ public class Name {
 	public void setLname(String lname) {
 		this.lname = lname;
 		//// DATABASE ////
-	}
-	
-	public Name(String fname, String lname) {
-		this.fname = fname;
-		this.lname = lname;
 	}
 	
 }

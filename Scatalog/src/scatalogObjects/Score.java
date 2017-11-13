@@ -11,7 +11,7 @@ public class Score {
 	
 	//// DATABASE FOR SETTERS ////
 	
-	Score() {
+	public Score() {
 		//// DATABASE ////
 	}
 	
