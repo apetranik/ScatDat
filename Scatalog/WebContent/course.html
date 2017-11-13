@@ -7,20 +7,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-	<script type="text/javascript" src="course.js"></script>
+
     <title>Scatalog</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    	<script type="text/javascript" src="course.js"></script>
     
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="course.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
+    <style>
+      body {
+        padding-top: 54px;
+      }
+      @media (min-width: 992px) {
+        body {
+          padding-top: 56px;
+        }
+      }
 
-	
+    </style>
+
   </head>
-<body onload="initialize()">
-<!-- Navigation -->
+
+  <body>
+
+    <!-- Navigation -->
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top justify-content-center ">
         <a href="/" class="navbar-brand d-flex w-20 mr-auto">Scatalog</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
@@ -50,22 +63,85 @@
     </div>
     </nav>
 
-<button class="accordion">Section 1</button>
-<div class="panel">
-  <p>Lorem ipsum...</p>
-</div>
+    <!-- Page Content -->
+   <div class="container">
+		<div class="row">
+			<div class="col-lg-6" id="info"> <b>CSCI 201</b> &nbsp;&nbsp; &#9733;&#9733;&#9733;&#9733;&#9733; &nbsp;&nbsp; (9999 reviews)</div>
 
-<button class="accordion">Section 2</button>
-<div class="panel">
-  <p>Lorem ipsum...</p>
-</div>
+			<div class="col-lg-3" id="info">				
+				<div class="dropdown">
+  				<button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    					Dropdown
+  				</button>
+  				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    					<a class="dropdown-item" href="#">Sort1</a>
+    					<a class="dropdown-item" href="#">Sort2</a>
+   				 	<a class="dropdown-item" href="#">Sort3</a>
+  				</div>
+  				</div>
+			</div>
+					
+			<div class="col-lg-3" id="info">
+				<div class="btn-group">
+ 					 <button type="button" class="btn btn-default btn-sm">Ascending</button>
+ 					 <button type="button" class="btn btn-default btn-sm">Descending</button>
+				</div>			
+			</div>
+			
+			
+		</div>
+		<div class="row">
+			<div class="col-lg-3" id="info">
+			<button type="button" class="btn btn-default btn-sm">Submit Review</button>
+			</div>
+		</div>
+		<div class="row" id= "description">
+			<div class="col-lg-12" id="info">
+			<p>Object-oriented paradigm for programming-in-the-large in Java; writing sophisticated concurrent applications with animation and graphic user interfaces; 
+			using professional tools on team project.</p>
+			</div>
+		</div>
+		
+		<!-- rows below can be regarded as a block for a single review, put it in a loop to print all reviews. Please don't forget to change the 
+			hard-coded things to SQL variables -->
+		<div class="row" id= "reviewerSection">
+			<div class="col-lg-3" id="reviewer">
+				<div class = "row">
+					<div class="col-lg-7"><b>Zhengxi Xiao</b></div>
+					<div class="col-lg-5 text-right"><b>Total: 5.0</b></div>
+				</div>		
+			</div>
+			<div class="col-lg-5">
+			</div>
+			<div class="col-lg-4 " id="instrutor">
+				<p class="text-center">Jeffrey Miller | Fall 2017</p>
+			</div>
+		</div>
+		
+		<div class="row" id= "reviewSection">
+			<div class="col-lg-3" id="points">
+				<p class="text-right">Diffculty:  5.0</p>
+				<p class="text-right">Value:      4.0</p>
+				<p class="text-right">Enjoyment:  3.0</p>
+				<p class="text-right">Workload:   2.0</p>			
+			</div>
+			<div class= "col-lg-1">
+			</div>
+			<div class="col-lg-8" id="review">
+				<p>CS 201 is a tough class. There are a lot of assignments, tests, and projects throughout the semester. It's worth it though to learn the material since most good internships require knowledge of topics taught in this class. Prof Miller is approachable and you can tell he cares. Always willing to write a letter of rec or go over interview questions.</p>		
+			</div>
+		</div>
+		
+		
+		
+		
+		
+	</div>
 
-<button class="accordion">Section 3</button>
-<div class="panel">
-  <p>Lorem ipsum...</p>
-</div>
-    <!-- end of container -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+  </body>
 
-</body>
 </html>
