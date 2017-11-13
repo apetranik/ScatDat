@@ -19,11 +19,11 @@
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
      <!-- Custom styles for this template -->
-    <link href="style.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
    	<script>
 		function srch() {
 			var xhttp = new XMLHttpRequest(); 
-  			xhttp.open("GET", "homeSearch.jsp?searchText=" +  document.getElementById("searchText").value, true); 
+  			xhttp.open("GET", "jsp/homeSearch.jsp?searchText=" +  document.getElementById("searchText").value, true); 
   			xhttp.send(); 
   			xhttp.onreadystatechange = function updateResults() {
   				if(this.readyState == 4 && this.status == 200) {
@@ -101,19 +101,15 @@
 	    				<input id="searchText" type="text" class="form-control" aria-describedby="search" placeholder="" oninput="srch();"/>
 	  			</div>
 	  		</form>
-	  	<!--<div id = "results"> -->
-		<!-- Course Item -->	
+	  		
+			<!-- Course Item -->	
 			<div id="accordion" role="tablist" aria-multiselectable="true"> 
 				<div id="card" class="card"></div>
-				
 			</div>
-		<!-- </div> -->
 		</div>
 		<!-- Side Col Right -->
 		<div class="col-md-2"></div>	
 	</div>
-	
-
 </body>
   
 
