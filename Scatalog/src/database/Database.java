@@ -155,8 +155,7 @@ public class Database {
 //		
 //		// return the list of Course
 //	}
-	
-<<<<<<< HEAD
+
 	private Map<Name, ProfCourse> queryProfCourseMap(int courseID){
 		try {
 			Map<Integer, ProfCourse> buffer = new HashMap<Integer, ProfCourse>();
@@ -206,11 +205,6 @@ public class Database {
 		
 		
 	}
-=======
-//	private Map<Name, ProfCourse> queryProfCourse(int courseID){
-//		
-//	}
->>>>>>> cfdec928fc28feb1baddca0ad1cb0ba7de7c78ef
 	
 	private int queryNumOfRatings(int classID) {
 		int num = 0;
