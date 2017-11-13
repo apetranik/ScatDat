@@ -15,7 +15,7 @@ public class Score {
 		//// DATABASE ////
 	}
 	
-	Score(double enjoyment, double difficulty, double value, double workload) {
+	public Score(double enjoyment, double difficulty, double value, double workload) {
 		this.enjoyment = enjoyment; 
 		this.difficulty = difficulty; 
 		this.value = value; 

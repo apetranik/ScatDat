@@ -1,5 +1,6 @@
 package scatalogObjects;
 import java.util.ArrayList;
+import java.util.List;
 
 import tools.ScoreMap;
 
@@ -10,8 +11,10 @@ public class ProfCourse {
 	private Score overallScore; 
 	private ArrayList<Review> reviews; 
 	
-	public ProfCourse() {
-		//// DATABASE CONSTRUCTOR ////
+	public ProfCourse(Name name, Score overallScore, ArrayList<Review> reviews) {
+		this.name = name;
+		this.overallScore = overallScore;
+		this.reviews = reviews;
 		
 	}
 	
