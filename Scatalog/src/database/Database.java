@@ -1,5 +1,7 @@
 package database;
 
+import java.awt.RadialGradientPaint;
+import java.security.interfaces.RSAKey;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PseudoColumnUsage;
@@ -125,7 +127,53 @@ public class Database {
 		// return the list of Course
 	}
 	
-	private Map<Name, ProfCourse> queryProfCourse(int courseID){
+	private Map<Name, ProfCourse> queryProfCourseMap(int courseID){
+		try {
+			Map<Integer, ProfCourse> buffer = new HashMap<Integer, ProfCourse>();
+			Statement st = conn.createStatement();
+			ResultSet rs;
+			rs = st.executeQuery("SELECT * FROM review r, professor p WHERE courseID='" + courseID + "' AND r.professorID=p.professorID");
+			while(rs.next()) {
+				if(!buffer.containsKey(rs.getInt("professorID"))) {
+					
+				}
+				String fname = rs.getString("fname");
+				String lname = rs.getString("lname");
+				Name name = new Name(fname, lname);
+			}
+		}catch(SQLException sqle) {
+			System.out.println(sqle.getMessage());
+		}
+	
+	}
+	
+	private ProfCourse querySingleProfCourse(int professorID, int courseID) {
+		try {
+			Statement st = conn.createStatement();
+			// get the name of the professor
+			ResultSet rs1 = st.executeQuery("SELECT * FROM professor WHERE professorID=" + professorID + "'");
+			rs1.next();
+			Name name = new Name(rs1.getString("fname"), rs1.getString("lname"));
+			// get all reviews
+			ResultSet rs;
+			rs = st.executeQuery("SELECT * FROM review WHERE courseID='" + courseID + "' AND professorID=" + professorID + "'");
+			long enjoyment = 0; 
+			long value = 0; 
+			long difficulty = 0; 
+			long workload = 0;
+			int count = 0;
+			while(rs.next()) {
+				enjoyment += rs.getInt("enjoyment");
+				value += rs.getInt("value");
+				difficulty += rs.getInt("difficulty");
+				workload += rs.getInt("workload");
+				count++;
+			}
+			
+		}catch(SQLException sqle) {
+			System.out.println(sqle.getMessage());
+		}
+		
 		
 	}
 	

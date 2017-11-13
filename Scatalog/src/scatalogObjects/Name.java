@@ -17,6 +17,11 @@ public class Name {
 	public void setLname(String lname) {
 		this.lname = lname;
 		//// DATABASE ////
-	} 
+	}
+	
+	public Name(String fname, String lname) {
+		this.fname = fname;
+		this.lname = lname;
+	}
 	
 }
