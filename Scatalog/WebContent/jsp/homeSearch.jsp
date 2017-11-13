@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList, scatalogObjects.Course"  %>
+<%@ page import="java.util.ArrayList, scatalogObjects.Course, java.text.DecimalFormat"  %>
 
 <%
 	//testing purposes
@@ -17,11 +17,16 @@
 	//delete the above after testing 
 	
 	//uncomment the following after testing
-	/*ArrayList<Course> courses = session.getAttribute("courses"); 
+	/*ArrayList<Course> courses = (ArrayList<Course>) session.getAttribute("courses"); 
 	if(courses == null) {
 		courses = ; //SQL Query
 		
 	}*/
+	DecimalFormat df = (DecimalFormat) session.getAttribute("decimalFormatter"); 
+	if(df == null ) {
+		df = new DecimalFormat("#0.0");
+		session.setAttribute("decimalFormatter", df);
+	}
 	
 	String searchText = request.getParameter("searchText").trim().toLowerCase(); 
 	int count = 0; 
@@ -39,7 +44,7 @@
 				      		</a>
 				      		<a class="card-link" id="cards-stars" data-toggle="collapse" data-parent="#accordion<%=count%>" href="#collapse<%=count%>">
 							<!-- This is where the stars goes -->
-								<%=" Score: " + course.getOverallScore().getOverallRating() %>
+								<%=" Score: " + df.format(course.getOverallScore().getOverallRating()) %>
 				      		</a>
 		   </div>
 				  		<div id="collapse<%=count%>" class="collapse">
