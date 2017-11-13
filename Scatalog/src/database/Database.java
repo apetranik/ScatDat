@@ -119,42 +119,42 @@ public class Database {
 	}
 	
 //	
-//	public List<Course> queryCourseTaken(String username) {
-//		try {
-//			Statement st = conn.createStatement();
-//			ResultSet rs;
-//			rs = st.executeQuery("SELECT * FROM user u, coursetaken ct, course c WHERE username='" + username + 
-//					"' AND u.userID=ct.userID AND ct.courseID=c.courseID");
-//			while(rs.next()) {
-//				int courseID = rs.getInt("courseID");
-////				System.out.println(courseID);
-//				String courseName = rs.getString("name");
-////				System.out.println(courseName);
-//				String description = rs.getString("description");
-////				System.out.println(description);
-//				int numRatings = queryNumOfRatings(courseID);
-////				System.out.println(numRatings);
-//				String prefix = rs.getString("prefix");
-//				double enjoyment = rs.getDouble("enjoyment");
-//				double difficulty = rs.getDouble("difficulty");
-//				double value = rs.getDouble("value");
-//				double workload = rs.getDouble("workload");
-//				//Score score = new Score(enjoyment, difficulty, value, workload);
-//				
-//				
-//			}
-//			
-//		}catch(SQLException sqle) {
-//			System.out.println(sqle.getMessage());
-//		}
-//		
-//		
-//		// get the list of classID that this student has taken from the CourseTaken table
-//			
-//		// instantiate each class using queryCourse(int classID)
-//		
-//		// return the list of Course
-//	}
+	public List<Course> queryCourseTaken(String username) {
+		try {
+			Statement st = conn.createStatement();
+			ResultSet rs;
+			rs = st.executeQuery("SELECT * FROM user u, coursetaken ct, course c WHERE username='" + username + 
+					"' AND u.userID=ct.userID AND ct.courseID=c.courseID");
+			while(rs.next()) {
+				int courseID = rs.getInt("courseID");
+//				System.out.println(courseID);
+				String courseName = rs.getString("name");
+//				System.out.println(courseName);
+				String description = rs.getString("description");
+//				System.out.println(description);
+				int numRatings = queryNumOfRatings(courseID);
+//				System.out.println(numRatings);
+				String prefix = rs.getString("prefix");
+				double enjoyment = rs.getDouble("enjoyment");
+				double difficulty = rs.getDouble("difficulty");
+				double value = rs.getDouble("value");
+				double workload = rs.getDouble("workload");
+				//Score score = new Score(enjoyment, difficulty, value, workload);
+				
+				
+			}
+			
+		}catch(SQLException sqle) {
+			System.out.println(sqle.getMessage());
+		}
+		
+		
+		// get the list of classID that this student has taken from the CourseTaken table
+			
+		// instantiate each class using queryCourse(int classID)
+		
+		// return the list of Course
+	}
 
 	private Map<Name, ProfCourse> queryProfCourseMap(int courseID){
 		try {
@@ -185,19 +185,30 @@ public class Database {
 			Name name = new Name(rs1.getString("fname"), rs1.getString("lname"));
 			// get all reviews
 			ResultSet rs;
-			rs = st.executeQuery("SELECT * FROM review WHERE courseID='" + courseID + "' AND professorID=" + professorID + "'");
+			rs = st.executeQuery("SELECT * FROM review r, user u WHERE courseID='" + courseID + "' AND professorID=" + professorID + "'");
+			Score overallScore = new Score();
+			List<Review> reviews = new ArrayList<Review>();
 			long enjoyment = 0; 
 			long value = 0; 
 			long difficulty = 0; 
 			long workload = 0;
 			int count = 0;
 			while(rs.next()) {
+				// compute score
 				enjoyment += rs.getInt("enjoyment");
 				value += rs.getInt("value");
 				difficulty += rs.getInt("difficulty");
 				workload += rs.getInt("workload");
 				count++;
+				// construct review
+				reviews.add(new Review(rs.getString("comment"), score, rs.getDate("date"), , courseTime, emoji, syllabus, professor))
 			}
+			overallScore.setEnjoyment(enjoyment/((double) count));
+			overallScore.setValue(value/((double) count));
+			overallScore.setDifficulty(difficulty/((double) count));
+			overallScore.setWorkload(workload/((double) count));
+			ScoreMap calculator = new ScoreMap(); 
+			overallScore.setOverallRating(calculator.computeOverallScore(overallScore)); 
 			
 		}catch(SQLException sqle) {
 			System.out.println(sqle.getMessage());
@@ -233,16 +244,7 @@ public class Database {
 //		
 //		// call score constructor
 //	}
-//	
-//	public String queryCourseName(int classID) {
-//		
-//	}
-//	
-//	public String queryCourseDescription(int classID) {
-//		
-//	}
-//	
-//	
+
 //	public int queryPrefix(int classID) {
 //		
 //	}

@@ -6,21 +6,18 @@ public class Review {
 	private String review;
 	private Score score;
 	private Date date;
-	private User user;
+	private String username;
 	private CourseTime courseTime;
 	private String emoji;
-	private String syllabus;
 	private Name professor;
-	public Review(String review, Score score, Date date, User user, CourseTime courseTime, String emoji,
-			String syllabus, Name professor) {
+	public Review(String review, Score score, Date date, String username, CourseTime courseTime, String emoji, Name professor) {
 		super();
 		this.review = review;
 		this.score = score;
 		this.date = date;
-		this.user = user;
+		this.username = username;
 		this.courseTime = courseTime;
 		this.emoji = emoji;
-		this.syllabus = syllabus;
 		this.professor = professor;
 		// DATABASE
 	}
@@ -45,11 +42,11 @@ public class Review {
 		this.date = date;
 		// DATABASE
 	}
-	public User getUser() {
-		return user;
+	public String getUsername() {
+		return username;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setUsername(String username) {
+		this.username = username;
 		// DATABASE
 	}
 	public CourseTime getCourseTime() {
@@ -64,13 +61,6 @@ public class Review {
 	}
 	public void setEmoji(String emoji) {
 		this.emoji = emoji;
-		// DATABASE
-	}
-	public String getSyllabus() {
-		return syllabus;
-	}
-	public void setSyllabus(String syllabus) {
-		this.syllabus = syllabus;
 		// DATABASE
 	}
 	public Name getProfessor() {

@@ -21,3 +21,29 @@ div.panel {
     background-color: white;
     display: none;
 }
+
+.container {
+  position: absolute;
+  top: 50px;
+  z-index: 1;
+  margin: 75px;
+}
+
+#description{
+	margin-top: 10px;
+}
+
+#reviewerSection{
+	border-top: 1px solid rgba(0, 0, 0, 0.1);
+	border-color: black;
+	margin-top: 5px;
+	width:95%;
+}
+
+#reviewSection{
+	margin-top: 5px;
+	width:95%
+}
+
+
+
