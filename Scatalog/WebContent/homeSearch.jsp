@@ -15,12 +15,12 @@
 	courses.add(course2); 
 	courses.add(course3); 
 	//delete the above after testing 
-
+	
 	//uncomment the following after testing
 	/*ArrayList<Course> courses = session.getAttribute("courses"); 
-	
 	if(courses == null) {
 		courses = ; //SQL Query
+		
 	}*/
 	
 	String searchText = request.getParameter("searchText").trim().toLowerCase(); 
@@ -30,7 +30,23 @@
 		String name = course.getCourseName().toLowerCase(); 
 		if((searchText != null) && (searchText.length() > 0) && (abbreviated.contains(searchText) || name.contains(searchText))) {
 %>
-		<span><%=course.getPrefix() + " " + course.getCourseId() + ": " + course.getCourseName() + " Score: " + course.getOverallScore().getOverallRating()  %></span><br/>
+		
+		<div class="card-header">
+			      		<a class="card-link" id="cards" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+							<%=course.getPrefix() + " " + course.getCourseId() + ": " + course.getCourseName()  %>
+			      		</a>
+			      		<a class="card-link" id="cards-stars" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+						<!-- This is where the stars goes -->
+							<%=" Score: " + course.getOverallScore().getOverallRating() %>
+			      		</a>
+			    		</div>
+			  		<div id="collapseOne" class="collapse">
+			    			<div class="card-body">
+			        		<!-- Description goes here -->
+			        			<%=course.getDescription() %>
+			    			</div>
+			    		</div>
+		
 <% 
 		}
 	}
