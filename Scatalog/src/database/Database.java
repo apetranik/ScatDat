@@ -2,12 +2,17 @@ package database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PseudoColumnUsage;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Vector;
+
+import javax.naming.spi.DirStateFactory.Result;
 
 import com.mysql.jdbc.PreparedStatement;
 
@@ -20,14 +25,10 @@ import scatalogObjects.Score;
 
 public class Database {
 	private Connection conn = null;
-	private Statement st = null;
-	private ResultSet rs = null;
-	
 	public Database() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://localhost/scatdat?user=root&password=root&useSSL=false");
-			st = conn.createStatement();
 		}catch(SQLException sqle) {
 			System.out.println (sqle.getMessage());
 		}catch(ClassNotFoundException cnfe) {
@@ -38,6 +39,7 @@ public class Database {
 	public String queryPassword(String username) {
 		String name = username;
 		PreparedStatement ps = null; 
+		ResultSet rs = null;
 		String password = "";
 		try {
 			ps = (PreparedStatement) conn.prepareStatement("SELECT * FROM user WHERE username=?");
@@ -57,7 +59,8 @@ public class Database {
 	
 	public String queryClassStanding(String username) {
 		String name = username;
-		PreparedStatement ps = null; 
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 		int classStanding = 0;
 		try {
 			ps = (PreparedStatement) conn.prepareStatement("SELECT * FROM user WHERE username=?");
@@ -84,14 +87,61 @@ public class Database {
 			return "Senior";
 		}
 	}
-//	
-//	public List<Course> queryCourseTaken(String username) {
-//		// get the list of classID that this student has taken from the CourseTaken table
-//			
-//		// instantiate each class using queryCourse(int classID)
-//		
-//		// return the list of Course
-//	}
+	
+	public List<Course> queryCourseTaken(String username) {
+		try {
+			Statement st = conn.createStatement();
+			ResultSet rs;
+			rs = st.executeQuery("SELECT * FROM user u, coursetaken ct, course c WHERE username='" + username + 
+					"' AND u.userID=ct.userID AND ct.courseID=c.courseID");
+			while(rs.next()) {
+				int courseID = rs.getInt("courseID");
+//				System.out.println(courseID);
+				String courseName = rs.getString("name");
+//				System.out.println(courseName);
+				String description = rs.getString("description");
+//				System.out.println(description);
+				int numRatings = queryNumOfRatings(courseID);
+//				System.out.println(numRatings);
+				String prefix = rs.getString("prefix");
+				double enjoyment = rs.getDouble("enjoyment");
+				double difficulty = rs.getDouble("difficulty");
+				double value = rs.getDouble("value");
+				double workload = rs.getDouble("workload");
+				Score score = new Score(enjoyment, difficulty, value, workload);
+				
+				
+			}
+			
+		}catch(SQLException sqle) {
+			System.out.println(sqle.getMessage());
+		}
+		
+		
+		// get the list of classID that this student has taken from the CourseTaken table
+			
+		// instantiate each class using queryCourse(int classID)
+		
+		// return the list of Course
+	}
+	
+	private Map<Name, ProfCourse> queryProfCourse(int courseID){
+		
+	}
+	
+	private int queryNumOfRatings(int classID) {
+		int num = 0;
+		try {
+			ResultSet rs;
+			Statement st = conn.createStatement();
+			rs = st.executeQuery("SELECT * FROM review WHERE courseID='" + classID + "'");
+			rs.last();
+			num = rs.getRow();
+		}catch(SQLException sqle) {
+			System.out.println(sqle.getMessage());
+		}
+		return num;
+	}
 //	
 //	public ScoreMap queryScoreMap(String username) {
 //		// get the 20 scores of the user
@@ -113,9 +163,6 @@ public class Database {
 //		
 //	}
 //	
-//	public int queryNumberOfRatings(int classID) {
-//		
-//	}
 //	
 //	public int queryPrefix(int classID) {
 //		
@@ -157,8 +204,8 @@ public class Database {
 	// IN PROGRESS
 	public Vector<Course> returnCourses() {
 		Vector<Course> courses = new Vector<Course>();
-		
-		PreparedStatement ps = null; 
+		ResultSet rs = null;
+		PreparedStatement ps = null;
 		try {
 			ps = (PreparedStatement) conn.prepareStatement("SELECT * FROM course");
 			rs = ps.executeQuery();
@@ -186,5 +233,6 @@ public class Database {
 		System.out.println(cs2);
 		String cs3 = db.queryClassStanding("apurvaga");
 		System.out.println(cs3);
+		db.queryCourseTaken("gopalk");
 	}
 }
