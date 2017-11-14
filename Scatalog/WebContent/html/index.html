@@ -34,6 +34,11 @@
    			})
    		}
 		function srch() {
+			var searchText = document.getElementById("searchText").value; 
+			if(searchText.length > 0)
+				document.getElementById("searchText").style.borderColor = "#4292f4"; 
+			else
+				document.getElementById("searchText").style.borderColor = "black"; 
 			var xhttp = new XMLHttpRequest(); 
   			xhttp.open("GET", "../jsp/homeSearch.jsp?searchText=" +  document.getElementById("searchText").value, true); 
   			xhttp.send(); 
