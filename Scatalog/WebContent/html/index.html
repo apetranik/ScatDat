@@ -45,6 +45,8 @@
   			xhttp.onreadystatechange = function updateResults() {
   				if(this.readyState == 4 && this.status == 200) {
   					document.getElementById("accordion").innerHTML = xhttp.responseText; 
+  					if(this.responseText.trim().length < 1 && searchText.length > 1)
+  						document.getElementById("searchText").style.borderColor = "#dc3545"; 
   				}
   			};
 		}
