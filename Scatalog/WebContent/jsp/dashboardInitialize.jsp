@@ -22,7 +22,7 @@
 	
 %>
 	<div class="container">
-	   		<h2><%=currentUser.getName().getFullName() %></h2><button type ="button" style="background:white; border:none; outline: 0"><i class="fa fa-cog" aria-hidden="true" style ="font-size: 28px"></i></button><button type="button" class="btn btn-link"></button>
+	   		<h2><%=currentUser.getName().getFullName() %></h2><button type ="button" data-toggle="modal" data-target="#myModal" style="background:white; border:none; outline: 0"><i class="fa fa-cog" aria-hidden="true" style ="font-size: 28px"></i></button><button type="button" class="btn btn-link"></button>
 	     		<div class="row">
 	       		<div class="col-lg-12 mx-center">          
 	         			<p class="lead"><%=currentUser.getClassStanding() + ", " +  currentUser.getMajor() + " | " + currentUser.getEmail()%></p>
