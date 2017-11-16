@@ -23,5 +23,8 @@ public class Name {
 		this.lname = lname;
 		//// DATABASE ////
 	}
+	public String getFullName() {
+		return fname + " " + lname; 
+	}
 	
 }

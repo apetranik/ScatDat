@@ -1,4 +1,5 @@
 package scatalogObjects;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.Vector;
 
@@ -8,17 +9,18 @@ public class User {
 	private Name name;
 	private String password;
 	private String classStanding;
+	private String major; 
 	private String email;
 	private Vector<Badge> badges;
 	private Vector<Course> wishlist;
-	private Vector<Course> coursesEvaluate;
+	private Vector<Course> coursesEvaluated;
 	private String username;
 	private Set<Course> coursesTaken;
 	private Vector<Course> courseList;
 	private ScoreMap preferredRatingStyle;
 	public User(Name name, String password, String classStanding, String email, Vector<Badge> badges,
-			Vector<Course> wishlist, Vector<Course> coursesEvaluate, String username, Set<Course> coursesTaken,
-			Vector<Course> courseList, ScoreMap preferredRatingStyle) {
+			Vector<Course> wishlist, Vector<Course> coursesEvaluated, String username, Set<Course> coursesTaken,
+			Vector<Course> courseList, ScoreMap preferredRatingStyle, String major) {
 		super();
 		this.name = name;
 		this.password = password;
@@ -26,14 +28,31 @@ public class User {
 		this.email = email;
 		this.badges = badges;
 		this.wishlist = wishlist;
-		this.coursesEvaluate = coursesEvaluate;
+		this.coursesEvaluated = coursesEvaluated;
 		this.username = username;
 		this.coursesTaken = coursesTaken;
 		this.courseList = courseList;
 		this.preferredRatingStyle = preferredRatingStyle;
+		this.major = major; 
 	}
 	public User() {
 		// DATA BASE
+	}
+	
+	//constructor for hardcoding testing purposes. Does not initialize all data members.
+	public User(String fname, String lname, String classStanding, String email, String major) {
+		this.name = new Name(fname, lname);
+		this.classStanding = classStanding;
+		this.email = email;
+		badges = new Vector<Badge>();
+		wishlist = new Vector<Course>();
+		coursesEvaluated = new Vector<Course>();
+		username = email.substring(0, email.indexOf('@')); 
+		coursesTaken = new HashSet<Course>();
+		courseList = new Vector<Course>(); 
+		preferredRatingStyle = new ScoreMap(); 
+		this.major = major; 
+		
 	}
 	public void addToWishlist(Course course) {
 		this.wishlist.add(course);
@@ -94,10 +113,10 @@ public class User {
 		// DATA BASE
 	}
 	public Vector<Course> getCoursesEvaluate() {
-		return coursesEvaluate;
+		return coursesEvaluated;
 	}
 	public void setCoursesEvaluate(Vector<Course> coursesEvaluate) {
-		this.coursesEvaluate = coursesEvaluate;
+		this.coursesEvaluated = coursesEvaluate;
 		// DATA BASE
 	}
 	public String getUsername() {
@@ -127,5 +146,18 @@ public class User {
 	public void setPreferredRatingStyle(ScoreMap preferredRatingStyle) {
 		this.preferredRatingStyle = preferredRatingStyle;
 		// DATA BASE
+	}
+	public void addCourseTaken(Course course) {
+		addToCoursesTaken(course);
+		addToCourseList(course);
+		//NO NEED FOR DATABASE
+	}
+	
+	public void setMajor(String major) {
+		this.major = major; 
+	}
+	
+	public String getMajor() {
+		return major; 
 	}
 }

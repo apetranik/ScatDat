@@ -8,16 +8,48 @@
     <meta name="author" content="">
 	
     <title>Scatalog</title>
-
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+    
     <!-- Bootstrap core CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+   	
     <!-- <link href="style.css" rel="stylesheet"> -->
 	<link href="../css/dashboard.css" rel="stylesheet">
     <!-- Custom styles for this template -->
+    
+    
+    <script>
+    		function initialize() {
+    			var xhttp = new XMLHttpRequest(); 
+    			xhttp.open("GET", "../jsp/dashboardInitialize.jsp", false); 
+      		xhttp.send(); 
+      		//if(this.responseText.trim() != "")
+      			document.getElementById("about").innerHTML = xhttp.responseText;
+    		}
+    		
+    		function srch() {
+    			var searchText = document.getElementById("searchText").value; 
+    			if(searchText.length > 0)
+    				document.getElementById("searchText").style.borderColor = "#4292f4"; 
+    			else
+    				document.getElementById("searchText").style.borderColor = "black"; 
+    			var xhttp = new XMLHttpRequest(); 
+      			xhttp.open("GET", "../jsp/dashboardSearch.jsp?searchText=" +  document.getElementById("searchText").value, true); 
+      			xhttp.send(); 
+      			xhttp.onreadystatechange = function updateResults() {
+      				if(this.readyState == 4 && this.status == 200) {
+      					document.getElementById("searchResults").innerHTML = xhttp.responseText; 
+      					if(this.responseText.trim().length < 1 && searchText.length > 1)
+      						document.getElementById("searchText").style.borderColor = "#dc3545"; 
+      				}
+      			};
+    		}
+    </script>
 
   </head>
-<body>
+<body onload="initialize()">
 <!-- Navigation -->
 	<div class = "nav-bar">
     		<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top justify-content-center ">
@@ -62,7 +94,6 @@
 			      				<th></th>
 			      				<th>Courses Taken</th>
 			      				<th>Wishlist</th>
-			      				<th>test</th>
 							</tr>
 			  			</thead>
 			 	 		<tbody>
@@ -89,6 +120,7 @@
 			  				<div class="col-xs-4">
 			   					<label for="search"></label>
 			    					<input id="searchText" type="text" class="form-control" aria-describedby="search" placeholder="Search Users" oninput="srch();"/>
+			    					<div id="searchResults"></div>
 			  				</div>
 			  			</div>
 			  		</form>	
