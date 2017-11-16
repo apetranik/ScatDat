@@ -35,18 +35,22 @@
    		}
 		function srch() {
 			var searchText = document.getElementById("searchText").value; 
-			if(searchText.length > 0)
-				document.getElementById("searchText").style.borderColor = "#4292f4"; 
-			else
-				document.getElementById("searchText").style.borderColor = "black"; 
+			//if(searchText.length > 0)
+			//	document.getElementById("searchText").style.borderColor = "#4292f4"; 
+			//else
+				//document.getElementById("searchText").style.borderColor = "black"; 
 			var xhttp = new XMLHttpRequest(); 
   			xhttp.open("GET", "../jsp/homeSearch.jsp?searchText=" +  document.getElementById("searchText").value, true); 
   			xhttp.send(); 
   			xhttp.onreadystatechange = function updateResults() {
   				if(this.readyState == 4 && this.status == 200) {
   					document.getElementById("accordion").innerHTML = xhttp.responseText; 
-  					if(this.responseText.trim().length < 1 && searchText.length > 1)
+  					if(this.responseText.trim().length < 1 && searchText.length > 0)
   						document.getElementById("searchText").style.borderColor = "#dc3545"; 
+  					else if(searchText.length > 0)
+  						document.getElementById("searchText").style.borderColor = "#4292f4"; 
+  					else 
+  						document.getElementById("searchText").style.borderColor = "black"; 
   				}
   			};
 		}
