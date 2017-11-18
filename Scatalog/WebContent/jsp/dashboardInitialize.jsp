@@ -20,65 +20,82 @@
 	//delete above lines once we get login page and queries working
 
 	
-%><!--data-target="#mymodal"-->
+	%><!--data-target="#mymodal"-->
 	<div class="container">
-	   		<h2><%=currentUser.getName().getFullName() %></h2><button type ="button" data-toggle="modal"  data-target="#myModal" style="background:white; border:none; outline: 0"><i class="fa fa-cog" aria-hidden="true" style ="font-size: 28px"></i></button><button type="button" class="btn btn-link"></button>
-	     		<div class="row">
+	   	<h2><%=currentUser.getName().getFullName() %></h2><button type ="button" data-toggle="modal"  data-target="#myModal" style="background:white; border:none; outline: 0"><i class="fa fa-cog" aria-hidden="true" style ="font-size: 28px"></i></button><button type="button" class="btn btn-link"></button>
+	     	<div class="row">
 	       		<div class="col-lg-12 mx-center">          
-	         			<p class="lead"><%=currentUser.getClassStanding() + ", " +  currentUser.getMajor() + " | " + currentUser.getEmail()%></p>
-			<table class="table">
-				<tr>
-					<td>
-						<table>
-							<tr><b>Courses Taken </b><button style="float: right; background:white; border-radius: 18px; outline: 0" type="button" id ="addCourseTaken">+</button></tr><hr />
-<%
-						Vector<Course> coursesTaken = currentUser.getCourseList(); 
-						for(Course course : coursesTaken) {
-%>
-		      				<tr><%=course.getPrefix() + " " + course.getCourseId() + ": " + course.getCourseName()%></tr><hr />
-<%
-						}
+	         		<p class="lead"><%=currentUser.getClassStanding() + ", " +  currentUser.getMajor() + " | " + currentUser.getEmail()%></p>
+					<table class="table">
+						<tr>
+							<td>
+								<table>
+									<tr>
+										<b>Courses Taken</b>
+										
+										<button type="button" class="btn btn-default btn-sm">
+  										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 
+										</button>
 						
-%>						
+								
+									</tr>
+									<hr />
+									<%
+									Vector<Course> coursesTaken = currentUser.getCourseList(); 
+									for(Course course : coursesTaken) 
+									{
+									%>
+		      						<tr><%=course.getPrefix() + " " + course.getCourseId() + ": " + course.getCourseName()%></tr>
+		      						<hr />
+									<%
+									}
+									%>						
 							
-						</table>
-					</td>
-					<td>
-						<table>
-							<tbody>
-							<tr><b>Wishlist </b><button style="float: right; background:white; border-radius:18px; border-style: solid; outline: 0" type="button" id="addToWishlist">+</button></tr><hr />
+								</table>
+							</td>
+							<td>
+								<table>
+									<tbody>
+										<tr>
+											<b>Wishlist</b>
+												<button style="float: right; background:white; border-radius:18px; border-style: solid; outline: 0" type="button" id="addToWishlist">
+												+
+												</button>
+										</tr>
+									<hr />
 
-<%
-						Vector<Course> wishlist = currentUser.getWishlist(); 
-						for(Course course : wishlist) {
-%>
-	      					<tr><%=course.getPrefix() + " " + course.getCourseId() + ": " + course.getCourseName()%></tr><hr />
-<%
-						}
-%>
-						</tbody>
-						</table>
-					</td>
-				</tr>
-			</table>
+									<%
+									Vector<Course> wishlist = currentUser.getWishlist(); 
+									for(Course course : wishlist) 
+									{
+									%>
+	      							<tr><%=course.getPrefix() + " " + course.getCourseId() + ": " + course.getCourseName()%></tr><hr />
+									<%
+									}
+									%>
+									</tbody>
+								</table>
+							</td>
+						</tr>
+					</table>
 	       		</div>
-	     		</div>
+	     	</div>
 
-	 			<!-- Search Users -->
+	 		<!-- Search Users -->
 	  		<div class="row">
 	  			<!-- Main section -->
-		<div class="col-md-8">
-			<form name="search">
-	  			<div class="form-group row">
-	  				<div class="col-xs-4">
-	   					<label for="search"></label>
-	    					<input id="searchText" type="text" class="form-control" aria-describedby="search" placeholder="Search Users" oninput="srch();"/>
-	    					<div id="searchResults"></div>
-	  				</div>
-	  			</div>
-	  		</form>	
-		</div>
-		<!-- Side Col Right -->
+				<div class="col-md-8">
+					<form name="search">
+	  					<div class="form-group row">
+	  						<div class="col-xs-4">
+	   							<label for="search"></label>
+	    							<input id="searchText" type="text" class="form-control" aria-describedby="search" placeholder="Search Uers" oninput="srch();"/>
+	    							<div id="searchResults"></div>
+	  						</div>
+	  					</div>
+	  				</form>	
+				</div>
+			<!-- Side Col Right -->
 			<div class="col-md-4"></div>	
 		</div>
 	</div>
