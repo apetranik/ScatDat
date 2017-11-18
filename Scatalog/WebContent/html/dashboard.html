@@ -15,12 +15,14 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
 	<!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">-->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
    	
     <!-- <link href="style.css" rel="stylesheet"> -->
 	<link href="../css/dashboard.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    
+    <script type="text/javascript" src="js/materialize.min.js"></script>
     
     <script>
     		function initialize() {
@@ -82,9 +84,6 @@
     			</div>
     		</nav>
 	</div>
-	<a href="#">
-          <span class="glyphicon glyphicon-cog"></span>
-    </a>
 	<!-- User Information -->
  	<section id="about">
  		<div class="container">
@@ -134,11 +133,18 @@
 			</div>
 		</div>
 	</section>
+	<!-- <section>
+		<div>
+			<button type="button" id ="addCourseTaken" class="btn btn-default">+ Courses Taken</button>
+			<button type="button" id="addToWishlist" class="btn btn-default">+ Wishlist</button>
+		</div>
+	</section> -->
 	<!-- Modal -->
 	<div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
-    <!-- Modal content-->
+   <!-- Modal content-->
+    
     <div class="modal-content">
       <div class="modal-header">
       	<h4 class="modal-title">User Settings</h4>
@@ -146,12 +152,19 @@
         
       </div>
       <div class="modal-body">
-        <p>Some text in the modal.</p>
+      <h5>Scoring Style</h5>
+      <div class="btn-group" role="group" aria-label="Basic example">
+		  <button type="button" class="btn btn-secondary">Standard</button>
+		  <button type="button" class="btn btn-secondary">Brave</button>
+		  <button type="button" class="btn btn-secondary">Slacker</button>
+	</div>
+    
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
-    </div>
+    </div> 
+    
 
   </div>
 </div>

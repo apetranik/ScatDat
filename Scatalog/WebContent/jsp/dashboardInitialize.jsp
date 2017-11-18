@@ -20,9 +20,9 @@
 	//delete above lines once we get login page and queries working
 
 	
-%>
+%><!--data-target="#mymodal"-->
 	<div class="container">
-	   		<h2><%=currentUser.getName().getFullName() %></h2><button type ="button" data-toggle="modal" data-target="#myModal" style="background:white; border:none; outline: 0"><i class="fa fa-cog" aria-hidden="true" style ="font-size: 28px"></i></button><button type="button" class="btn btn-link"></button>
+	   		<h2><%=currentUser.getName().getFullName() %></h2><button type ="button" data-toggle="modal"  data-target="#myModal" style="background:white; border:none; outline: 0"><i class="fa fa-cog" aria-hidden="true" style ="font-size: 28px"></i></button><button type="button" class="btn btn-link"></button>
 	     		<div class="row">
 	       		<div class="col-lg-12 mx-center">          
 	         			<p class="lead"><%=currentUser.getClassStanding() + ", " +  currentUser.getMajor() + " | " + currentUser.getEmail()%></p>
@@ -30,7 +30,7 @@
 				<tr>
 					<td>
 						<table>
-							<tr><b>Courses Taken</b></tr><hr />
+							<tr><b>Courses Taken </b><button style="float: right; background:white; border-radius: 18px; outline: 0" type="button" id ="addCourseTaken">+</button></tr><hr />
 <%
 						Vector<Course> coursesTaken = currentUser.getCourseList(); 
 						for(Course course : coursesTaken) {
@@ -46,7 +46,7 @@
 					<td>
 						<table>
 							<tbody>
-							<tr><b>Wishlist</b></tr><hr />
+							<tr><b>Wishlist </b><button style="float: right; background:white; border-radius:18px; border-style: solid; outline: 0" type="button" id="addToWishlist">+</button></tr><hr />
 
 <%
 						Vector<Course> wishlist = currentUser.getWishlist(); 
