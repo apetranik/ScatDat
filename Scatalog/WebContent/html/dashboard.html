@@ -153,10 +153,16 @@
 	      		
 	      		<div class="modal-body">
 	     			<h5>Scoring Style</h5>
-	      			<div class="btn-group" role="group" aria-label="Basic example">
-			  			<button type="button" class="btn btn-secondary">Standard</button>
-			  			<button type="button" class="btn btn-secondary">Brave</button>
-			  			<button type="button" class="btn btn-secondary">Slacker</button>
+	      			<div class="btn-group" data-toggle="buttons">
+					  <label class="btn btn-secondary active">
+					    <input type="radio" name="options" id="standard" autocomplete="off" checked> Standard
+					  </label>
+					  <label class="btn btn-secondary">
+					    <input type="radio" name="options" id="try-hard" autocomplete="off"> Try-Hard
+					  </label>
+					  <label class="btn btn-secondary">
+					    <input type="radio" name="options" id="slacker" autocomplete="off"> Slacker
+					  </label>
 					</div>
 					<hr>
 					<h5>Edit User Info</h5>
@@ -180,12 +186,10 @@
 							<label for="classStanding" class="col-4 col-form-label">Class Standing</label>
 							 <div class="col-8">
 							    <select class="form-control" id="classStanding">
-							      <option>Freshman</option>
-							      <option>Sophomore</option>
-							      <option>Junior</option>
-							      <option>Senior</option>
-							      <option>Extra Senior</option>
-							      <option>Grad</option>
+									<option>Freshman</option>
+							      	<option>Sophomore</option>
+							      	<option>Junior</option>
+							      	<option>Senior</option>
 							    </select>
 							 </div>
 						</div>
