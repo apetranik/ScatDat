@@ -139,34 +139,71 @@
 			<button type="button" id="addToWishlist" class="btn btn-default">+ Wishlist</button>
 		</div>
 	</section> -->
-	<!-- Modal -->
+	
+	
+	<!-- Settings Modal -->
 	<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-   <!-- Modal content-->
-    
-    <div class="modal-content">
-      <div class="modal-header">
-      	<h4 class="modal-title">User Settings</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        
-      </div>
-      <div class="modal-body">
-      <h5>Scoring Style</h5>
-      <div class="btn-group" role="group" aria-label="Basic example">
-		  <button type="button" class="btn btn-secondary">Standard</button>
-		  <button type="button" class="btn btn-secondary">Brave</button>
-		  <button type="button" class="btn btn-secondary">Slacker</button>
+  		<div class="modal-dialog">
+   			<!-- Modal content-->  
+			<div class="modal-content">
+	      		<div class="modal-header">
+	      			<h4 class="modal-title">User Settings</h4>
+	        			<button type="button" class="close" data-dismiss="modal">&times;</button>
+	      		</div> <!-- Close modal header -->
+	      		
+	      		<div class="modal-body">
+	     			<h5>Scoring Style</h5>
+	      			<div class="btn-group" role="group" aria-label="Basic example">
+			  			<button type="button" class="btn btn-secondary">Standard</button>
+			  			<button type="button" class="btn btn-secondary">Brave</button>
+			  			<button type="button" class="btn btn-secondary">Slacker</button>
+					</div>
+					<hr>
+					<h5>Edit User Info</h5>
+					<form>
+						<!-- First Name -->
+						<div class="form-group row">
+							<label for="fname" class="col-4 col-form-label">First Name</label>
+							<div class="col-8">
+								<input type="text" class="form-control" id="fname" placeholder="">
+							</div>
+						</div>
+						<!-- Last Name -->
+						<div class="form-group row">
+							<label for="fname" class="col-4 col-form-label">Last Name</label>
+							<div class="col-8">
+								<input type="text" class="form-control" id="fname" placeholder="">
+							</div>
+						</div>
+						<!-- Class Standing-->
+						<div class="form-group row">
+							<label for="classStanding" class="col-4 col-form-label">Class Standing</label>
+							 <div class="col-8">
+							    <select class="form-control" id="classStanding">
+							      <option>Freshman</option>
+							      <option>Sophomore</option>
+							      <option>Junior</option>
+							      <option>Senior</option>
+							      <option>Extra Senior</option>
+							      <option>Grad</option>
+							    </select>
+							 </div>
+						</div>
+						<!-- Major -->
+						<div class="form-group row">
+							<label for="fname" class="col-4 col-form-label">Major</label>
+							<div class="col-8">
+								<input type="text" class="form-control" id="fname" placeholder="">
+							</div>
+						</div>
+					</form>	
+				</div> <!-- Close modal body -->
+				
+	     		<div class="modal-footer">
+	        			<button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
+	      		</div>
+	    		</div>  <!-- Close modal content -->
+   	 	</div>
 	</div>
-    
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div> 
-    
-
-  </div>
-</div>
 </body>
 </html>
