@@ -59,10 +59,10 @@ public class ScoreMap{
 	//choice == 0 should be reserved for default, more choices can be added 
 	//in the future
 	ScoreMap(int choice) {
-		value = new Vector<Double>(5); 
-		enjoyment = new Vector<Double>(5); 
-		workload = new Vector<Double>(5); 
-		difficulty = new Vector<Double>(5);
+		value = new Vector<Double>(); 
+		enjoyment = new Vector<Double>(); 
+		workload = new Vector<Double>(); 
+		difficulty = new Vector<Double>();
 
 		//this configuration weighs value and enjoyment normally 
 		//but does not weigh in workload and difficulty
