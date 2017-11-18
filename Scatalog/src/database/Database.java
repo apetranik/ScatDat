@@ -157,7 +157,51 @@ public class Database {
 		}
 		return courses;
 	}
-
+	
+	public ArrayList<Course> queryCourses() {
+		ArrayList<Course> courses = new ArrayList<Course>();
+		ResultSet rs = null;
+		PreparedStatement ps = null;
+		try {
+			ps = (PreparedStatement) conn.prepareStatement("SELECT * FROM course");
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				int courseID = rs.getInt("courseID");
+				String courseName = rs.getString("name");
+				int number = Integer.parseInt(rs.getString("number"));
+				String description = rs.getString("description");
+				String prefix = rs.getString("prefix");
+				int numRatings = queryNumOfRatings(courseID);
+				double enjoyment = rs.getDouble("enjoyment");
+				double difficulty = rs.getDouble("difficulty");
+				double value = rs.getDouble("value");
+				double workload = rs.getDouble("workload");
+				int type = Integer.parseInt(rs.getString("type"));
+				System.out.println("CourseID: " + courseID);
+				System.out.println("Prefix: " + prefix);
+				System.out.println("Number: " + number);
+				System.out.println("CourseName: " + courseName);
+				System.out.println("Description: " + description);
+				System.out.println("Num of Ratings: " + numRatings);
+				System.out.println("Enjoyment: " + enjoyment);
+				System.out.println("Difficulty: " + difficulty);
+				System.out.println("Value: " + value);
+				System.out.println("Workload: " + workload);
+				System.out.println("Type: " + type);
+//				Score overallScore = new Score(enjoyment, difficulty, value, workload);
+//				HashMap<Name, ProfCourse> profCourses = queryProfCourseMap(courseID);
+//				ArrayList<Review> reviews = queryAllReview(courseID);
+//				int numUsers = rs.getInt("numRegistered");
+//				courses.add(new Course(courseName, number, description, numRatings, prefix, overallScore, profCourses, reviews, type, numUsers));
+				courses.add(new Course(courseName, number, description, prefix, enjoyment, value, workload, difficulty, type));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		
+		return courses;
+	}
+	
 	private HashMap<Name, ProfCourse> queryProfCourseMap(int courseID){
 		HashMap<Name, ProfCourse> result = new HashMap<Name, ProfCourse>();
 		try {
@@ -187,12 +231,12 @@ public class Database {
 		try {
 			Statement st = conn.createStatement();
 			// get the name of the professor
-			ResultSet rs1 = st.executeQuery("SELECT * FROM professor WHERE professorID=" + professorID + "'");
+			ResultSet rs1 = st.executeQuery("SELECT * FROM professor WHERE professorID='" + professorID + "'");
 			rs1.next();
 			Name name = new Name(rs1.getString("fname"), rs1.getString("lname"));
 			// get all reviews
 			ResultSet rs;
-			rs = st.executeQuery("SELECT * FROM review r, user u WHERE courseID='" + courseID + "' AND professorID=" + professorID + 
+			rs = st.executeQuery("SELECT * FROM review r, user u WHERE courseID='" + courseID + "' AND professorID='" + professorID + 
 					"' AND r.userID=u.userID");
 			ArrayList<Review> reviews = new ArrayList<Review>();
 			long enjoyment = 0; 
@@ -248,8 +292,8 @@ public class Database {
 		try {
 			Statement st = conn.createStatement();
 			ResultSet rs;
-			rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID=" + classID + 
-					"' AND r.userID=u.userID AND r.professorID=p.professorID" );
+			rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID + 
+					"' AND r.userID=u.userID AND r.professorID=p.professorID");
 			while(rs.next()) {
 				reviews.add(new Review(rs.getString("comment"),
 						new Score(rs.getInt("enjoyment"),rs.getInt("difficulty"), rs.getInt("value"), rs.getInt("workload")), 
@@ -312,31 +356,6 @@ public class Database {
 //		this.numUsers = numUsers;
 //	}
 	
-	
-	// IN PROGRESS
-	public Vector<Course> returnCourses() {
-		Vector<Course> courses = new Vector<Course>();
-		ResultSet rs = null;
-		PreparedStatement ps = null;
-		try {
-			ps = (PreparedStatement) conn.prepareStatement("SELECT * FROM course");
-			rs = ps.executeQuery();
-			
-			while (rs.next()) {
-				String courseName = rs.getString("name");
-				int courseID = rs.getInt("number");
-				String description = rs.getString("description");
-				String prefix = rs.getString("prefix");
-				
-				int numRatings;
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} // set first variable in prepared statement
-		
-		return courses;
-	}
 	public static void main(String [] args) {
 		Database db = new Database();
 //		String cs1 = db.queryClassStanding("gopalk");
@@ -345,11 +364,12 @@ public class Database {
 //		System.out.println(cs2);
 //		String cs3 = db.queryClassStanding("apurvaga");
 //		System.out.println(cs3);
-		Name name = new Name("Quisi", "Li");
-		User user = new User(name, "abcde", "2", "quisili@usc.edu", null,
-				null, null, "quisili", null,
-				null, null);
-		db.insertUser(user);
+//		Name name = new Name("Quisi", "Li");
+//		User user = new User(name, "abcde", "2", "quisili@usc.edu", null,
+//				null, null, "quisili", null,
+//				null, null);
+//		db.insertUser(user);
 		//db.queryCourseTaken("gopalk");
+		db.queryCourses();
 	}
 }
