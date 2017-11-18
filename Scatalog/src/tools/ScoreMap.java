@@ -108,6 +108,8 @@ public class ScoreMap{
 	//they are subtracted from 5 so as to have the effect of weighing negatively on the overall score
 	//All these weighted values are then averaged to get the overall score
 	public double computeOverallScore(Score score) {
+		if(score.getValue() == 0 || score.getEnjoyment() == 0 || score.getDifficulty() == 0 || score.getWorkload() == 0)
+			return 0; 
 		double sum = score.getValue()*value.get((int) score.getValue() - 1)
 			+ score.getEnjoyment()*enjoyment.get((int) score.getEnjoyment() - 1)
 			+ (5 - score.getWorkload()*workload.get((int )score.getWorkload() - 1)
