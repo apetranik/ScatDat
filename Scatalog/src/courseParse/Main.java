@@ -100,7 +100,7 @@ public class Main {
 				ps.setInt(9, value);
 				ps.setInt(10, workload);
 				ps.setString(11, description);
-				System.out.println(prefix + number + ": " + name);
+				ps.executeUpdate();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
