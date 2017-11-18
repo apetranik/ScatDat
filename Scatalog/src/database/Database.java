@@ -345,11 +345,7 @@ public class Database {
 //		System.out.println(cs2);
 //		String cs3 = db.queryClassStanding("apurvaga");
 //		System.out.println(cs3);
-		Name name = new Name("Quisi", "Li");
-		User user = new User(name, "abcde", "2", "quisili@usc.edu", null,
-				null, null, "quisili", null,
-				null, null);
-		db.insertUser(user);
+		
 		//db.queryCourseTaken("gopalk");
 	}
 }
