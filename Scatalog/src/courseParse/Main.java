@@ -82,11 +82,11 @@ public class Main {
 			int type = 0;
 			String name = courseInfo.getString("title");
 			int numRegistered = 0;
-			int overallSCore = -1;
-			int enjoyment = -1;
-			int difficulty = -1;
-			int value = -1;
-			int workload = -1;
+			int overallSCore = 0;
+			int enjoyment = 0;
+			int difficulty = 0;
+			int value = 0;
+			int workload = 0;
 			String description = courseInfo.getString("description");
 			try {
 				ps.setString(1, number);

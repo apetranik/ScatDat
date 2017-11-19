@@ -32,6 +32,7 @@
    			        _this.focus();
    			    }, 0);
    			})
+   			$("accordion").on('click', function (e) { e.preventDefault(); })
    		}
 		function srch() {
 			var searchText = document.getElementById("searchText").value; 
@@ -53,6 +54,7 @@
   						document.getElementById("searchText").style.borderColor = "black"; 
   				}
   			};
+  			
 		}
 		function onSuccess(googleUser) {
 		      console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
