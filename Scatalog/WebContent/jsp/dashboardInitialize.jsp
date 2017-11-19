@@ -21,63 +21,68 @@
 
 	
 	%><!--data-target="#mymodal"-->
+	<!-- User info content -->
 	<div class="container">
-	   	<h2><%=currentUser.getName().getFullName() %></h2><button type ="button" data-toggle="modal"  data-target="#myModal" style="background:white; border:none; outline: 0"><i class="fa fa-cog" aria-hidden="true" style ="font-size: 28px"></i></button><button type="button" class="btn btn-link"></button>
+	   	<h2><%=currentUser.getName().getFullName() %></h2><button type ="button" data-toggle="modal"  data-target="#settingsModal" style="background:white; border:none; outline: 0"><i class="fa fa-cog" aria-hidden="true" style ="font-size: 28px"></i></button><button type="button" class="btn btn-link"></button>
 	     	<div class="row">
 	       		<div class="col-lg-12 mx-center">          
 	         		<p class="lead"><%=currentUser.getClassStanding() + ", " +  currentUser.getMajor() + " | " + currentUser.getEmail()%></p>
-					<table class="table">
-						<tr>
-							<td>
-								<table>
-									<tr>
-										<b>Courses Taken</b>
-										
-										<button type="button" class="btn btn-default btn-sm">
-  										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 
-										</button>
-						
-								
-									</tr>
-									<hr />
+					<!-- Courses Taken/Wishlist Body -->
+					<div class="row">
+						<!-- Courses Taken -->
+						<div class="col-md-5">
+							<div class="row">
+								<!-- Left side -->
+								<div class="col-md-10">
+									<b>Courses Taken</b>
+									<hr>
 									<%
 									Vector<Course> coursesTaken = currentUser.getCourseList(); 
 									for(Course course : coursesTaken) 
 									{
 									%>
-		      						<tr><%=course.getPrefix() + " " + course.getCourseId() + ": " + course.getCourseName()%></tr>
-		      						<hr />
+					      				<%=course.getPrefix() + " " + course.getCourseId() + ": " + course.getCourseName()%>
+					      			<hr />
 									<%
 									}
-									%>						
-							
-								</table>
-							</td>
-							<td>
-								<table>
-									<tbody>
-										<tr>
-											<b>Wishlist</b>
-												<button style="float: right; background:white; border-radius:18px; border-style: solid; outline: 0" type="button" id="addToWishlist">
-												+
-												</button>
-										</tr>
-									<hr />
-
+									%>
+								</div>
+								<!-- Right side of courses taken + button -->
+								<div class="col-md-2">
+									<button style="float: right; background:white; border-radius:18px; border-style: solid; outline: 0" type="button" data-toggle="modal" data-target="#courseModal" id="addToCourses">
+									+
+									</button>
+								</div>
+							</div>
+						</div>
+						<!-- Wishlist content -->
+						<div class="col-md-5">
+							<div class="row">
+								<!-- Left side of wishlist -->
+								<div class="col-md-10">
+									<b>Wishlist</b>
+									<hr>
 									<%
 									Vector<Course> wishlist = currentUser.getWishlist(); 
 									for(Course course : wishlist) 
 									{
 									%>
-	      							<tr><%=course.getPrefix() + " " + course.getCourseId() + ": " + course.getCourseName()%></tr><hr />
+				      					<%=course.getPrefix() + " " + course.getCourseId() + ": " + course.getCourseName()%><hr />
 									<%
 									}
 									%>
-									</tbody>
-								</table>
-							</td>
-						</tr>
-					</table>
+								</div>
+								<!-- Right side of wishlist +button -->
+								<div class="col-md-2">
+									<button style="float: right; background:white; border-radius:18px; border-style: solid; outline: 0" type="button" data-toggle="modal" data-target="#wishlistModal" id="addToWishlist">
+									+
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2">
+						</div>
+					</div>
 	       		</div>
 	     	</div>
 
@@ -96,6 +101,60 @@
 	  				</form>	
 				</div>
 			<!-- Side Col Right -->
-			<div class="col-md-4"></div>	
+				<div class="col-md-4"></div>	
+			</div>
 		</div>
+		
+	<!-- Add Course Modal -->
+	<div id="courseModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+  		<div class="modal-dialog">
+   			<!-- Modal content-->  
+			<div class="modal-content">
+	      		<div class="modal-header">
+	      			<h4 class="modal-title">Add Course</h4>
+	        			<button type="button" class="close" data-dismiss="modal">&times;</button>
+	      		</div> <!-- Close modal header -->
+	      		
+	      		<!-- Body of Modal -->
+	      		<div class="modal-body">
+	      			<form name="search">
+	  					<div class="form-group">
+	   						<label for="search"></label>
+	    						<input id="searchText" type="text" class="form-control" aria-describedby="search" placeholder="Scat Dat Course!" oninput="srch();" autocomplete="off"  autofocus/>
+	  					</div>
+	  				</form>
+				</div> <!-- Close modal body -->
+				
+	     		<div class="modal-footer">
+	     			<button type="button" class="btn btn-secondary">Save</button>
+	      		</div>
+	    		</div>  <!-- Close modal content -->
+   	 	</div>
+	</div>
+	
+	<!-- Add To Wishlist Modal -->
+	<div id="courseModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+  		<div class="modal-dialog">
+   			<!-- Modal content-->  
+			<div class="modal-content">
+	      		<div class="modal-header">
+	      			<h4 class="modal-title">Add To Wishlist</h4>
+	        			<button type="button" class="close" data-dismiss="modal">&times;</button>
+	      		</div> <!-- Close modal header -->
+	      		
+	      		<!-- Body of Modal -->
+	      		<div class="modal-body">
+	      			<form name="search">
+	  					<div class="form-group">
+	   						<label for="search"></label>
+	    						<input id="searchText" type="text" class="form-control" aria-describedby="search" placeholder="Scat Dat Course!" oninput="srch();" autocomplete="off"  autofocus/>
+	  					</div>
+	  				</form>
+				</div> <!-- Close modal body -->
+				
+	     		<div class="modal-footer">
+	     			<button type="button" class="btn btn-secondary">Save</button>
+	      		</div>
+	    		</div>  <!-- Close modal content -->
+   	 	</div>
 	</div>

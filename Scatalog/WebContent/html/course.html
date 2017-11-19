@@ -11,11 +11,20 @@
     <title>Scatalog</title>
 
     <!-- Bootstrap core CSS -->
-    	<script type="text/javascript" src="../js/course.js"></script>
+   <!--  	<script type="text/javascript" src="../js/course.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
     
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+     <!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+	<!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
     <link href="../css/course.css" rel="stylesheet">
+  
+    
 
     <!-- Custom styles for this template -->
     <style>
@@ -93,67 +102,128 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-3" id="info">
-			<button type="button" class="btn btn-default btn-sm"  data-toggle="modal" data-target="#myModal">Submit Review</button>	
 			
+			<!-- Modal -->
+			<button type="button" class="btn btn-default btn-sm"  data-toggle="modal" data-target="#myModal">Submit Review</button>			
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   				<div class="modal-dialog modal-lg" role="document">
     					<div class="modal-content">
       					 <div class="modal-header">
-      					    <h4 class="modal-title" id="myModalLabel">Write your review</h4>
+      					    <h4 class="modal-title" id="myModalLabel">Tell us about CSCI201..</h4>
         						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         						
      					 </div>
-      					 <div class="modal-body">
-       					 	<form>
-       					 		<div class="radio"> 
-       					 			<label>Overall Rating:</label>    					 			
-  									<label><input type="radio" name="optradio">1</label>
-  									<label><input type="radio" name="optradio">2</label>
-  									<label><input type="radio" name="optradio">3</label>
-  									<label><input type="radio" name="optradio">4</label>
-  									<label><input type="radio" name="optradio">5</label>
+      					 <div class="modal-body">			 
+       					 	<form class="form-horizontal">
+       					 		<div class="form-group row">
+       					 			<label class="col-lg-4 col-form-label">Overall Rating: </label>
+       					 			<div class="col-lg-2"></div>
+    									<div class="col-lg-6">
+      									<select id="overall" name="overall" class="form-control">
+  										<option value="Select">Select</option>
+										<option value=1 >1</option>
+										<option value=2 >2</option>
+										<option value=3 >3</option>
+										<option value=4 >4</option>
+										<option value=5 >5</option>									
+										</select>
+    									</div>
+    								</div>
+    								<div class="form-group row">
+       					 			<label class="col-lg-4 col-form-label">Difficulty:</label>
+       					 			<div class="col-lg-2"></div>
+    									<div class="col-lg-6">
+      									<select id="difficulty" name="difficulty" class="form-control">
+  										<option value="Select">Select</option>
+										<option value=1 >1</option>
+										<option value=2 >2</option>
+										<option value=3 >3</option>
+										<option value=4 >4</option>
+										<option value=5 >5</option>									
+									</select>
+    									</div>
+    								</div>
+    								<div class="form-group row">
+       					 			<label class="col-lg-4 col-form-label">Value: </label>
+       					 			<div class="col-lg-2"></div>
+    									<div class="col-lg-6">
+      									<select id="value" name="value" class="form-control">
+  										<option value="Select">Select</option>
+										<option value=1 >1</option>
+										<option value=2 >2</option>
+										<option value=3 >3</option>
+										<option value=4 >4</option>
+										<option value=5 >5</option>									
+									</select>
+    									</div>
+    								</div>
+    								<div class="form-group row">
+       					 			<label class="col-lg-4 col-form-label">Enjoyment: </label>
+       					 			<div class="col-lg-2"></div>
+    									<div class="col-lg-6">
+      									<select id="enjoyment" name="enjoyment" class="form-control">
+  										<option value="Select">Select</option>
+										<option value=1 >1</option>
+										<option value=2 >2</option>
+										<option value=3 >3</option>
+										<option value=4 >4</option>
+										<option value=5 >5</option>									
+										</select>
+    									</div>
+    								</div>
+    								<div class="form-group row">
+       					 			<label class="col-lg-4 col-form-label">Workload: </label>
+       					 			<div class="col-lg-2"></div>
+    									<div class="col-lg-6">
+      									<select id="workload" name="workload" class="form-control">
+  										<option value="Select">Select</option>
+										<option value=1 >1</option>
+										<option value=2 >2</option>
+										<option value=3 >3</option>
+										<option value=4 >4</option>
+										<option value=5 >5</option>									
+										</select>
+    									</div>
 								</div>
-								<div class="radio"> 
-       					 			<label>Difficulty:</label>    					 			
-  									<label><input type="radio" name="optradio1">1</label>
-  									<label><input type="radio" name="optradio1">2</label>
-  									<label><input type="radio" name="optradio1">3</label>
-  									<label><input type="radio" name="optradio1">4</label>
-  									<label><input type="radio" name="optradio1">5</label>
+								<div class="form-group row">
+       					 			<label class="col-lg-4 col-form-label">Term: </label>
+       					 			<div class="col-lg-2"></div>
+    									<div class="col-lg-6">
+      									<select id="term" name="term" class="form-control">
+  										<option value="Select">Select Term</option>
+										<option value="" >Fall 2017</option>
+										<option value="" >Spring 2017</option>									
+										</select>
+    									</div>
 								</div>
-								<div class="radio"> 
-       					 			<label>Value:</label>    					 			
-  									<label><input type="radio" name="optradio2">1</label>
-  									<label><input type="radio" name="optradio2">2</label>
-  									<label><input type="radio" name="optradio2">3</label>
-  									<label><input type="radio" name="optradio2">4</label>
-  									<label><input type="radio" name="optradio2">5</label>
+								<div class="form-group row">
+       					 			<label class="col-lg-4 col-form-label">Professor: </label>
+       					 			<div class="col-lg-2"></div>
+    									<div class="col-lg-6">
+      									<select id="professor" name="professor" class="form-control">
+  										<option value="Select">Select Professor</option>
+										<option value="" >Jeffrey Miller</option>
+										<option value="" >Aaron Cote</option>								
+										</select>
+    									</div>
 								</div>
-								<div class="radio"> 
-       					 			<label>Enjoyment:</label>    					 			
-  									<label><input type="radio" name="optradio3">1</label>
-  									<label><input type="radio" name="optradio3">2</label>
-  									<label><input type="radio" name="optradio3">3</label>
-  									<label><input type="radio" name="optradio3">4</label>
-  									<label><input type="radio" name="optradio3">5</label>
+								<div class="form-group row">
+									<label class="col-lg-4 col-form-label">Review: </label>								
 								</div>
-								<div class="radio"> 
-       					 			<label>Workload:</label>    					 			
-  									<label><input type="radio" name="optradio4">1</label>
-  									<label><input type="radio" name="optradio4">2</label>
-  									<label><input type="radio" name="optradio4">3</label>
-  									<label><input type="radio" name="optradio4">4</label>
-  									<label><input type="radio" name="optradio4">5</label>
+								<div class="form-group row">
+									<div class="col-lg-12">
+										<textarea class="form-control" id="reviewbox" placeholder="Enter you reivew.."></textarea>
+									</div>
+																
 								</div>
-       					 	
-       					 	
+												 											
        					 	</form>
        					 
      					 </div>
      					 <div class="modal-footer">
         					 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
        					 <button type="button" class="btn btn-primary">Submit</button>
-      				</div>
+      					</div>
    				 </div>
   			</div>
 			</div>
@@ -205,10 +275,6 @@
 		
 		
 	</div>
-
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   </body>
 
