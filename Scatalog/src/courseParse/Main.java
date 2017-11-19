@@ -54,6 +54,7 @@ public class Main {
 	}
 
 	public static void parseDepartment(String url) throws IOException, JSONException {
+		System.out.println(url);
 		Connection conn = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -67,6 +68,7 @@ public class Main {
 		JSONObject json = readJsonFromUrl(url);
 		JSONObject offeredCourses = json.getJSONObject("OfferedCourses");
 		JSONArray course = offeredCourses.getJSONArray("course");
+		
 		for (int i = 0; i < course.length(); i++) {
 			try {
 				ps = (java.sql.PreparedStatement) conn.prepareStatement("INSERT INTO course(number, prefix, type, name, numRegistered, overallSCore, enjoyment, difficulty, value, workload, description) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
@@ -82,12 +84,15 @@ public class Main {
 			int type = 0;
 			String name = courseInfo.getString("title");
 			int numRegistered = 0;
-			int overallSCore = -1;
-			int enjoyment = -1;
-			int difficulty = -1;
-			int value = -1;
-			int workload = -1;
+			int overallSCore = 0;
+			int enjoyment = 0;
+			int difficulty = 0;
+			int value = 0;
+			int workload = 0;
 			String description = courseInfo.getString("description");
+			if(prefix.equals("http://web-app.usc.edu/web/soc/api/classes/MATH/20173")) {
+				System.out.println(prefix+number+": "+name);
+			}
 			try {
 				ps.setString(1, number);
 				ps.setString(2, prefix);
@@ -111,15 +116,18 @@ public class Main {
 	public static void main(String[] args) {
 		try {
 			JSONObject json = readJsonFromUrl("http://web-app.usc.edu/web/soc/api/departments/20173");
-			JSONArray department = json.getJSONArray("department");
-			for (int i = 0; i < department.length(); i++) {
+			JSONArray outerDepartment = json.getJSONArray("department");
+			for (int i = 0; i < outerDepartment.length(); i++) {
 				try {
-				JSONArray dep = department.getJSONObject(i).getJSONArray("department");
-				for(int j = 0; j<dep.length(); j++) {
-					String code = dep.getJSONObject(j).getString("code");
-					String url = "http://web-app.usc.edu/web/soc/api/classes/" + code + "/20173";
-					parseDepartment(url);
-				}
+				JSONArray innerDepartment = outerDepartment.getJSONObject(i).getJSONArray("department");
+				
+					for(int j = 0; j<innerDepartment.length(); j++) {
+						System.out.println(j + " " + innerDepartment.length());
+						String code = innerDepartment.getJSONObject(j).getString("code");
+						System.out.println(code);
+						String url = "http://web-app.usc.edu/web/soc/api/classes/" + code + "/20173";
+						//parseDepartment(url);
+					}
 				} catch(org.json.JSONException jse) {
 					
 				}
