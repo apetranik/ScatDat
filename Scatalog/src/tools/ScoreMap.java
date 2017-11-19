@@ -47,7 +47,7 @@ public class ScoreMap{
 
 	//allows a user to define an arbitrary mapping of weights to score by supporting 
 	//custom weights
-	ScoreMap(Vector<Double> value, Vector<Double> enjoyment, Vector<Double> workload,
+	public ScoreMap(Vector<Double> value, Vector<Double> enjoyment, Vector<Double> workload,
 		Vector<Double> difficulty) {
 		this.value = value;
 		this.enjoyment = enjoyment;
@@ -58,7 +58,7 @@ public class ScoreMap{
 	//some predefined mappings
 	//choice == 0 should be reserved for default, more choices can be added 
 	//in the future
-	ScoreMap(int choice) {
+	public ScoreMap(int choice) {
 		value = new Vector<Double>(); 
 		enjoyment = new Vector<Double>(); 
 		workload = new Vector<Double>(); 
@@ -82,6 +82,18 @@ public class ScoreMap{
 				enjoyment.addElement(1.);
 				workload.addElement(1.);
 				difficulty.addElement(1.);
+			}
+		}
+		//weighs lower difficulty courses as lower
+		else if(choice == 3) {
+			for(int i = 0; i < 5; i++) {
+				value.addElement(1.);
+				enjoyment.addElement(1.);
+				workload.addElement(1.);
+				if(i == 1)
+					difficulty.addElement(0.1);
+				else if(i == 2)
+					difficulty.addElement();
 			}
 		}
 
