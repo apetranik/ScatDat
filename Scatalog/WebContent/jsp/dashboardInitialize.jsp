@@ -117,12 +117,21 @@
 	      		
 	      		<!-- Body of Modal -->
 	      		<div class="modal-body">
-	      			<form name="search">
-	  					<div class="form-group">
-	   						<label for="search"></label>
-	    						<input id="searchText" type="text" class="form-control" aria-describedby="search" placeholder="Scat Dat Course!" oninput="srch();" autocomplete="off"  autofocus/>
-	  					</div>
-	  				</form>
+	      			<div class="row">
+	      				<div class="col-md-10">
+			      			<form name="search">
+			  					<div class="form-group">
+			   						<label for="search"></label>
+			    						<input id="searchText" type="text" class="form-control" aria-describedby="search" placeholder="Scat Dat Course!" oninput="srch();" autocomplete="off"  autofocus/>
+			  					</div>
+			  				</form>
+			  			</div>
+			  			<div class="col-md-2">
+			  				<button style="float: right; background:white; border-radius:18px; border-style: solid; outline: 0" type="button" data-toggle="modal" data-target="#wishlistModal" id="addToWishlist">
+									+
+							</button>
+			  			</div>
+	  				</div>
 				</div> <!-- Close modal body -->
 				
 	     		<div class="modal-footer">
