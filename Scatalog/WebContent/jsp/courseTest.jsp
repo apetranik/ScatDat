@@ -79,9 +79,10 @@
 			</div>
 		</div>
  -->
-<div class="row" id= "reviewerSection">
+		<div class="row" id= "reviewerSection">
 			<div class="col-lg-3" id="reviewer">
 				<div class = "row">
+					<br />
 					<div class="col-lg-7"><b><%=currReview.getUsername()%></b></div>
 					<div class="col-lg-5 text-right"><b>Total: <%=currScore.getOverallRating()%></b></div>
 				</div>		
