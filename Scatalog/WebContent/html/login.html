@@ -71,25 +71,64 @@
         </ul>
     </div> 
     </nav>
-    
-  	<div class="container">
-
-      <form class="form-signin">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      </form>
-
-    </div> <!-- /container -->
+    <div class = "container">
+    <br /><br />
+    		<h2>Sign-Up</h2>
+    		<hr>
+		<form>
+			<!-- First Name -->
+			<div class="form-group row">
+				<label for="fname" class="col-4 col-form-label">First Name</label>
+				<div class="col-8">
+					<input type="text" class="form-control" id="fname" placeholder="">
+				</div>
+			</div>
+			<!-- Last Name -->
+			<div class="form-group row">
+				<label for="fname" class="col-4 col-form-label">Last Name</label>
+				<div class="col-8">
+					<input type="text" class="form-control" id="fname" placeholder="">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="fname" class="col-4 col-form-label">Email</label>
+				<div class="col-8">
+					<input type="text" class="form-control" id="fname" placeholder="Should be autofilled from gsign-in">
+				</div>
+			</div>
+			<!-- Class Standing-->
+			<div class="form-group row">
+				<label for="classStanding" class="col-4 col-form-label">Class Standing</label>
+				<div class="col-8">
+					<select class="form-control" id="classStanding">
+						<option>Freshman</option>
+						<option>Sophomore</option>
+						<option>Junior</option>
+						<option>Senior</option>
+					</select>
+				</div>
+			</div>
+			<!-- Major -->
+			<div class="form-group row">
+				<label for="fname" class="col-4 col-form-label">Major</label>
+				<div class="col-8">
+					<input type="text" class="form-control" id="fname" placeholder="">
+				</div>
+			</div>
+			<!-- Preferred Rating Style -->
+			<div class="form-group row">
+				<label for="fname" class="col-4 col-form-label">Preferred Rating Style</label>
+				<div class="col-8">
+					<select class="form-control" id="ratingStyle">
+						<option>Standard</option>
+						<option>Try-Hard</option>
+						<option>Slacker</option>
+					</select>
+				</div>
+			</div>
+		</form>	
+	</div>
+	<hr>
 	<div class="g-signin2" data-onsuccess="onSignIn"></div>
-
 </body>
 </html>
