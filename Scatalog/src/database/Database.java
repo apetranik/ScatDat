@@ -130,15 +130,16 @@ public class Database {
 					"' AND u.userID=ct.userID AND ct.courseID=c.courseID");
 			while(rs.next()) {
 				int courseID = rs.getInt("courseID");
-//				System.out.println(courseID);
 				String courseName = rs.getString("name");
 				int number = Integer.parseInt(rs.getString("number"));
-//				System.out.println(courseName);
 				String description = rs.getString("description");
-//				System.out.println(description);
 				int numRatings = queryNumOfRatings(courseID);
-//				System.out.println(numRatings);
 				String prefix = rs.getString("prefix");
+				System.out.println("CourseID: " + courseID);
+				System.out.println("Prefix: " + prefix);
+				System.out.println("Number: " + number);
+				System.out.println("CourseName: " + courseName);
+				System.out.println("Description: " + description);
 				double enjoyment = rs.getDouble("enjoyment");
 				double difficulty = rs.getDouble("difficulty");
 				double value = rs.getDouble("value");
@@ -149,7 +150,7 @@ public class Database {
 				ArrayList<Review> reviews = queryAllReview(courseID);
 				int type = Integer.parseInt(rs.getString("type"));
 				int numUsers = rs.getInt("numRegistered");
-				courses.add(new Course(courseName, number, description, numRatings, prefix, overallScore, profCourses, reviews, type, numUsers));
+				courses.add(new Course(courseName, number, description, prefix, enjoyment, value, workload, difficulty, type));
 			}
 			
 		}catch(SQLException sqle) {
@@ -370,6 +371,6 @@ public class Database {
 //				null, null);
 //		db.insertUser(user);
 		//db.queryCourseTaken("gopalk");
-		db.queryCourses();
+		db.queryCourseTaken("qiusili");
 	}
 }
