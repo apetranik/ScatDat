@@ -59,7 +59,20 @@ public class Database {
 			ps.setString(1, email);
 			ps.setString(2, password);
 			ps.setString(3, username);
-			ps.setString(4, classstanding);
+			int classNum = 0;
+			if(classstanding.trim().toLowerCase().equals("freshman")) {
+				classNum = 0;
+			}
+			else if(classstanding.trim().toLowerCase().equals("sophomore")) {
+				classNum = 1;
+			}
+			else if(classstanding.trim().toLowerCase().equals("junior")) {
+				classNum = 2;
+			}
+			else {
+				classNum = 3;
+			}
+			ps.setInt(4, classNum);
 			ps.setString(5, fname);
 			ps.setString(6, lname);
 			ps.executeUpdate();
@@ -68,27 +81,138 @@ public class Database {
 		}
 	}
 	
-	public String queryPassword(String username) {
-		String name = username;
-		PreparedStatement ps = null; 
+//	public String queryPassword(String username) {
+//		String name = username;
+//		PreparedStatement ps = null; 
+//		ResultSet rs = null;
+//		String password = "";
+//		try {
+//			ps = (PreparedStatement) conn.prepareStatement("SELECT * FROM user WHERE username=?");
+//			ps.setString(1, name);
+//			rs = ps.executeQuery();
+//			
+//			while (rs.next()) {
+//				password += rs.getString("password");
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} // set first variable in prepared statement
+//		return password;
+//		
+//	}
+	
+	public User queryUser(String email) {
+		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String password = "";
+		User currentUser = null;
+		int userID = 0;
 		try {
-			ps = (PreparedStatement) conn.prepareStatement("SELECT * FROM user WHERE username=?");
-			ps.setString(1, name);
+			ps = (PreparedStatement) conn.prepareStatement("SELECT * FROM user WHERE email=?");
+			ps.setString(1,  email);
 			rs = ps.executeQuery();
-			
-			while (rs.next()) {
-				password += rs.getString("password");
+			while(rs.next()) {
+				userID = rs.getInt("userID");
+				String fname = rs.getString("fname");
+				String lname = rs.getString("lname");
+				Name name = new Name(fname, lname);
+				int classNum = rs.getInt("classstanding");
+				String major = rs.getString("major");
+				String username = rs.getString("username");
+				int preferredRatingStyle = rs.getInt("preferredRatingStyle");
+				Vector<Course> courseList = queryCourseTaken(username);
+				Set<Course> coursesTaken = new HashSet<Course>();
+				for(int i = 0; i<courseList.size(); i++) {
+					coursesTaken.add(courseList.get(i));
+				}
+				
+				Vector<Course> coursesEvaluated = queryCourseEvaluated(userID);
+				Vector<Course> wishlist = queryWishlist(userID);
+				ScoreMap scoreMap = new ScoreMap(preferredRatingStyle);
+				Vector<Badge> badges = new Vector();
+				badges.add(new Badge(preferredRatingStyle));
+				String classStanding = "";
+				if(classNum == 0) {
+					classStanding = "Freshman";
+				}
+				else if(classNum == 1) {
+					classStanding = "Sophomore";
+				}
+				else if(classNum == 2) {
+					classStanding = "Junior";
+				}
+				else {
+					classStanding = "Senior";
+				}
+				currentUser = new User(name, classStanding, email, badges, wishlist, coursesEvaluated, username, coursesTaken, courseList, scoreMap, major);
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} catch(SQLException e) {
 			e.printStackTrace();
-		} // set first variable in prepared statement
-		return password;
-		
+		}
+		return currentUser;
 	}
 	
+	public Vector<Course> queryWishlist(int userID) {
+		Vector<Course> courses = new Vector<Course>();
+		try {
+			Statement st = conn.createStatement();
+			ResultSet rs;
+			rs = st.executeQuery("SELECT c.courseID, c.name, c.number, c.description, c.prefix, c.enjoyment, c.difficulty, c.value, c.workload, c.type, c.numRegistered FROM wishlist w, course c\n" + 
+					"	WHERE c.courseID = w.courseID AND w.userID =" + userID);
+			while(rs.next()) {
+				int courseID = rs.getInt("courseID");
+				String courseName = rs.getString("name");
+				int number = Integer.parseInt(rs.getString("number"));
+				String description = rs.getString("description");
+				int numRatings = queryNumOfRatings(courseID);
+				String prefix = rs.getString("prefix");
+				double enjoyment = rs.getDouble("enjoyment");
+				double difficulty = rs.getDouble("difficulty");
+				double value = rs.getDouble("value");
+				double workload = rs.getDouble("workload");
+				Score overallScore = new Score(enjoyment, difficulty, value, workload);
+				HashMap<Name, ProfCourse> profCourses = queryProfCourseMap(courseID);
+				ArrayList<Review> reviews = queryAllReview(courseID);
+				int type = Integer.parseInt(rs.getString("type"));
+				int numUsers = rs.getInt("numRegistered");
+				courses.add(new Course(courseName, number, description, prefix, enjoyment, value, workload, difficulty, type));
+			}
+			
+		}catch(SQLException sqle) {
+			System.out.println(sqle.getMessage());
+		}
+		return courses;
+	}
+	public Vector<Course> queryCourseEvaluated(int userID) {
+		Vector<Course> courses = new Vector<Course>();
+		try {
+			Statement st = conn.createStatement();
+			ResultSet rs;
+			rs = st.executeQuery("SELECT c.courseID, c.name, c.number, c.description, c.prefix, c.enjoyment, c.difficulty, c.value, c.workload, c.type, c.numRegistered FROM review r, user u, course c\n" + 
+					"	WHERE r.userID = u.userID AND c.courseID = r.courseID AND u.userID =" + userID);
+			while(rs.next()) {
+				int courseID = rs.getInt("courseID");
+				String courseName = rs.getString("name");
+				int number = Integer.parseInt(rs.getString("number"));
+				String description = rs.getString("description");
+				int numRatings = queryNumOfRatings(courseID);
+				String prefix = rs.getString("prefix");
+				double enjoyment = rs.getDouble("enjoyment");
+				double difficulty = rs.getDouble("difficulty");
+				double value = rs.getDouble("value");
+				double workload = rs.getDouble("workload");
+				Score overallScore = new Score(enjoyment, difficulty, value, workload);
+				HashMap<Name, ProfCourse> profCourses = queryProfCourseMap(courseID);
+				ArrayList<Review> reviews = queryAllReview(courseID);
+				int type = Integer.parseInt(rs.getString("type"));
+				int numUsers = rs.getInt("numRegistered");
+				courses.add(new Course(courseName, number, description, prefix, enjoyment, value, workload, difficulty, type));			}
+			
+		}catch(SQLException sqle) {
+			System.out.println(sqle.getMessage());
+		}
+		return courses;
+	}
 	public String queryClassStanding(String username) {
 		String name = username;
 		PreparedStatement ps = null;
@@ -121,8 +245,8 @@ public class Database {
 	}
 	
 //	
-	public List<Course> queryCourseTaken(String username) {
-		List<Course> courses = new ArrayList<Course>();
+	public Vector<Course> queryCourseTaken(String username) {
+		Vector<Course> courses = new Vector<Course>();
 		try {
 			Statement st = conn.createStatement();
 			ResultSet rs;
@@ -130,16 +254,15 @@ public class Database {
 					"' AND u.userID=ct.userID AND ct.courseID=c.courseID");
 			while(rs.next()) {
 				int courseID = rs.getInt("courseID");
+//				System.out.println(courseID);
 				String courseName = rs.getString("name");
 				int number = Integer.parseInt(rs.getString("number"));
+//				System.out.println(courseName);
 				String description = rs.getString("description");
+//				System.out.println(description);
 				int numRatings = queryNumOfRatings(courseID);
+//				System.out.println(numRatings);
 				String prefix = rs.getString("prefix");
-				System.out.println("CourseID: " + courseID);
-				System.out.println("Prefix: " + prefix);
-				System.out.println("Number: " + number);
-				System.out.println("CourseName: " + courseName);
-				System.out.println("Description: " + description);
 				double enjoyment = rs.getDouble("enjoyment");
 				double difficulty = rs.getDouble("difficulty");
 				double value = rs.getDouble("value");
@@ -151,7 +274,7 @@ public class Database {
 				int type = Integer.parseInt(rs.getString("type"));
 				int numUsers = rs.getInt("numRegistered");
 				courses.add(new Course(courseName, number, description, prefix, enjoyment, value, workload, difficulty, type));
-			}
+		}
 			
 		}catch(SQLException sqle) {
 			System.out.println(sqle.getMessage());
@@ -359,18 +482,6 @@ public class Database {
 	
 	public static void main(String [] args) {
 		Database db = new Database();
-//		String cs1 = db.queryClassStanding("gopalk");
-//		System.out.println(cs1);
-//		String cs2 = db.queryClassStanding("petranik");
-//		System.out.println(cs2);
-//		String cs3 = db.queryClassStanding("apurvaga");
-//		System.out.println(cs3);
-//		Name name = new Name("Quisi", "Li");
-//		User user = new User(name, "abcde", "2", "quisili@usc.edu", null,
-//				null, null, "quisili", null,
-//				null, null);
-//		db.insertUser(user);
-		//db.queryCourseTaken("gopalk");
-		db.queryCourseTaken("qiusili");
+		db.queryCourses();
 	}
 }
