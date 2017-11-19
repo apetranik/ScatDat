@@ -93,7 +93,7 @@ public class ScoreMap{
 				if(i == 1)
 					difficulty.addElement(0.1);
 				else if(i == 2)
-					difficulty.addElement();
+					difficulty.addElement(0.1);
 			}
 		}
 
