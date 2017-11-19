@@ -53,7 +53,8 @@ public class Main {
 		}
 	}
 
-	public static void parseDepartment(String url) throws IOException, JSONException {
+	public static void parseDepartment(String url){
+		
 		System.out.println(url);
 		Connection conn = null;
 		try {
@@ -65,6 +66,7 @@ public class Main {
 			System.out.println (cnfe.getMessage());
 		}
 		java.sql.PreparedStatement ps = null;
+		try {
 		JSONObject json = readJsonFromUrl(url);
 		JSONObject offeredCourses = json.getJSONObject("OfferedCourses");
 		JSONArray course = offeredCourses.getJSONArray("course");
@@ -110,6 +112,9 @@ public class Main {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+		} catch(Exception e) {
+			
 		}
 	}
 
