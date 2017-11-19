@@ -7,7 +7,6 @@ import tools.ScoreMap;
 
 public class User {
 	private Name name;
-	private String password;
 	private String classStanding;
 	private String major; 
 	private String email;
@@ -18,12 +17,11 @@ public class User {
 	private Set<Course> coursesTaken;
 	private Vector<Course> courseList;
 	private ScoreMap preferredRatingStyle;
-	public User(Name name, String password, String classStanding, String email, Vector<Badge> badges,
+	public User(Name name, String classStanding, String email, Vector<Badge> badges,
 			Vector<Course> wishlist, Vector<Course> coursesEvaluated, String username, Set<Course> coursesTaken,
 			Vector<Course> courseList, ScoreMap preferredRatingStyle, String major) {
 		super();
 		this.name = name;
-		this.password = password;
 		this.classStanding = classStanding;
 		this.email = email;
 		this.badges = badges;
@@ -75,13 +73,6 @@ public class User {
 	}
 	public void setName(Name name) {
 		this.name = name;
-		// DATA BASE
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
 		// DATA BASE
 	}
 	public String getClassStanding() {

@@ -8,13 +8,33 @@
     <meta name="description" content="">
     <meta name="author" content="">
 	<meta name="google-signin-client_id" content="647589413183-bdfcadf4bm2vugreeo6a8n4hj3ath8rg.apps.googleusercontent.com">
-	<script src="https://apis.google.com/js/platform.js" async defer>
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+	<script>
+
 	function onSignIn(googleUser) {
-	  var profile = googleUser.getBasicProfile();
-	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-	  console.log('Name: ' + profile.getName());
-	  console.log('Image URL: ' + profile.getImageUrl());
-	  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+		var profile = googleUser.getBasicProfile();
+		document.getElementById("userHello").innerHTML = "Hello, "+ profile.getName()+ "!";
+		console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+		console.log('Name: ' + profile.getName());
+		console.log('Image URL: ' + profile.getImageUrl());
+		console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+		document.getElementById("email").value = profile.getEmail(); 
+		document.getElementById("email").readOnly = true;
+		return true;
+	}
+	function addUser() {
+		var xhttp = new XMLHttpRequest();
+		alert("hello");
+		xhttp.open("GET", "../jsp/addUser.jsp?email=" +  document.getElementById("email").value + "&fname=" + document.getElementById("fname").value + "&lname=" + document.getElementById("lname").value + "&classStanding=" + document.getElementById("classStanding").value + "&major=" + document.getElementById("major").value + "&ratingStyle=" + document.getElementById("ratingStyle").value, true); 
+		alert();
+		xhttp.send();
+		xhttp.onreadystatechange = function addUser() {
+				if(this.readyState == 4 && this.status == 200) {
+					alert("here");
+					return true; 
+				}
+				return true; 
+			};
 	}
 	</script>
     <title>Scatalog</title>
@@ -61,11 +81,14 @@
             </li>
         </ul>
         <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+        		<li class="nav-item">
+        			<a class="nav-link" id="userHello"></a>
+        		</li>
             <li class="nav-item">
                 <a class="nav-link" href="dashboard.html">User Dashboard</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="#">Sign-In</a>
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
             </li>
             
         </ul>
@@ -75,7 +98,7 @@
     <br /><br />
     		<h2>Sign-Up</h2>
     		<hr>
-		<form>
+		<form action="index.html" onsubmit="return addUser(); ">
 			<!-- First Name -->
 			<div class="form-group row">
 				<label for="fname" class="col-4 col-form-label">First Name</label>
@@ -85,15 +108,15 @@
 			</div>
 			<!-- Last Name -->
 			<div class="form-group row">
-				<label for="fname" class="col-4 col-form-label">Last Name</label>
+				<label for="lname" class="col-4 col-form-label">Last Name</label>
 				<div class="col-8">
-					<input type="text" class="form-control" id="fname" placeholder="">
+					<input type="text" class="form-control" id="lname" placeholder="">
 				</div>
 			</div>
 			<div class="form-group row">
-				<label for="fname" class="col-4 col-form-label">Email</label>
+				<label for="email" class="col-4 col-form-label">Email</label>
 				<div class="col-8">
-					<input type="text" class="form-control" id="fname" placeholder="Should be autofilled from gsign-in">
+					<input type="text" class="form-control" id="email" value="Should be autofilled from gsign-in">
 				</div>
 			</div>
 			<!-- Class Standing-->
@@ -101,34 +124,37 @@
 				<label for="classStanding" class="col-4 col-form-label">Class Standing</label>
 				<div class="col-8">
 					<select class="form-control" id="classStanding">
-						<option>Freshman</option>
-						<option>Sophomore</option>
-						<option>Junior</option>
-						<option>Senior</option>
+						<option value="0">Freshman</option>
+						<option value="1">Sophomore</option>
+						<option value="2">Junior</option>
+						<option value="3">Senior</option>
 					</select>
 				</div>
 			</div>
 			<!-- Major -->
 			<div class="form-group row">
-				<label for="fname" class="col-4 col-form-label">Major</label>
+				<label for="major" class="col-4 col-form-label">Major</label>
 				<div class="col-8">
-					<input type="text" class="form-control" id="fname" placeholder="">
+					<input type="text" class="form-control" id="major" placeholder="">
 				</div>
 			</div>
 			<!-- Preferred Rating Style -->
 			<div class="form-group row">
-				<label for="fname" class="col-4 col-form-label">Preferred Rating Style</label>
+				<label for="ratingStyle" class="col-4 col-form-label">Preferred Rating Style</label>
 				<div class="col-8">
 					<select class="form-control" id="ratingStyle">
-						<option>Standard</option>
-						<option>Try-Hard</option>
-						<option>Slacker</option>
+						<option value="0">Standard</option>
+						<option value="1">Try-Hard</option>
+						<option value="2">Slacker</option>
 					</select>
 				</div>
+			</div>
+			<!-- submit -->
+			<div class="form-group row">
+				<input type="submit" class="btn btn-secondary" value ="submit" />
 			</div>
 		</form>	
 	</div>
 	<hr>
-	<div class="g-signin2" data-onsuccess="onSignIn"></div>
 </body>
 </html>
