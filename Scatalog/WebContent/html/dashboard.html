@@ -22,7 +22,7 @@
    	
     <!-- <link href="style.css" rel="stylesheet"> -->
 	<link href="../css/dashboard.css" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+	<script src="https://use.fontawesome.com/b402a83b11.js"></script>
 	
     <!-- Custom styles for this template -->
     <script type="text/javascript" src="js/materialize.min.js"></script>
@@ -33,7 +33,7 @@
     			xhttp.open("GET", "../jsp/dashboardInitialize.jsp", false); 
       		xhttp.send(); 
       		//if(this.responseText.trim() != "")
-      			document.getElementById("about").innerHTML = xhttp.responseText;
+      		document.getElementById("about").innerHTML = xhttp.responseText;
       		
     		}
     		
@@ -54,8 +54,114 @@
       				}
       			};
     		}
-    </script>
+    		
+    		function searchCourses()
+    		{
+    			console.log("courseSearch");
+    			var theElement = document.getElementById("courseSearchText");
 
+       			theElement.addEventListener("focusout", function(){
+       			    _this = this;
+       			    setTimeout(function () {
+       			        _this.focus();
+       			    }, 0);
+       			})
+
+       			
+       			var textInput = document.getElementById("courseSearchText"); 
+          		// Init a timeout variable to be used below
+          		var timeout = null;
+
+          		// Listen for keystroke events
+          		textInput.oninput = function (e) {
+
+          		    // Clear the timeout if it has already been set.
+          		    // This will prevent the previous task from executing
+          		    // if it has been less than <MILLISECONDS>
+          		    clearTimeout(timeout);
+
+          		    // Make a new timeout set to go off in 800ms
+          		    timeout = setTimeout(function () {
+          		    	var searchText = document.getElementById("courseSearchText").value; 
+          				
+          				var xhttp = new XMLHttpRequest(); 
+          	  			xhttp.open("GET", "../jsp/dashboardCourseSearch.jsp?searchText=" +  document.getElementById("courseSearchText").value, true); 
+          	  			xhttp.send(); 
+          	  			xhttp.onreadystatechange = function updateResults() {
+          	  				if(this.readyState == 4 && this.status == 200) {
+          	  					document.getElementById("accordion").innerHTML = xhttp.responseText; 
+          	  					if(this.responseText.trim().length < 1 && searchText.length > 0)
+          	  						document.getElementById("courseSearchText").style.borderColor = "#dc3545"; 
+          	  					else if(searchText.length > 0)
+          	  						document.getElementById("courseSearchText").style.borderColor = "#4292f4"; 
+          	  					else 
+          	  						document.getElementById("courseSearchText").style.borderColor = "black"; 
+          	  				}
+          	  			};
+          		    }, 200);
+          		};
+    		}
+    		function searchWishlist()
+    		{
+    			console.log("wishlist");
+    			var theElement = document.getElementById("wishlistSearchText");
+
+       			theElement.addEventListener("focusout", function(){
+       			    _this = this;
+       			    setTimeout(function () {
+       			        _this.focus();
+       			    }, 0);
+       			})
+
+       			
+       			var textInput = document.getElementById("wishlistSearchText"); 
+          		// Init a timeout variable to be used below
+          		var timeout = null;
+
+          		// Listen for keystroke events
+          		textInput.oninput = function (e) {
+
+          		    // Clear the timeout if it has already been set.
+          		    // This will prevent the previous task from executing
+          		    // if it has been less than <MILLISECONDS>
+          		    clearTimeout(timeout);
+
+          		    // Make a new timeout set to go off in 800ms
+          		    timeout = setTimeout(function () {
+          		    	var searchText = document.getElementById("wishlistSearchText").value; 
+          				
+          				var xhttp = new XMLHttpRequest(); 
+          	  			xhttp.open("GET", "../jsp/dashboardWishlistSearch.jsp?searchTexting=" +  document.getElementById("wishlistSearchText").value, true); 
+          	  			xhttp.send(); 
+          	  			xhttp.onreadystatechange = function updateResults() {
+          	  				if(this.readyState == 4 && this.status == 200) {
+          	  					document.getElementById("accordion2").innerHTML = xhttp.responseText; 
+          	  					if(this.responseText.trim().length < 1 && searchText.length > 0)
+          	  						document.getElementById("wishlistSearchText").style.borderColor = "#dc3545"; 
+          	  					else if(searchText.length > 0)
+          	  						document.getElementById("wishlistSearchText").style.borderColor = "#4292f4"; 
+          	  					else 
+          	  						document.getElementById("wishlistSearchText").style.borderColor = "black"; 
+          	  				}
+          	  			};
+          		    }, 200);
+          		};
+    		}
+    		
+    		function addToCourses(test)
+    		{
+    			var searchText = document.getElementById("courseSearchText").value;
+    			
+    			console.log("addToCourses: " + search);
+    		}
+    		function addToWishlist()
+    		{
+    			var searchText = document.getElementById("wishlistSearchText").value;
+    			
+    			console.log("addToWishlist");
+    		}
+    		
+    </script>
   </head>
 <body onload="initialize()">
 <!-- Navigation -->

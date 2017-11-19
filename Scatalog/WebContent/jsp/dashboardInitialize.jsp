@@ -1,8 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="scatalogObjects.User, scatalogObjects.Course, java.util.Vector"%>
+    pageEncoding="UTF-8" import="scatalogObjects.User, scatalogObjects.Course, java.util.Vector"
 
-    
+%>
+	<script src="https://use.fontawesome.com/b402a83b11.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+ 	<script type="text/javascript" src="js/materialize.min.js"></script>
+
 <%
+	
 	User currentUser = (User)session.getAttribute("currentUser");
 	if(currentUser == null) {
 		//redirect to login page
@@ -94,7 +100,7 @@
 	  					<div class="form-group row">
 	  						<div class="col-xs-4">
 	   							<label for="search"></label>
-	    							<input id="searchText" type="text" class="form-control" aria-describedby="search" placeholder="Search Uers" oninput="srch();"/>
+	    							<input id="searchText" type="text" class="form-control" aria-describedby="search" placeholder="Search Users" oninput="srch();"/>
 	    							<div id="searchResults"></div>
 	  						</div>
 	  					</div>
@@ -107,43 +113,42 @@
 		
 	<!-- Add Course Modal -->
 	<div id="courseModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
-  		<div class="modal-dialog">
+  		<div class="modal-dialog modal-lg">
    			<!-- Modal content-->  
 			<div class="modal-content">
 	      		<div class="modal-header">
 	      			<h4 class="modal-title">Add Course</h4>
+	      			<script>
+						test();
+					</script>
 	        			<button type="button" class="close" data-dismiss="modal">&times;</button>
 	      		</div> <!-- Close modal header -->
 	      		
 	      		<!-- Body of Modal -->
+	      		
 	      		<div class="modal-body">
-	      			<div class="row">
-	      				<div class="col-md-10">
-			      			<form name="search">
-			  					<div class="form-group">
-			   						<label for="search"></label>
-			    						<input id="searchText" type="text" class="form-control" aria-describedby="search" placeholder="Scat Dat Course!" oninput="srch();" autocomplete="off"  autofocus/>
-			  					</div>
-			  				</form>
+			      	<form name="search">
+			  			<div class="input-group">
+			   				<label for="search"></label>
+			    				<input id="courseSearchText" type="text" class="form-control" aria-describedby="search" placeholder="Scat Dat Course!" oninput="searchCourses();" autocomplete="off"  autofocus/>
 			  			</div>
-			  			<div class="col-md-2">
-			  				<button style="float: right; background:white; border-radius:18px; border-style: solid; outline: 0" type="button" data-toggle="modal" data-target="#wishlistModal" id="addToWishlist">
-									+
-							</button>
-			  			</div>
-	  				</div>
+			  		</form>
+			  		<hr>
+			  		<div id="accordion" role="tablist" aria-multiselectable="true"> </div>
 				</div> <!-- Close modal body -->
 				
+	
+				<!-- Modal Footer -->
 	     		<div class="modal-footer">
-	     			<button type="button" class="btn btn-secondary">Save</button>
+	     			<button type="button" class="btn btn-secondary" onclick="submitCourse()">Save</button>
 	      		</div>
 	    		</div>  <!-- Close modal content -->
    	 	</div>
 	</div>
 	
 	<!-- Add To Wishlist Modal -->
-	<div id="courseModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
-  		<div class="modal-dialog">
+	<div id="wishlistModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+  		<div class="modal-dialog modal-lg">
    			<!-- Modal content-->  
 			<div class="modal-content">
 	      		<div class="modal-header">
@@ -156,13 +161,15 @@
 	      			<form name="search">
 	  					<div class="form-group">
 	   						<label for="search"></label>
-	    						<input id="searchText" type="text" class="form-control" aria-describedby="search" placeholder="Scat Dat Course!" oninput="srch();" autocomplete="off"  autofocus/>
+	    						<input id="wishlistSearchText" type="text" class="form-control" aria-describedby="search" placeholder="Scat Dat Course!" oninput="searchWishlist();" autocomplete="off"  autofocus/>
 	  					</div>
 	  				</form>
+	  				<hr>
+			  		<div id="accordion2" role="tablist" aria-multiselectable="true"> </div>
 				</div> <!-- Close modal body -->
 				
 	     		<div class="modal-footer">
-	     			<button type="button" class="btn btn-secondary">Save</button>
+	     			<button type="button" class="btn btn-secondary" onclick="">Save</button>
 	      		</div>
 	    		</div>  <!-- Close modal content -->
    	 	</div>
