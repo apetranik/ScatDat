@@ -108,6 +108,7 @@ public class Main {
 				ps.setInt(10, workload);
 				ps.setString(11, description);
 				ps.executeUpdate();
+				System.out.println(prefix+number+": "+name);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -131,7 +132,7 @@ public class Main {
 						String code = innerDepartment.getJSONObject(j).getString("code");
 						System.out.println(code);
 						String url = "http://web-app.usc.edu/web/soc/api/classes/" + code + "/20173";
-						//parseDepartment(url);
+						parseDepartment(url);
 					}
 				} catch(org.json.JSONException jse) {
 					
