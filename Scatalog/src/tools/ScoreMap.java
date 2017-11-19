@@ -114,7 +114,16 @@ public class ScoreMap{
 			+ score.getEnjoyment()*enjoyment.get((int) score.getEnjoyment() - 1)
 			+ (5 - score.getWorkload()*workload.get((int )score.getWorkload() - 1)
 			+ (5 - score.getDifficulty()*difficulty.get((int) score.getDifficulty() - 1))); 
-
-		return sum/4; 
+		int total = 0; 
+		if(value.get((int) score.getValue() - 1) != 0)
+			total++;
+		if(enjoyment.get((int) score.getEnjoyment() - 1) != 0)
+			total++; 
+		if(workload.get((int) score.getEnjoyment() - 1) != 0)
+			total++; 
+		if(difficulty.get((int) score.getDifficulty() - 1) != 0)
+			total++; 
+		
+		return sum/total; 
 	}
 }

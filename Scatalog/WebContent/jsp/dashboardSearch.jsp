@@ -34,7 +34,7 @@
 		if(searchText != null && searchText.length() > 0 && !user.equals(currentUser) && user.getName().getFullName().toLowerCase().contains(searchText)) {
 %>
 				
-					<tr><td><%=user.getName().getFullName()%></td><td><%=user.getClassStanding()%><td><%=user.getMajor() %></td></tr>
+					<tr><td><a href="../jsp/otherDashBoard.jsp"><%=user.getName().getFullName()%></a></td><td><%=user.getClassStanding()%><td><%=user.getMajor() %></td></tr>
 
 <%
 		}

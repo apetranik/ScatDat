@@ -94,7 +94,7 @@
 	  					<div class="form-group row">
 	  						<div class="col-xs-4">
 	   							<label for="search"></label>
-	    							<input id="searchText" type="text" class="form-control" aria-describedby="search" placeholder="Search Uers" oninput="srch();"/>
+	    							<input id="searchText" type="text" class="form-control" aria-describedby="search" placeholder="Search Users" oninput="srch();"/>
 	    							<div id="searchResults"></div>
 	  						</div>
 	  					</div>
