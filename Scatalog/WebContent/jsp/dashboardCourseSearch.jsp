@@ -9,9 +9,9 @@
 	// get all the courses from the database
 	ArrayList<Course> courses = (ArrayList<Course>)session.getAttribute("courses"); 
 	Course currCourse = null;
-	Database db = new Database();
+	//Database db = new Database();
 	if(courses == null) {
-		courses = db.queryCourses(); //SQL Query
+		courses = Database.queryCourses(); //SQL Query
 	}
 	// Truncates decimal if too long
 	DecimalFormat df = (DecimalFormat) session.getAttribute("decimalFormatter"); 

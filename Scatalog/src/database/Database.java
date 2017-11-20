@@ -3,6 +3,7 @@ package database;
 import java.awt.RadialGradientPaint;
 import java.security.interfaces.RSAKey;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PseudoColumnUsage;
 import java.sql.ResultSet;
@@ -44,42 +45,150 @@ public class Database {
 		}
 	}
 	
+	// Insert user into database
 	public static void insertUser(User user) {
+			PreparedStatement ps = null;
+			// Try to insert user into user database table
+			try {
+				ps = (PreparedStatement) conn.prepareStatement("INSERT INTO user (email, username, classstanding, fname, lname, preferredRatingStyle, major) VALUES (?,?,?,?,?,?,?)");
+				String email = user.getEmail();
+				String username = user.getUsername();
+				String password = user.getUsername();
+				String classstanding = user.getClassStanding();
+
+				Name name = user.getName();
+				String fname = name.getFname();
+				String lname = name.getLname();
+				String major = user.getMajor();
+
+				ps.setString(1, email);
+			
+				ps.setString(2, username);
+				int classNum = 0;
+				if(classstanding.trim().toLowerCase().equals("freshman")) {
+					classNum = 0;
+				}
+				else if(classstanding.trim().toLowerCase().equals("sophomore")) {
+					classNum = 1;
+				}
+				else if(classstanding.trim().toLowerCase().equals("junior")) {
+					classNum = 2;
+				}
+				else {
+					classNum = 3;
+				}
+				ps.setInt(3, classNum);
+				ps.setString(4, fname);
+				ps.setString(5, lname);
+				ps.setString(7, major);
+				ps.executeUpdate();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	public static void addToUserCourselist(User user, Course course)
+	{
+
+		// Select user from database
 		PreparedStatement ps = null;
-		//int rs;
+		ResultSet rs = null;
+		User currentUser = null;
+		int userID = 0;
+		// get the course ID based on the course inputted
+		int courseID = returnCourseID(course.getPrefix(), course.getCourseId());
+
+		// Get the user and their id
 		try {
-			ps = (PreparedStatement) conn.prepareStatement("INSERT INTO user (email, password, username, classstanding, fname, lname) VALUES (?,?,?,?,?,?)");
-			String email = user.getEmail();
-			String username = user.getUsername();
-			String password = user.getUsername();
-			String classstanding = user.getClassStanding();
-			Name name = user.getName();
-			String fname = name.getFname();
-			String lname = name.getLname();
-			ps.setString(1, email);
-			ps.setString(2, password);
-			ps.setString(3, username);
-			int classNum = 0;
-			if(classstanding.trim().toLowerCase().equals("freshman")) {
-				classNum = 0;
+			ps = (PreparedStatement) conn.prepareStatement("SELECT * FROM user WHERE email=?");
+			ps.setString(1,  user.getEmail());
+			rs = ps.executeQuery();
+			while(rs.next()) 
+			{
+				userID = rs.getInt("userID");
 			}
-			else if(classstanding.trim().toLowerCase().equals("sophomore")) {
-				classNum = 1;
+
+			// Insert course into coursesTaken table
+			try {
+				ps = (PreparedStatement) conn.prepareStatement("INSERT INTO courseTaken (userID, courseID) VALUES (?,?)");
+				
+				ps.setInt(1, userID);
+				ps.setInt(2, courseID);
+			
+				ps.executeUpdate();
+			} catch(SQLException e) {
+				e.printStackTrace();
 			}
-			else if(classstanding.trim().toLowerCase().equals("junior")) {
-				classNum = 2;
+			
+			
+			finally
+			{
+				
 			}
-			else {
-				classNum = 3;
-			}
-			ps.setInt(4, classNum);
-			ps.setString(5, fname);
-			ps.setString(6, lname);
-			ps.executeUpdate();
-		} catch(SQLException e) {
+		}
+		catch(SQLException e) {
 			e.printStackTrace();
 		}
+		finally
+		{
+			
+		}
 	}
+			public static void insertReview(Review review, int courseID) {
+				Score score = review.getScore();
+				double overallrating = score.getOverallRating();
+				double enjoyment = score.getEnjoyment();
+				double difficulty = score.getDifficulty();
+				double value = score.getValue();
+				double workload = score.getWorkload();
+				//Date date = review.getDate();
+				//java.sql.Date sqlDate = new java.sql.Date(date.getTime()); 
+				String username = review.getUsername();
+				int userID = 0;
+				try {
+					Statement st = conn.createStatement();
+					ResultSet rs = st.executeQuery("SELECT * FROM user WHERE username='" + username + "'");
+					rs.next();
+					userID = rs.getInt("userID");
+					
+				}catch(SQLException sqle) {
+					System.out.println(sqle.getMessage());
+				}
+				CourseTime courseTime = review.getCourseTime();
+				String term = courseTime.getTerm();
+				int year = Integer.parseInt(courseTime.getYear());
+				Name name = review.getProfessor();
+				String fname = name.getFname();
+				String lname = name.getLname();
+				int professorID = 0;
+				try {
+					Statement st = conn.createStatement();
+					ResultSet rs = st.executeQuery("SELECT * FROM professor WHERE fname='" + fname + "' AND lname='" + lname + "'");
+					rs.next();
+					professorID = rs.getInt("professorID");
+				}catch(SQLException sqle) {
+					System.out.println(sqle.getMessage());
+				}
+				String emoji = review.getEmoji();
+				String comment = review.getReview();
+				try {
+					PreparedStatement ps = (PreparedStatement) conn.prepareStatement("INSERT INTO review (userID, courseID, term, year, professorID, overallScore, enjoyment, difficulty, value, workload, emoji, comment, date) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+					ps.setInt(1, userID);
+					ps.setInt(2, courseID);
+					ps.setString(3, term);
+					ps.setInt(4, year);
+					ps.setInt(5, professorID);
+					ps.setDouble(6, overallrating);
+					ps.setDouble(7, enjoyment);
+					ps.setDouble(8, difficulty);
+					ps.setDouble(9, value);
+					ps.setDouble(10, workload);
+					ps.setString(11, emoji);
+					ps.setString(12, comment);
+					//ps.setDate(13, sqlDate);
+				}catch(SQLException sqle) {
+					System.out.println(sqle.getMessage());
+				}
+			}
 	
 
 	
