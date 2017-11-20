@@ -12,7 +12,7 @@
 	User currentUser = (User)session.getAttribute("currentUser");
 	if(currentUser == null) {
 		//redirect to login page
-		
+		return; 
 	}
 	
 	/*

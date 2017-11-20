@@ -32,8 +32,10 @@
     			var xhttp = new XMLHttpRequest(); 
     			xhttp.open("GET", "../jsp/dashboardInitialize.jsp", false); 
       		xhttp.send(); 
-      		//if(this.responseText.trim() != "")
-      		document.getElementById("about").innerHTML = xhttp.responseText;
+      		if(this.responseText.trim() != "")
+      			document.getElementById("about").innerHTML = xhttp.responseText;
+      		else
+      			window.location.href = "../html/login.html";
       		
     		}
     		
