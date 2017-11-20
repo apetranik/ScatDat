@@ -12,6 +12,49 @@
 	
 	
 	<script>
+	function initialize() {
+			var theElement = document.getElementById("searchText");
+			theElement.addEventListener("focusout", function(){
+			    _this = this;
+			    setTimeout(function () {
+			        _this.focus();
+			    }, 0);
+			})
+			
+			var textInput = document.getElementById("searchText"); 
+  		// Init a timeout variable to be used below
+  		var timeout = null;
+  		// Listen for keystroke events
+  		textInput.oninput = function (e) {
+  		    // Clear the timeout if it has already been set.
+  		    // This will prevent the previous task from executing
+  		    // if it has been less than <MILLISECONDS>
+  		    clearTimeout(timeout);
+  		    // Make a new timeout set to go off in 800ms
+  		    timeout = setTimeout(function () {
+  		    	var searchText = document.getElementById("searchText").value; 
+  				//if(searchText.length > 0)
+  				//	document.getElementById("searchText").style.borderColor = "#4292f4"; 
+  				//else
+  					//document.getElementById("searchText").style.borderColor = "black"; 
+  				var xhttp = new XMLHttpRequest(); 
+  	  			xhttp.open("GET", "../jsp/homeSearch.jsp?searchText=" +  document.getElementById("searchText").value, true); 
+  	  			xhttp.send(); 
+  	  			xhttp.onreadystatechange = function updateResults() {
+  	  				if(this.readyState == 4 && this.status == 200) {
+  	  					document.getElementById("accordion").innerHTML = xhttp.responseText; 
+  	  					if(this.responseText.trim().length < 1 && searchText.length > 0)
+  	  						document.getElementById("searchText").style.borderColor = "#dc3545"; 
+  	  					else if(searchText.length > 0)
+  	  						document.getElementById("searchText").style.borderColor = "#4292f4"; 
+  	  					else 
+  	  						document.getElementById("searchText").style.borderColor = "black"; 
+  	  				}
+  	  			};
+  		    }, 200);
+  		};
+		}
+	
 	function onSignIn(googleUser) {
 		var profile = googleUser.getBasicProfile();
 		document.getElementById("userHello").innerHTML = "Hello, "+ profile.getName()+ "!";
@@ -51,18 +94,49 @@
      <!-- Custom styles for this template -->
     <link href="../css/style.css" rel="stylesheet">
    	<script>
-   		function initialize() {
-   			var theElement = document.getElementById("searchText");
-
-   			theElement.addEventListener("focusout", function(){
-   			    _this = this;
-   			    setTimeout(function () {
-   			        _this.focus();
-   			    }, 0);
-   			})
-   			$("accordion").on('click', function (e) { e.preventDefault(); })
-   		}
-		function srch() {
+   	function initialize() {
+			var theElement = document.getElementById("searchText");
+			theElement.addEventListener("focusout", function(){
+			    _this = this;
+			    setTimeout(function () {
+			        _this.focus();
+			    }, 0);
+			})
+			
+			var textInput = document.getElementById("searchText"); 
+  		// Init a timeout variable to be used below
+  		var timeout = null;
+  		// Listen for keystroke events
+  		textInput.oninput = function (e) {
+  		    // Clear the timeout if it has already been set.
+  		    // This will prevent the previous task from executing
+  		    // if it has been less than <MILLISECONDS>
+  		    clearTimeout(timeout);
+  		    // Make a new timeout set to go off in 800ms
+  		    timeout = setTimeout(function () {
+  		    	var searchText = document.getElementById("searchText").value; 
+  				//if(searchText.length > 0)
+  				//	document.getElementById("searchText").style.borderColor = "#4292f4"; 
+  				//else
+  					//document.getElementById("searchText").style.borderColor = "black"; 
+  				var xhttp = new XMLHttpRequest(); 
+  	  			xhttp.open("GET", "../jsp/homeSearch.jsp?searchText=" +  document.getElementById("searchText").value, true); 
+  	  			xhttp.send(); 
+  	  			xhttp.onreadystatechange = function updateResults() {
+  	  				if(this.readyState == 4 && this.status == 200) {
+  	  					document.getElementById("accordion").innerHTML = xhttp.responseText; 
+  	  					if(this.responseText.trim().length < 1 && searchText.length > 0)
+  	  						document.getElementById("searchText").style.borderColor = "#dc3545"; 
+  	  					else if(searchText.length > 0)
+  	  						document.getElementById("searchText").style.borderColor = "#4292f4"; 
+  	  					else 
+  	  						document.getElementById("searchText").style.borderColor = "black"; 
+  	  				}
+  	  			};
+  		    }, 200);
+  		};
+		}
+		/*function srch() {
 			var searchText = document.getElementById("searchText").value; 
 			//if(searchText.length > 0)
 			//	document.getElementById("searchText").style.borderColor = "#4292f4"; 
@@ -83,8 +157,8 @@
   				}
   			};
   			
-		}
-		/* function onSuccess(googleUser) {
+		}*/
+		 function onSuccess(googleUser) {
 		      console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
 		    }
 		    function onFailure(error) {
@@ -153,7 +227,7 @@
 			<form name="search">
 	  			<div class="form-group">
 	   				<label for="search"></label>
-	    				<input id="searchText" type="text" class="form-control" aria-describedby="search" placeholder="Scat Dat Course!" oninput="srch();" autocomplete="off"  autofocus/>
+	    				<input id="searchText" type="text" class="form-control" aria-describedby="search" placeholder="Scat Dat Course!" autocomplete="off"  autofocus/>
 	  			</div>
 	  		</form>
 	  		
