@@ -14,14 +14,17 @@
 	<script>
 	function initialize() {
 			var theElement = document.getElementById("searchText");
-			theElement.addEventListener("focusout", function(){
+			/*theElement.addEventListener("focusout", function(){
 			    _this = this;
 			    setTimeout(function () {
 			        _this.focus();
 			    }, 0);
-			})
+			}) */
 			
-			var textInput = document.getElementById("searchText"); 
+		document.body.onkeydown = function(e){
+			theElement.focus();	
+		}
+		var textInput = document.getElementById("searchText"); 
   		// Init a timeout variable to be used below
   		var timeout = null;
   		// Listen for keystroke events
