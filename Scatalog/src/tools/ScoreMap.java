@@ -31,17 +31,17 @@ public class ScoreMap{
 		workload = new Vector<Double>(); 
 		difficulty = new Vector<Double>(); 
 		for(int i = 0; i < 5; i++) {
-			value.addElement(1.);
-			enjoyment.addElement(1.);
+			value.addElement(1. * (i + 1));
+			enjoyment.addElement(1. * (i + 1));
 			if(i <= 3) 
-				workload.addElement(0.);
+				workload.addElement(0. * (i + 1));
 			else 
-				workload.addElement(0.8);  
+				workload.addElement(5 - (0.8 * (i + 1)));  
 	
 			if(i <= 3) 
-				difficulty.addElement(0.);
+				difficulty.addElement(0. * (5 - (i + 1)));
 			else 
-				difficulty.addElement(0.8); 
+				difficulty.addElement(5 - (0.8 * (i + 1))); 
 		}
 	}
 
@@ -68,32 +68,40 @@ public class ScoreMap{
 		//but does not weigh in workload and difficulty
 		if(choice == 1) {
 			for(int i = 0; i < 5; i++) {
-				value.addElement(1.);
-				enjoyment.addElement(1.);
-				workload.addElement(0.);
-				workload.addElement(0.);
+				value.addElement(1. * (i + 1));
+				enjoyment.addElement(1. * (i + 1));
+				workload.addElement(0. * (i + 1));
+				workload.addElement(0. * (i + 1));
 			}
 		} 
 
 		//this configuration weighs all attributes normally
 		else if(choice == 2) {
 			for(int i = 0; i < 5; i++) {
-				value.addElement(1.);
-				enjoyment.addElement(1.);
-				workload.addElement(1.);
-				difficulty.addElement(1.);
+				value.addElement(1. * (i + 1));
+				enjoyment.addElement(1. * (i + 1));
+				workload.addElement(1. * (i + 1));
+				difficulty.addElement(1. * (i + 1));
 			}
 		}
-		//weighs lower difficulty courses as lower
+		//Try-hard configuration. Weighs lower difficulties as lower, difficulties of 3 and 4
+		//as the highest, and a difficulty of 5 as decently high
 		else if(choice == 3) {
 			for(int i = 0; i < 5; i++) {
-				value.addElement(1.);
-				enjoyment.addElement(1.);
-				workload.addElement(1.);
-				if(i == 1)
-					difficulty.addElement(0.1);
+				value.addElement(1. * (i + 1));
+				enjoyment.addElement(1. * (i + 1));
+				workload.addElement(1. * (i + 1));
+				if(i == 0)
+					difficulty.addElement(2.);
+				else if(i == 1)
+					difficulty.addElement(3.);
 				else if(i == 2)
-					difficulty.addElement(0.1);
+					difficulty.add(5.); 
+				else if(i == 3)
+					difficulty.add(5.);
+				else 
+					difficulty.add(4.); 
+				
 			}
 		}
 
@@ -103,14 +111,14 @@ public class ScoreMap{
 				value.addElement(1.);
 				enjoyment.addElement(1.);
 				if(i <= 3) 
-					workload.addElement(0.);
+					workload.addElement(0.* (i + 1));
 				else 
-					workload.addElement(0.8);  
+					workload.addElement(5 - (0.8 * (i + 1)));  
 
 				if(i <= 3) 
-					difficulty.addElement(0.);
+					difficulty.addElement(0. * (5 - (i + 1)));
 				else 
-					difficulty.addElement(0.8);  
+					difficulty.addElement(5 - (0.8 * (i + 1)));  
 			}
 		}
 	}
@@ -122,10 +130,10 @@ public class ScoreMap{
 	public double computeOverallScore(Score score) {
 		if(score.getValue() == 0 || score.getEnjoyment() == 0 || score.getDifficulty() == 0 || score.getWorkload() == 0)
 			return 0; 
-		double sum = score.getValue()*value.get((int) score.getValue() - 1)
-			+ score.getEnjoyment()*enjoyment.get((int) score.getEnjoyment() - 1)
-			+ (5 - score.getWorkload()*workload.get((int )score.getWorkload() - 1)
-			+ (5 - score.getDifficulty()*difficulty.get((int) score.getDifficulty() - 1))); 
+		double sum = value.get((int) score.getValue() - 1)
+			+ enjoyment.get((int) score.getEnjoyment() - 1)
+			+ workload.get((int )score.getWorkload() - 1)
+			+ difficulty.get((int) score.getDifficulty() - 1); 
 		int total = 0; 
 		if(value.get((int) score.getValue() - 1) != 0)
 			total++;
