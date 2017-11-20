@@ -59,7 +59,7 @@
   Review r = new Review(review, s, d, currentUser, ct, null, professorName);
   //db.addReview(Review,courseId);
   
-  myReviewList = db.queryAllReview(courseId);
+  myReviewList = Database.queryAllReview(courseId);
   
 
 
