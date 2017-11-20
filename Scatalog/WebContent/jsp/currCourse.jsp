@@ -1,22 +1,57 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
-	import="scatalogObjects.*,java.util.Vector,java.util.Date, java.util.ArrayList"
+	import="scatalogObjects.*,java.util.Vector,java.util.Date, java.util.ArrayList, database.Database"
 	
 %>
 
 <% 
 	
 	//remove comment below later
-	/* 
+	 
 	User currentUser = (User)session.getAttribute("currentUser");
-	String currentUsername = currentUser.getUsername();
-	Course currentCourse = (Course)request.getParameter("currentCourse");
-	ArrayList<Review> currReviewList = currCourse.getReviews();
+	String username = "CURRENTUSER";
+	//String currentUsername = currentUser.getUsername();
 	
-	 */
+	String prefix = "ALI";
+	int number = 255;
+	int courseId;
+	ArrayList<Course> courses = (ArrayList<Course>) session.getAttribute("courses"); 
+	Database db = new Database();
+	if(courses == null) {
+		courses = db.queryCourses(); //SQL Query
+		session.setAttribute("courses", courses);
+	}
+	
+	courseId = db.returnCourseID(prefix, number);
+	System.out.println(courseId);
+	
+	
+	Course currCourse = null;
+	for(Course c: courses){
+
+		if(c.getPrefix().equals(prefix)){
+			
+			if(c.getCourseId() == number){
+				System.out.println(c.getCourseId());
+				
+				currCourse = c;
+				break;
+			}
+		}
+	}
+	
+	
+	
+	
+	ArrayList<Review> currReviewList = new ArrayList<>();
+	
+	//currReviewList = currCourse.getReviews();
+	currReviewList = db.queryAllReview(courseId);
+	
+	
 	 
 	//test course	
-	String courseName = "Principles of Software Development";
+	/* String courseName = "Principles of Software Development";
 	int courseId = 201;
 	String description = "";
 	String prefix = "CSCI";
@@ -37,7 +72,7 @@
 	currReviewList.add(test2);
 	currReviewList.add(test3);
 	currCourse.setReviews(currReviewList);
-	currCourse.updateOverallScore();
+	currCourse.updateOverallScore(); */
 	
 	
 	//variables
@@ -106,7 +141,8 @@
 		sendStr += "&year=" + document.myform.year.value;
 		sendStr += "&professor=" + document.myform.professor.value;
 		sendStr += "&review=" + document.myform.reviewbox.value;
-		sendStr += "&currentUser=" + "Zhengxi Xiao";
+		sendStr += "&currentUser=" + "<%=username%>";
+		sendStr += "&courseid=" + "<%=courseId%>";
 		
 		xhttp.open("GET", sendStr, false); 
 		xhttp.send();
@@ -129,6 +165,8 @@
     function updateNum(){
     		var xhttp = new XMLHttpRequest(); 
 		var sendStr = "../jsp/updateCourseScoreDiv.jsp?";
+		sendStr += "&prefix=" + "<%=prefix%>";
+		sendStr += "&number=" + "<%=number%>";
 		xhttp.open("GET", sendStr, false);
 		xhttp.send();
 		document.getElementById("courseInfo").innerHTML = xhttp.responseText;
@@ -345,8 +383,7 @@
 		</div>
 		<div class="row" id= "description">
 			<div class="col-lg-12" id="info">
-			<p>Object-oriented paradigm for programming-in-the-large in Java; writing sophisticated concurrent applications with animation and graphic user interfaces; 
-			using professional tools on team project.</p>
+			<p><%=currCourse.getDescription() %></p>
 			</div>
 		</div>
 		
