@@ -22,9 +22,8 @@
 	
 	//uncomment the following after testing
 	ArrayList<Course> courses = (ArrayList<Course>) session.getAttribute("courses"); 
-	Database db = new Database();
 	if(courses == null) {
-		courses = db.queryCourses(); //SQL Query
+		courses = Database.queryCourses(); //SQL Query
 		session.setAttribute("courses", courses);
 	}
 	DecimalFormat df = (DecimalFormat) session.getAttribute("decimalFormatter"); 

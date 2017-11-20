@@ -33,8 +33,8 @@ try {
 	}
 	if(userFound) {
 		System.out.println("Found user!");
-		Database db = new Database();
-		User currentUser = db.queryUser(email);
+		//Database db = new Database();
+		User currentUser = Database.queryUser(email);
 		System.out.println(currentUser.getName().getFname());
 		session.setAttribute("currentUser", currentUser);
 		

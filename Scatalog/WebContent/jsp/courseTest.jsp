@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="scatalogObjects.*, scatalogObjects.Course,scatalogObjects.Review, java.util.Vector,java.util.Date, java.util.ArrayList"%>
+    pageEncoding="UTF-8" import="scatalogObjects.*, scatalogObjects.Course,scatalogObjects.Review, java.util.Vector,java.util.Date, java.util.ArrayList, database.*"%>
 
 <%
   //get our new reviews, store it into database and return it 
@@ -12,28 +12,31 @@
   String professor = request.getParameter("professor");
   String review = request.getParameter("review");
   String currentUser = request.getParameter("currentUser");
+  String currentCourseId = request.getParameter("courseid");
   String firstName = "";
   String lastName = "";
   
+  Database db = new Database();
   
   double diff = Double.parseDouble(difficulty);
   double value = Double.parseDouble(courseValue);
   double enjoy = Double.parseDouble(enjoyment);
   double work = Double.parseDouble(workload);
-  
+  int courseId = Integer.parseInt(currentCourseId);
   
   ArrayList<Review> myReviewList = new ArrayList<>();
+  myReviewList = db.queryAllReview(courseId);
   Score s = new Score(enjoy, diff, value, work);
   Date d = new Date();
   
-  /////////Test
+  /* /////////Test
   
   Review test1 = new Review("Hellooooooooo", new Score(2.0, 2.0, 3.0, 4.0), new Date(), "zhengxix", new CourseTime("Spring","2015"), null, new Name("Jeffrey","Miller"));
   Review test2 = new Review("Hiiiiii 201", new Score(4.0, 4.0, 3.0, 4.0), new Date(), "cote", new CourseTime("Spring","2017"), null, new Name("Aaron","Cote"));
   Review test3 = new Review("Trash course", new Score(1.0, 1.0, 2.0, 2.0), new Date(), "jeffrey", new CourseTime("Fall","2017"), null, new Name("Jeffrey","Miller"));
   myReviewList.add(test1);
   myReviewList.add(test2);
-  myReviewList.add(test3);
+  myReviewList.add(test3); */
   
   
   //////////////////delete things above!!!~
@@ -54,8 +57,9 @@
   }
   Name professorName = new Name(firstName,lastName);
   Review r = new Review(review, s, d, currentUser, ct, null, professorName);
-  myReviewList.add(r);
+  //db.addReview(Review,courseId);
   
+  myReviewList = db.queryAllReview(courseId);
   
 
 
