@@ -68,13 +68,13 @@
 		xhttp.onreadystatechange = function updateResults() {
 				if(this.readyState == 4 && this.status == 200) {
 					var result = xhttp.responseText.trim();
-					alert(result);
+					
 					if(result == '1') {
-						alert("Yes");
+						
 						window.location.href = "../html/login.html";
 					}
 					else {
-						alert("no");
+					
 					}
 				}
 		};
@@ -135,7 +135,12 @@
   	  			};
   		    }, 200);
   		};
-		}
+  		jQuery('document').ready(function() {
+  		    jQuery('#accordian').on('show hide', function() {
+  		        jQuery(this).css('height', 'auto');
+  		    });
+  		    jQuery('#accordian').collapse({ parent: true, toggle: true }); 
+  		});
 		/*function srch() {
 			var searchText = document.getElementById("searchText").value; 
 			//if(searchText.length > 0)
@@ -174,7 +179,7 @@
 		        'onsuccess': onSuccess,
 		        'onfailure': onFailure
 		      });
-		    } */
+		    } 
 		
 	</script>
 	<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
@@ -232,7 +237,9 @@
 	  		</form>
 	  		
 			<!-- Course Item -->	
-			<div id="accordion" role="tablist" aria-multiselectable="true"> </div>
+			<div class = "accordian">
+			<div class="panel panel-default" id="accordion" role="tablist" aria-multiselectable="true"> </div>
+			</div>
 		</div>
 		<!-- Side Col Right -->
 		<div class="col-md-2"></div>	

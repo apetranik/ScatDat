@@ -42,12 +42,12 @@
 		String name = course.getCourseName().toLowerCase(); 
 		if((searchText != null) && (searchText.length() > 0) && (abbreviated.contains(searchText) || name.contains(searchText))) {
 %>
-			
-			<div class="card-header">
-				      		<a class="card-link" id="cards" data-toggle="collapse" data-parent="#accordion<%=count%>"  href="#collapse<%=count%>">
+		<div class="card">
+			<div class="card-header" role="tab">
+				      		<a class="card-link" id="cards" data-toggle="collapse" data-parent="#accordion<%=count%>"  data-target="#collapse<%=count%>" href="javascript:void(0);" aria-expanded="false" aria-controls="collapse<%=count%>" >
 								<%=course.getPrefix() + " " + course.getCourseId() + ": " + course.getCourseName()  %>
 				      		</a>
-				      		<a class="card-link" id="cards-stars" data-toggle="collapse" data-parent="#accordion<%=count%>" href="#collapse<%=count%>">
+				      		<a class="card-link" id="cards-stars" data-toggle="collapse" data-parent="#accordion<%=count%>" data-target="#collapse<%=count%>" href="javascript:void(0);" aria-expanded="false" aria-controls="collapse<%=count%>">
 							<!-- This is where the stars goes -->
 								<%=" Score: " + df.format(course.getOverallScore().getOverallRating()) %>
 				      		</a>
@@ -58,7 +58,7 @@
 				        			<%=course.getDescription() %>
 				    			</div>
 				    		</div>
-		
+		</div>
 <% 
 		}
 	}
