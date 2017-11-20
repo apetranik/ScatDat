@@ -25,7 +25,7 @@
 	Database db = new Database();
 	if(courses == null) {
 		courses = db.queryCourses(); //SQL Query
-		
+		session.setAttribute("courses", courses);
 	}
 	DecimalFormat df = (DecimalFormat) session.getAttribute("decimalFormatter"); 
 	if(df == null ) {
