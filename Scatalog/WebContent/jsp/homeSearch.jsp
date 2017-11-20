@@ -19,11 +19,11 @@
 	
 	
 	//delete the above after testing 
-	
+	Database db = new Database();
 	//uncomment the following after testing
 	ArrayList<Course> courses = (ArrayList<Course>) session.getAttribute("courses"); 
 	if(courses == null) {
-		courses = Database.queryCourses(); //SQL Query
+		courses = db.queryCourses(); //SQL Query
 		session.setAttribute("courses", courses);
 	}
 	DecimalFormat df = (DecimalFormat) session.getAttribute("decimalFormatter"); 

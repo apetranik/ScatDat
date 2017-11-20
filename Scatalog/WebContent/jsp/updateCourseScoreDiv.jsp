@@ -7,9 +7,9 @@
 	String prefix = request.getParameter("prefix");
 	String numStr = request.getParameter("number");
 	int number = Integer.parseInt(numStr);
-	int courseId = Database.returnCourseID(prefix, number);
-	Course currCourse = Database.returnCourse(prefix,number);
-	ArrayList<Review> currList = Database.queryAllReview(courseId);
+	int courseId = db.returnCourseID(prefix, number);
+	Course currCourse = db.returnCourse(prefix,number);
+	ArrayList<Review> currList = db.queryAllReview(courseId);
 	
 %>
 
