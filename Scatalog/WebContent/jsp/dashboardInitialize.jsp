@@ -15,6 +15,7 @@
 		
 	}
 	
+	/*
 	//delete lines below once we get login page working
 	currentUser = new User("Apurva", "Gandhi", "Junior", "apurvaga@usc.edu", "Computer Engineering and Computer Science");
 	currentUser.addCourseTaken(new Course("Discrete Mathematics", 170, "Introduction to logic, proofs, runtime, probability, number theory and cryptography with computer science applications in mind", "CSCI",
@@ -24,7 +25,7 @@
 	currentUser.addToWishlist(new Course("Data Structures", 104, "Redekopp stuff", "CSCI",
 			5, 5, 1, 1, 0)); 
 	//delete above lines once we get login page and queries working
-
+	*/
 	
 	%><!--data-target="#mymodal"-->
 	<!-- User info content -->
