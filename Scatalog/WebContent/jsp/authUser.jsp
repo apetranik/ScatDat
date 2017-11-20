@@ -35,6 +35,7 @@ try {
 		System.out.println("Found user!");
 		Database db = new Database();
 		User currentUser = db.queryUser(email);
+		System.out.println(currentUser.getName().getFname());
 		session.setAttribute("currentUser", currentUser);
 		
 		%>0<%
