@@ -411,7 +411,7 @@ public class Database {
 		return num;
 	}
 	
-	private ArrayList<Review> queryAllReview(int classID){
+	public ArrayList<Review> queryAllReview(int classID){
 		ArrayList<Review> reviews = new ArrayList<Review>();
 		try {
 			Statement st = conn.createStatement();
@@ -430,6 +430,22 @@ public class Database {
 		return reviews;
 	}
 	
+	public int returnCourseID(String prefix, int number) {
+		int courseID = 0;
+		try {
+			Statement st = conn.createStatement();
+			ResultSet rs;
+			rs = st.executeQuery("SELECT * FROM course WHERE prefix='" + prefix + 
+					"' AND number="+number);
+			while(rs.next()) {
+				courseID = rs.getInt("courseID");
+			}
+		} catch(SQLException sqle) {
+			System.out.println(sqle.getMessage());
+		}
+		
+		return courseID;
+	}
 	
 //	
 //	public ScoreMap queryScoreMap(String username) {
@@ -482,6 +498,11 @@ public class Database {
 	
 	public static void main(String [] args) {
 		Database db = new Database();
-		db.queryCourses();
+		//db.queryCourses();
+		
+		String prefix = "ALI";
+		int number = 254;
+		int courseID = db.returnCourseID(prefix, number);
+		System.out.println("Course ID: " + courseID);
 	}
 }
