@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -81,7 +82,62 @@ public class Database {
 		}
 	}
 	
-
+	public static void insertReview(Review review, int courseID) {
+		Score score = review.getScore();
+		double overallrating = score.getOverallRating();
+		double enjoyment = score.getEnjoyment();
+		double difficulty = score.getDifficulty();
+		double value = score.getValue();
+		double workload = score.getWorkload();
+		Date date = review.getDate();
+		java.sql.Date sqlDate = new java.sql.Date(date.getTime()); 
+		String username = review.getUsername();
+		int userID = 0;
+		try {
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery("SELECT * FROM user WHERE username='" + username + "'");
+			rs.next();
+			userID = rs.getInt("userID");
+			
+		}catch(SQLException sqle) {
+			System.out.println(sqle.getMessage());
+		}
+		CourseTime courseTime = review.getCourseTime();
+		String term = courseTime.getTerm();
+		int year = Integer.parseInt(courseTime.getYear());
+		Name name = review.getProfessor();
+		String fname = name.getFname();
+		String lname = name.getLname();
+		int professorID = 0;
+		try {
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery("SELECT * FROM professor WHERE fname='" + fname + "' AND lname='" + lname + "'");
+			rs.next();
+			professorID = rs.getInt("professorID");
+		}catch(SQLException sqle) {
+			System.out.println(sqle.getMessage());
+		}
+		String emoji = review.getEmoji();
+		String comment = review.getReview();
+		try {
+			PreparedStatement ps = (PreparedStatement) conn.prepareStatement("INSERT INTO review (userID, courseID, term, year, professorID, overallScore, enjoyment, difficulty, value, workload, emoji, comment, date) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			ps.setInt(1, userID);
+			ps.setInt(2, courseID);
+			ps.setString(3, term);
+			ps.setInt(4, year);
+			ps.setInt(5, professorID);
+			ps.setDouble(6, overallrating);
+			ps.setDouble(7, enjoyment);
+			ps.setDouble(8, difficulty);
+			ps.setDouble(9, value);
+			ps.setDouble(10, workload);
+			ps.setString(11, emoji);
+			ps.setString(12, comment);
+			ps.setDate(13, sqlDate);
+		}catch(SQLException sqle) {
+			System.out.println(sqle.getMessage());
+		}
+	}
 	
 //	public String queryPassword(String username) {
 //		String name = username;
@@ -185,6 +241,7 @@ public class Database {
 		}
 		return courses;
 	}
+	
 	public static Vector<Course> queryCourseEvaluated(int userID) {
 		Vector<Course> courses = new Vector<Course>();
 		try {
