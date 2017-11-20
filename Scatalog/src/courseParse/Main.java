@@ -72,46 +72,52 @@ public class Main {
 		JSONArray course = offeredCourses.getJSONArray("course");
 		
 		for (int i = 0; i < course.length(); i++) {
-			try {
-				ps = (java.sql.PreparedStatement) conn.prepareStatement("INSERT INTO course(number, prefix, type, name, numRegistered, overallSCore, enjoyment, difficulty, value, workload, description) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
-			
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			JSONObject currObj = course.getJSONObject(i);
 			JSONObject courseInfo = currObj.getJSONObject("CourseData");
 			String number = courseInfo.getString("number");
 			String prefix = courseInfo.getString("prefix");
-			int type = 0;
-			String name = courseInfo.getString("title");
-			int numRegistered = 0;
-			int overallSCore = 0;
-			int enjoyment = 0;
-			int difficulty = 0;
-			int value = 0;
-			int workload = 0;
-			String description = courseInfo.getString("description");
-			if(prefix.equals("http://web-app.usc.edu/web/soc/api/classes/MATH/20173")) {
-				System.out.println(prefix+number+": "+name);
-			}
-			try {
-				ps.setString(1, number);
-				ps.setString(2, prefix);
-				ps.setInt(3, type);
-				ps.setString(4, name);
-				ps.setInt(5, numRegistered);
-				ps.setInt(6, overallSCore);
-				ps.setInt(7, enjoyment);
-				ps.setInt(8, difficulty);
-				ps.setInt(9, value);
-				ps.setInt(10, workload);
-				ps.setString(11, description);
-				ps.executeUpdate();
-				System.out.println(prefix+number+": "+name);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			PreparedStatement ps1 = (PreparedStatement) conn.prepareStatement("SELECT * FROM course WHERE prefix=? AND number=?");
+			ps1.setString(1,  prefix);
+			ps1.setString(2, number);
+			ResultSet rs = ps1.executeQuery();
+			if(!rs.next()) {
+				try {
+					ps = (PreparedStatement) conn.prepareStatement("INSERT INTO course(number, prefix, type, name, numRegistered, overallSCore, enjoyment, difficulty, value, workload, description) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+				
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				int type = 0;
+				String name = courseInfo.getString("title");
+				int numRegistered = 0;
+				int overallSCore = 0;
+				int enjoyment = 0;
+				int difficulty = 0;
+				int value = 0;
+				int workload = 0;
+				String description = courseInfo.getString("description");
+				if(prefix.equals("http://web-app.usc.edu/web/soc/api/classes/MATH/20173")) {
+					System.out.println(prefix+number+": "+name);
+				}
+				try {
+					ps.setString(1, number);
+					ps.setString(2, prefix);
+					ps.setInt(3, type);
+					ps.setString(4, name);
+					ps.setInt(5, numRegistered);
+					ps.setInt(6, overallSCore);
+					ps.setInt(7, enjoyment);
+					ps.setInt(8, difficulty);
+					ps.setInt(9, value);
+					ps.setInt(10, workload);
+					ps.setString(11, description);
+					ps.executeUpdate();
+					System.out.println(prefix+number+": "+name);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		} catch(Exception e) {
