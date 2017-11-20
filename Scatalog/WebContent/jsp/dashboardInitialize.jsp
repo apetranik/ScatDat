@@ -119,9 +119,7 @@
 			<div class="modal-content">
 	      		<div class="modal-header">
 	      			<h4 class="modal-title">Add Course</h4>
-	      			<script>
-						test();
-					</script>
+	      			
 	        			<button type="button" class="close" data-dismiss="modal">&times;</button>
 	      		</div> <!-- Close modal header -->
 	      		
@@ -135,7 +133,8 @@
 			  			</div>
 			  		</form>
 			  		<hr>
-			  		<div id="accordion" role="tablist" aria-multiselectable="true"> </div>
+			  		<div id="accordion" role="tablist" aria-multiselectable="true"> 
+			  		</div>
 				</div> <!-- Close modal body -->
 				
 	

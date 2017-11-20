@@ -62,13 +62,6 @@
     			console.log("courseSearch");
     			var theElement = document.getElementById("courseSearchText");
 
-       			theElement.addEventListener("focusout", function(){
-       			    _this = this;
-       			    setTimeout(function () {
-       			        _this.focus();
-       			    }, 0);
-       			})
-
        			
        			var textInput = document.getElementById("courseSearchText"); 
           		// Init a timeout variable to be used below
@@ -108,12 +101,7 @@
     			console.log("wishlist");
     			var theElement = document.getElementById("wishlistSearchText");
 
-       			theElement.addEventListener("focusout", function(){
-       			    _this = this;
-       			    setTimeout(function () {
-       			        _this.focus();
-       			    }, 0);
-       			})
+       			
 
        			
        			var textInput = document.getElementById("wishlistSearchText"); 
@@ -152,6 +140,7 @@
     		
     		function addToCourses(test)
     		{
+    			console.log(test);
     			var searchText = document.getElementById("courseSearchText").value;
     			
     			console.log("addToCourses: " + search);
@@ -162,6 +151,7 @@
     			
     			console.log("addToWishlist");
     		}
+    		
     		
     </script>
   </head>
