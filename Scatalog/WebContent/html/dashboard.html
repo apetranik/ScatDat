@@ -141,9 +141,11 @@
     		function addToCourses(test)
     		{
     			console.log(test);
-    			var searchText = document.getElementById("courseSearchText").value;
+    			var xhttp = new XMLHttpRequest(); 
+  	  			xhttp.open("GET", "../jsp/dashboardCourseAdd.jsp?newCourse=" +  test, true); 
+  	  			xhttp.send(); 
     			
-    			console.log("addToCourses: " + search);
+    			
     		}
     		function addToWishlist()
     		{

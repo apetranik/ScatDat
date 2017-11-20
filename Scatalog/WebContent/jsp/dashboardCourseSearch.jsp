@@ -40,14 +40,21 @@
   					<div class = "col-md-10" data-target="#courseSearch">
 	   			 		<%=course.getPrefix() + " " + course.getCourseId() + ": " + course.getCourseName()  %>
 	   			 		<%=" Score: " + df.format(course.getOverallScore().getOverallRating()) %>
+	   			 		<% String tmp = course.getPrefix(); 
+	   			 			tmp+= "-";
+	   			 			tmp+=course.getCourseId();
+	   			 		%>
 	   			 		<hr>
 	  				</div>
+	  				
 	  				<div class="col-md-2">
-	  					<button class="btn btn-outline-secondary left-align" type="button" aria-pressed="true">
-	        					<i class="fa fa-plus" onclick="addToCourses(<%=currCourse%>);"></i>
+	  					<button class="btn btn-outline-secondary left-align" type="button" aria-pressed="true" id="addCourse">
+	        					<i class="fa fa-plus" id="<%=tmp%>" onclick="addToCourses(this.id)">
+	        					</i>
 	        				</button>
 	        			
 	        			</div>
+	        			
         			</div>
   			</div>
 		</div>

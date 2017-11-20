@@ -32,7 +32,7 @@ import tools.ScoreMap;
 
 
 public class Database {
-	private Connection conn = null;
+	private static Connection conn = null;
 	public Database() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -44,7 +44,7 @@ public class Database {
 		}
 	}
 	
-	public void insertUser(User user) {
+	public static void insertUser(User user) {
 		PreparedStatement ps = null;
 		//int rs;
 		try {
@@ -81,6 +81,8 @@ public class Database {
 		}
 	}
 	
+
+	
 //	public String queryPassword(String username) {
 //		String name = username;
 //		PreparedStatement ps = null; 
@@ -102,7 +104,7 @@ public class Database {
 //		
 //	}
 	
-	public User queryUser(String email) {
+	public static User queryUser(String email) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		User currentUser = null;
@@ -152,7 +154,7 @@ public class Database {
 		return currentUser;
 	}
 	
-	public Vector<Course> queryWishlist(int userID) {
+	public static Vector<Course> queryWishlist(int userID) {
 		Vector<Course> courses = new Vector<Course>();
 		try {
 			Statement st = conn.createStatement();
@@ -183,7 +185,7 @@ public class Database {
 		}
 		return courses;
 	}
-	public Vector<Course> queryCourseEvaluated(int userID) {
+	public static Vector<Course> queryCourseEvaluated(int userID) {
 		Vector<Course> courses = new Vector<Course>();
 		try {
 			Statement st = conn.createStatement();
@@ -213,7 +215,7 @@ public class Database {
 		}
 		return courses;
 	}
-	public String queryClassStanding(String username) {
+	public static String queryClassStanding(String username) {
 		String name = username;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -245,7 +247,7 @@ public class Database {
 	}
 	
 //	
-	public Vector<Course> queryCourseTaken(String username) {
+	public static Vector<Course> queryCourseTaken(String username) {
 		Vector<Course> courses = new Vector<Course>();
 		try {
 			Statement st = conn.createStatement();
@@ -282,7 +284,7 @@ public class Database {
 		return courses;
 	}
 	
-	public ArrayList<Course> queryCourses() {
+	public static ArrayList<Course> queryCourses() {
 		ArrayList<Course> courses = new ArrayList<Course>();
 		ResultSet rs = null;
 		PreparedStatement ps = null;
@@ -326,7 +328,7 @@ public class Database {
 		return courses;
 	}
 	
-	private HashMap<Name, ProfCourse> queryProfCourseMap(int courseID){
+	private static HashMap<Name, ProfCourse> queryProfCourseMap(int courseID){
 		HashMap<Name, ProfCourse> result = new HashMap<Name, ProfCourse>();
 		try {
 			Set<Integer> finishedProfessor = new HashSet<Integer>();
@@ -350,7 +352,7 @@ public class Database {
 		return result;
 	}
 	
-	private ProfCourse querySingleProfCourse(int professorID, int courseID) {
+	private static ProfCourse querySingleProfCourse(int professorID, int courseID) {
 		ProfCourse profCourse = null;
 		try {
 			Statement st = conn.createStatement();
@@ -397,7 +399,7 @@ public class Database {
 		
 	}
 	
-	private int queryNumOfRatings(int classID) {
+	private static int queryNumOfRatings(int classID) {
 		int num = 0;
 		try {
 			ResultSet rs;
@@ -411,7 +413,7 @@ public class Database {
 		return num;
 	}
 	
-	public ArrayList<Review> queryAllReview(int classID){
+	public static ArrayList<Review> queryAllReview(int classID){
 		ArrayList<Review> reviews = new ArrayList<Review>();
 		try {
 			Statement st = conn.createStatement();
@@ -430,7 +432,7 @@ public class Database {
 		return reviews;
 	}
 	
-	public int returnCourseID(String prefix, int number) {
+	public static int returnCourseID(String prefix, int number) {
 		int courseID = 0;
 		try {
 			Statement st = conn.createStatement();
@@ -446,7 +448,18 @@ public class Database {
 		
 		return courseID;
 	}
-	
+	public static Course returnCourse(String prefix, int number) {
+		ArrayList<Course> courses = queryCourses();
+		Course currCourse = null;
+		for(int i = 0; i<courses.size(); i++) {
+			currCourse = courses.get(i);
+			if(currCourse.getPrefix().equals(prefix) && currCourse.getCourseId() == number) {
+				return currCourse;
+			}
+		}
+		return currCourse;
+		
+	}
 //	
 //	public ScoreMap queryScoreMap(String username) {
 //		// get the 20 scores of the user
@@ -454,11 +467,7 @@ public class Database {
 //		// instantiate with ScoreMap with its constructor;
 //	}
 //	
-//	public Course queryCourse(int classID) {
-//		// call 
-//		
-//		// call score constructor
-//	}
+
 
 //	public int queryPrefix(int classID) {
 //		

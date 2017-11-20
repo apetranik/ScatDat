@@ -133,8 +133,7 @@
 			  			</div>
 			  		</form>
 			  		<hr>
-			  		<div id="accordion" role="tablist" aria-multiselectable="true"> 
-			  		</div>
+			  		<div id="accordion" role="tablist" aria-multiselectable="true"></div>
 				</div> <!-- Close modal body -->
 				
 	
