@@ -7,10 +7,11 @@
 <%@ page import ="java.sql.SQLException" %>
 <%@ page import ="java.sql.Statement" %>
 <%@ page import ="com.mysql.jdbc.PreparedStatement" %>
-<%@ page import = "database.Database" %>
+<%@ page import = "database.*" %>
 <%@ page import = "scatalogObjects.*" %>
 <%
 Connection conn = null;
+Database db = new Database();
 try {
 	Class.forName("com.mysql.jdbc.Driver");
 	conn = DriverManager.getConnection("jdbc:mysql://localhost/scatdat?user=root&password=root&useSSL=false");
@@ -33,8 +34,8 @@ try {
 	}
 	if(userFound) {
 		System.out.println("Found user!");
-		//Database db = new Database();
-		User currentUser = Database.queryUser(email);
+		//db db = new db();
+		User currentUser = db.queryUser(email);
 		System.out.println(currentUser.getName().getFname());
 		session.setAttribute("currentUser", currentUser);
 		

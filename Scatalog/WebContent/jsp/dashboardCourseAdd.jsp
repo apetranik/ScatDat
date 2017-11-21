@@ -5,6 +5,7 @@
 <%@ page import="database.*" 
 %>
 <%
+	Database db = new Database();
 	String searchText = request.getParameter("newCourse").trim().toLowerCase(); 
 	System.out.println(searchText);
 	String[] parts = searchText.split("\\-");
@@ -13,12 +14,12 @@
 	System.out.println(prefix);
 	System.out.println(number);
 	// Get course object from courses databases
-	Course course = Database.returnCourse(prefix, number);	
+	Course course = db.returnCourse(prefix, number);	
 	User user = (User)session.getAttribute("currentUser");
 	// Add to users wishlist
-	Database.addToUserCourselist(user, course);
+	db.addToUserCourselist(user, course);
 	// re-query
-	User currentUser = Database.queryUser(user.getEmail());
+	User currentUser = db.queryUser(user.getEmail());
 	session.setAttribute("currentUser", currentUser);
 	
 %>

@@ -22,7 +22,7 @@
 		session.setAttribute("courses", courses);
 	}
 	
-	courseId = db.returnCourseID(prefix, number);
+	courseId = Database.returnCourseID(prefix, number);
 	System.out.println(courseId);
 	
 	
