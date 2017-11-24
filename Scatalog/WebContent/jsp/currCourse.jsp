@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
-	import="scatalogObjects.*,java.util.Vector,java.util.Date, java.util.ArrayList, database.Database"
+	import="scatalogObjects.*,java.util.Vector,java.util.Date, java.util.ArrayList, database.Database, java.text.DecimalFormat"
 	
 %>
 
@@ -9,13 +9,13 @@
 	//remove comment below later
 	 
 	User currentUser = (User)session.getAttribute("currentUser");
-	String username = "CURRENTUSER";
+	String username = "zhengxix";
 	//String currentUsername = currentUser.getUsername();
 	
-	String prefix = "ALI";
-	int number = 255;
+	String prefix = "CSCI";
+	int number = 100;
 	int courseId;
-	ArrayList<Course> courses = (ArrayList<Course>) session.getAttribute("courses"); 
+	ArrayList<Course> courses = (ArrayList<Course>)session.getAttribute("courses"); 
 	Database db = new Database();
 	if(courses == null) {
 		courses = db.queryCourses(); //SQL Query
@@ -24,7 +24,7 @@
 	
 	courseId = db.returnCourseID(prefix, number);
 	System.out.println(courseId);
-	
+	DecimalFormat df = new DecimalFormat("#0.0");
 	
 	Course currCourse = null;
 	for(Course c: courses){
@@ -44,10 +44,11 @@
 	
 	
 	ArrayList<Review> currReviewList = new ArrayList<>();
-	
+
 	//currReviewList = currCourse.getReviews();
 	currReviewList = db.queryAllReview(courseId);
-	
+	currCourse.setReviews(currReviewList);
+	currCourse.updateOverallScore();
 	
 	 
 	//test course	
@@ -143,7 +144,7 @@
 		sendStr += "&review=" + document.myform.reviewbox.value;
 		sendStr += "&currentUser=" + "<%=username%>";
 		sendStr += "&courseid=" + "<%=courseId%>";
-		
+		alert(sendStr);
 		xhttp.open("GET", sendStr, false); 
 		xhttp.send();
 		document.getElementById("reviewlist").innerHTML = xhttp.responseText;
@@ -229,7 +230,7 @@
     <!-- Page Content -->
    <div class="container">
 		<div class="row">
-			<div class="col-lg-6" id="courseInfo"> <b><%=fullCourseName %></b> &nbsp;&nbsp; <%=currCourse.getOverallScore().getOverallRating()%> &nbsp;&nbsp; (<%=currReviewList.size() %> reviews)</div>
+			<div class="col-lg-6" id="courseInfo"> <b><%=fullCourseName %></b> &nbsp;&nbsp; <%=df.format(currCourse.getOverallScore().getOverallRating())%> &nbsp;&nbsp; (<%=currReviewList.size() %> reviews)</div>
 
 			<div class="col-lg-3" id="info">				
 				<div class="dropdown">
@@ -328,15 +329,15 @@
        					 			<label class="col-lg-4 col-form-label">Term: </label>
        					 			<div class="col-lg-4">
       									<select id="term" name="term" class="form-control">
-  										<option value="">Select Term</option>
-  										<option value="Spring" >Spring</option>
-						　　				<option value="Summer" >Summer</option>
-										<option value="Fall" >Fall</option>									
+  										<option value="0">Select Term</option>
+  										<option value="0" >Spring</option>
+						　　				<option value="1" >Summer</option>
+										<option value="2" >Fall</option>									
 										</select>
     									</div>
     									<div class="col-lg-4">
       									<select id="year" name="year" class="form-control">
-  										<option value="">Select Term</option>
+  										<option value="0">Select Term</option>
   										<option value="2017" >2017</option>
   										<option value="2016" >2016</option>
   										<option value="2015" >2015</option>
@@ -394,18 +395,27 @@
 				Score currScore = currReview.getScore();
 				Name currProf = currReview.getProfessor();
 				CourseTime currCT = currReview.getCourseTime();
+				String termstr = "";
+				String termInt = currCT.getTerm();
+				if(termInt.equals("0")){
+					termstr = "Spring";
+				}else if(termInt.equals("1")){
+					termstr = "Summer";
+				}else if(termInt.equals("2")){
+					termstr = "Fall";
+				}
 	 
 %>
 			<div class="row" id= "reviewerSection">
 				<div class="col-lg-3" id="reviewer">
 					<div class = "row">
 						<div class="col-lg-6"><b><%=currReview.getUsername()%></b></div>
-						<div class="col-lg-6 text-right"><b>Total: <%=currScore.getOverallRating()%></b></div>
+						<div class="col-lg-6 text-right"><b>Total: <%=df.format(currScore.getOverallRating())%></b></div>
 					</div>		
 				</div>
 				<div class="col-lg-5"></div>
 				<div class="col-lg-4 " id="instrutor">
-					<p class="text-center"><%=currProf.getFname() + " " + currProf.getLname() %> | <%=currCT.getTerm() + " " + currCT.getYear()%></p>
+					<p class="text-center"><%=currProf.getFname() + " " + currProf.getLname() %> | <%=termstr + " " + currCT.getYear()%></p>
 				</div>
 			</div>
 		

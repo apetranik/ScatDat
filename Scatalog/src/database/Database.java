@@ -3,7 +3,7 @@ package database;
 import java.awt.RadialGradientPaint;
 import java.security.interfaces.RSAKey;
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.DriverManager;
 import java.sql.PseudoColumnUsage;
 import java.sql.ResultSet;
@@ -134,8 +134,9 @@ public class Database {
 		double difficulty = score.getDifficulty();
 		double value = score.getValue();
 		double workload = score.getWorkload();
-		// Date date = review.getDate();
-		// java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+		Date date = (Date)review.getDate();
+		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+		System.out.println(sqlDate.toString());
 		String username = review.getUsername();
 		int userID = 0;
 		try {
@@ -143,9 +144,10 @@ public class Database {
 			ResultSet rs = st.executeQuery("SELECT * FROM user WHERE username='" + username + "'");
 			rs.next();
 			userID = rs.getInt("userID");
+			System.out.println(userID);
 
 		} catch (SQLException sqle) {
-			System.out.println(sqle.getMessage());
+			System.out.println("Get userid: "+sqle.getMessage());
 		}
 		CourseTime courseTime = review.getCourseTime();
 		String term = courseTime.getTerm();
@@ -161,7 +163,7 @@ public class Database {
 			rs.next();
 			professorID = rs.getInt("professorID");
 		} catch (SQLException sqle) {
-			System.out.println(sqle.getMessage());
+			System.out.println("Get Professor: " +sqle.getMessage());
 		}
 		String emoji = review.getEmoji();
 		String comment = review.getReview();
@@ -180,9 +182,10 @@ public class Database {
 			ps.setDouble(10, workload);
 			ps.setString(11, emoji);
 			ps.setString(12, comment);
-			// ps.setDate(13, sqlDate);
+			ps.setDate(13, sqlDate);
+			ps.execute();
 		} catch (SQLException sqle) {
-			System.out.println(sqle.getMessage());
+			System.out.println("INSERT COURSE ERROR: " + sqle.getMessage());
 		}
 	}
 
@@ -530,14 +533,14 @@ public class Database {
 			Statement st = conn.createStatement();
 			ResultSet rs;
 			rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
-					+ "' AND r.userID=u.userID AND r.professorID=p.professorID");
+					+ "' AND r.professorID=p.professorID AND r.userID=u.userID");
 			while (rs.next()) {
 				reviews.add(new Review(rs.getString("comment"),
 						new Score(rs.getInt("enjoyment"), rs.getInt("difficulty"), rs.getInt("value"),
 								rs.getInt("workload")),
 						rs.getDate("date"), rs.getString("username"),
 						new CourseTime(rs.getString("term"), rs.getString("year")), rs.getString("emoji"),
-						new Name(rs.getString("fname"), rs.getString("lname"))));
+						new Name(rs.getString("p.fname"), rs.getString("p.lname"))));
 			}
 		} catch (SQLException sqle) {
 			System.out.println(sqle.getMessage());
