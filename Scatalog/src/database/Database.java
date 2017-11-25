@@ -86,7 +86,6 @@ public class Database {
 	}
 
 	public void addToUserCourselist(User user, Course course) {
-
 		// Select user from database
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -211,7 +210,7 @@ public class Database {
 	//
 	// }
 
-	public  User queryUser(String email) {
+	public User queryUser(String email) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		User currentUser = null;

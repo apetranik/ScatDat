@@ -39,7 +39,7 @@ try {
 	ps.setInt(6, ratingStyle);
 	ps.setString(7, major);
 	ps.executeUpdate();
-	System.out.println("Hello");
+
 } catch (SQLException e) {
 	// TODO Auto-generated catch block
 	e.printStackTrace();
