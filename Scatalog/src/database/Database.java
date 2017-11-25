@@ -145,7 +145,6 @@ public class Database {
 			rs.next();
 			userID = rs.getInt("userID");
 			System.out.println(userID);
-
 		} catch (SQLException sqle) {
 			System.out.println("Get userid: "+sqle.getMessage());
 		}
@@ -211,7 +210,7 @@ public class Database {
 	//
 	// }
 
-	public  User queryUser(String email) {
+	public User queryUser(String email) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		User currentUser = null;
@@ -570,7 +569,7 @@ public class Database {
 		prefix = prefix.toUpperCase();
 		for (int i = 0; i < courses.size(); i++) {
 			currCourse = courses.get(i);
-			
+
 			if (currCourse.getPrefix().equals(prefix) && currCourse.getCourseId() == number) {
 				System.out.println("return course id: " + currCourse.getCourseId());
 				return currCourse;
