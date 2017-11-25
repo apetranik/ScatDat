@@ -1,0 +1,4 @@
+Instruction on importing database:
+1. Create a schema called "scatdat";
+2. Use Data Import/Restore->Import from Dump Project Folder
+3. Use the "dump" folder in this Doc folder, which contains all tables and data

@@ -27,13 +27,17 @@ String username = email.substring(0, email.indexOf('@'));
 String classstanding = request.getParameter("classStanding");
 String fname = request.getParameter("fname");
 String lname = request.getParameter("lname");
+int ratingStyle = Integer.parseInt(request.getParameter("ratingStyle"));
+String major = request.getParameter("major");
 try {
-	ps = (PreparedStatement) conn.prepareStatement("INSERT INTO user (email, username, classstanding, fname, lname) VALUES (?,?,?,?,?)");
+	ps = (PreparedStatement) conn.prepareStatement("INSERT INTO user (email, username, classstanding, fname, lname, preferredRatingStyle, major) VALUES (?,?,?,?,?,?,?)");
 	ps.setString(1, email);
 	ps.setString(2, username);
 	ps.setString(3, classstanding);
 	ps.setString(4, fname);
 	ps.setString(5, lname);
+	ps.setInt(6, ratingStyle);
+	ps.setString(7, major);
 	ps.executeUpdate();
 	System.out.println("Hello");
 } catch (SQLException e) {
