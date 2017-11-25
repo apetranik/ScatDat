@@ -86,7 +86,6 @@ public class Database {
 	}
 
 	public void addToUserCourselist(User user, Course course) {
-
 		// Select user from database
 		PreparedStatement ps = null;
 		ResultSet rs = null;
