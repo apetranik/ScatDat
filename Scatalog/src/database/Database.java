@@ -86,6 +86,7 @@ public class Database {
 	}
 
 	public void addToUserCourselist(User user, Course course) {
+
 		// Select user from database
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -93,7 +94,7 @@ public class Database {
 		int userID = 0;
 		// get the course ID based on the course inputted
 		int courseID = returnCourseID(course.getPrefix(), course.getCourseId());
-		System.out.println("courseID: " + courseID);
+
 		// Get the user and their id
 		try {
 			ps = (PreparedStatement) conn.prepareStatement("SELECT * FROM user WHERE email=?");
@@ -144,6 +145,7 @@ public class Database {
 			rs.next();
 			userID = rs.getInt("userID");
 			System.out.println(userID);
+
 		} catch (SQLException sqle) {
 			System.out.println("Get userid: "+sqle.getMessage());
 		}
@@ -158,8 +160,30 @@ public class Database {
 			Statement st = conn.createStatement();
 			ResultSet rs = st
 					.executeQuery("SELECT * FROM professor WHERE fname='" + fname + "' AND lname='" + lname + "'");
-			rs.next();
-			professorID = rs.getInt("professorID");
+			Boolean empty = true; 
+			if(rs.next()) {
+				empty = false;
+			}
+			if(!empty) {
+				professorID = rs.getInt("professorID");
+				System.out.println(fname);
+				System.out.println(lname);
+				System.out.println("professor id is " + professorID);
+			}
+			else {
+				System.out.println("add a new professor");
+				try {
+					PreparedStatement ps = (PreparedStatement) conn.prepareStatement("INSERT INTO professor (fname, lname) VALUES (?,?)");
+					ps.setString(1, fname);
+					ps.setString(2, lname);
+					ps.execute();
+					rs = st.executeQuery("SELECT * FROM professor WHERE fname='" + fname + "' AND lname='" + lname + "'");
+					rs.next();
+					professorID = rs.getInt("professorID");
+				}catch(SQLException sqle) {
+					System.out.println("Get Professor insert professor problem: " +sqle.getMessage());
+				}
+			}
 		} catch (SQLException sqle) {
 			System.out.println("Get Professor: " +sqle.getMessage());
 		}
@@ -209,7 +233,7 @@ public class Database {
 	//
 	// }
 
-	public User queryUser(String email) {
+	public  User queryUser(String email) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		User currentUser = null;
@@ -565,12 +589,9 @@ public class Database {
 	public Course returnCourse(String prefix, int number) {
 		ArrayList<Course> courses = queryCourses();
 		Course currCourse = null;
-		prefix = prefix.toUpperCase();
 		for (int i = 0; i < courses.size(); i++) {
 			currCourse = courses.get(i);
-
 			if (currCourse.getPrefix().equals(prefix) && currCourse.getCourseId() == number) {
-				System.out.println("return course id: " + currCourse.getCourseId());
 				return currCourse;
 			}
 		}
