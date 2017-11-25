@@ -14,7 +14,9 @@
 	System.out.println(prefix);
 	System.out.println(number);
 	// Get course object from courses databases
-	Course course = db.returnCourse(prefix, number);	
+	int id = db.returnCourseID(prefix, number);
+	System.out.println("what is this: " + id);
+	Course course = db.returnCourse(prefix, id);	
 	User user = (User)session.getAttribute("currentUser");
 	// Add to users wishlist
 	db.addToUserCourselist(user, course);

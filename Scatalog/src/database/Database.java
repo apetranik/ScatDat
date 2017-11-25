@@ -94,7 +94,7 @@ public class Database {
 		int userID = 0;
 		// get the course ID based on the course inputted
 		int courseID = returnCourseID(course.getPrefix(), course.getCourseId());
-
+		System.out.println("courseID: " + courseID);
 		// Get the user and their id
 		try {
 			ps = (PreparedStatement) conn.prepareStatement("SELECT * FROM user WHERE email=?");
@@ -569,7 +569,9 @@ public class Database {
 		Course currCourse = null;
 		for (int i = 0; i < courses.size(); i++) {
 			currCourse = courses.get(i);
+			
 			if (currCourse.getPrefix().equals(prefix) && currCourse.getCourseId() == number) {
+				System.out.println("return course id: " + currCourse.getCourseId());
 				return currCourse;
 			}
 		}
