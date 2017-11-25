@@ -47,8 +47,9 @@
 
 	//currReviewList = currCourse.getReviews();
 	currReviewList = db.queryAllReview(courseId);
-	currCourse.setReviews(currReviewList);
-	currCourse.updateOverallScore();
+	currCourse.setReviews((currReviewList == null ? new ArrayList<Review>() : currReviewList));
+	if(currReviewList.size() > 0)
+		currCourse.updateOverallScore();
 	
 	 
 	//test course	
