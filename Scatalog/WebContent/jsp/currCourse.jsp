@@ -109,6 +109,7 @@
     
     <!-- script -->
     <script>
+    
     function initialize(){
           if("<%=username%>" == ""){
         	  	document.getElementById("modalEntry").disabled = true;
@@ -119,6 +120,8 @@
         	  	alert("<%=username%>");
           }
     }
+    
+    
     
     function submitReview(){
       
@@ -224,7 +227,6 @@
     
     
     
-
     
 
     
@@ -437,8 +439,6 @@
         </div>
       </div>
     </div>
-      
-    
       
       
     </div>
