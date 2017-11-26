@@ -126,6 +126,47 @@ public class Database {
 
 		}
 	}
+	public void addToUserWishlist(User user, Course course) {
+
+		// Select user from database
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		User currentUser = null;
+		int userID = 0;
+		// get the course ID based on the course inputted
+		int courseID = returnCourseID(course.getPrefix(), course.getCourseId());
+
+		// Get the user and their id
+		try {
+			ps = (PreparedStatement) conn.prepareStatement("SELECT * FROM user WHERE email=?");
+			ps.setString(1, user.getEmail());
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				userID = rs.getInt("userID");
+			}
+
+			// Insert course into coursesTaken table
+			try {
+				ps = (PreparedStatement) conn
+						.prepareStatement("INSERT INTO wishlist (userID, courseID) VALUES (?,?)");
+
+				ps.setInt(1, userID);
+				ps.setInt(2, courseID);
+
+				ps.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			finally {
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+
+		}
+	}
 
 	public  void insertReview(Review review, int courseID) {
 		Score score = review.getScore();
@@ -281,6 +322,52 @@ public class Database {
 		return currentUser;
 	}
 
+	public Vector<User> queryUsers() {
+		Vector<User> users = new Vector<User>();
+		try {
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery("SELECT * FROM user");
+			while(rs.next()) {
+				String email = rs.getString("email");
+				int userID = rs.getInt("userID");
+				String fname = rs.getString("fname");
+				String lname = rs.getString("lname");
+				Name name = new Name(fname, lname);
+				int classNum = rs.getInt("classstanding");
+				String major = rs.getString("major");
+				String username = rs.getString("username");
+				int preferredRatingStyle = rs.getInt("preferredRatingStyle");
+				Vector<Course> courseList = queryCourseTaken(username);
+				Set<Course> coursesTaken = new HashSet<Course>();
+				for (int i = 0; i < courseList.size(); i++) {
+					coursesTaken.add(courseList.get(i));
+				}
+
+				Vector<Course> coursesEvaluated = queryCourseEvaluated(userID);
+				Vector<Course> wishlist = queryWishlist(userID);
+				ScoreMap scoreMap = new ScoreMap(preferredRatingStyle);
+				Vector<Badge> badges = new Vector();
+				badges.add(new Badge(preferredRatingStyle));
+				String classStanding = "";
+				if (classNum == 0) {
+					classStanding = "Freshman";
+				} else if (classNum == 1) {
+					classStanding = "Sophomore";
+				} else if (classNum == 2) {
+					classStanding = "Junior";
+				} else {
+					classStanding = "Senior";
+				}
+				users.add(new User(name, classStanding, email, badges, wishlist, coursesEvaluated, username,
+						coursesTaken, courseList, scoreMap, major));
+			}
+			
+		}catch(SQLException sqle) {
+			System.out.println(sqle.getMessage());
+		}
+		return users;
+		
+	}
 	public  Vector<Course> queryWishlist(int userID) {
 		Vector<Course> courses = new Vector<Course>();
 		try {
@@ -487,7 +574,7 @@ public class Database {
 		return result;
 	}
 
-	private  ProfCourse querySingleProfCourse(int professorID, int courseID) {
+	private ProfCourse querySingleProfCourse(int professorID, int courseID) {
 		ProfCourse profCourse = null;
 		try {
 			Statement st = conn.createStatement();
