@@ -187,11 +187,19 @@
     			
     			}
     		}
-    		function addToWishlist()
+    		function addToWishlist(courseName)
     		{
-    			var searchText = document.getElementById("wishlistSearchText").value;
+    			console.log(courseName);
+    			var xhttp = new XMLHttpRequest(); 
+  	  			xhttp.open("GET", "../jsp/dashboardWishlistAdd.jsp?newCourse=" +  courseName, true); 
+  	  			xhttp.send(); 
+	  	  		xhttp.onreadystatechange = function updateResults() {
+		  				if(this.readyState == 4 && this.status == 200) {
+		  					document.getElementById("accordion2").innerHTML = xhttp.responseText; 
+		  					
+		  			};
     			
-    			console.log("addToWishlist");
+    			}
     		}
     		
     		
