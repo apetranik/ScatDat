@@ -133,10 +133,8 @@
     		}
     		function searchWishlist()
     		{
-    			console.log("wishlist");
+    			console.log("searchwishlist");
     			var theElement = document.getElementById("wishlistSearchText");
-
-       			
 
        			
        			var textInput = document.getElementById("wishlistSearchText"); 
@@ -156,7 +154,7 @@
           		    	var searchText = document.getElementById("wishlistSearchText").value; 
           				
           				var xhttp = new XMLHttpRequest(); 
-          	  			xhttp.open("GET", "../jsp/dashboardWishlistSearch.jsp?searchTexting=" +  document.getElementById("wishlistSearchText").value, true); 
+          	  			xhttp.open("GET", "../jsp/dashboardWishlistSearch.jsp?searchText=" +  document.getElementById("wishlistSearchText").value, true); 
           	  			xhttp.send(); 
           	  			xhttp.onreadystatechange = function updateResults() {
           	  				if(this.readyState == 4 && this.status == 200) {
@@ -171,21 +169,6 @@
           	  			};
           		    }, 200);
           		};
-    		}
-    		
-    		function addToCourses(courseName)
-    		{
-    			console.log(courseName);
-    			var xhttp = new XMLHttpRequest(); 
-  	  			xhttp.open("GET", "../jsp/dashboardCourseAdd.jsp?newCourse=" +  courseName, true); 
-  	  			xhttp.send(); 
-	  	  		xhttp.onreadystatechange = function updateResults() {
-		  				if(this.readyState == 4 && this.status == 200) {
-		  					document.getElementById("accordion").innerHTML = xhttp.responseText; 
-		  					
-		  			};
-    			
-    			}
     		}
     		function addToWishlist(courseName)
     		{
