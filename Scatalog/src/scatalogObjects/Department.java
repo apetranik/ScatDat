@@ -6,11 +6,10 @@ public class Department {
 	private Vector<Course> courses;
 	public Department(String prefix) {
 		this.prefix = prefix;
-		// DATABASE
+		courses = new Vector<Course>();
 	}
 	public void addCourse(Course course) {
 		this.courses.add(course);
-		// DATABASE
 	}
 	public String getPrefix() {
 		return prefix;
@@ -21,8 +20,4 @@ public class Department {
 	public Vector<Course> getCourses() {
 		return courses;
 	}
-	public void setCourses(Vector<Course> courses) {
-		this.courses = courses;
-	}
-	
 }
