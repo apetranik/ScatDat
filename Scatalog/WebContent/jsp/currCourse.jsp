@@ -112,6 +112,7 @@
     function initialize(){
           if("<%=username%>" == ""){
         	  	document.getElementById("modalEntry").disabled = true;
+        	  	
         	  	alert("log in first")
           }else{
         	  	document.getElementById("modalEntry").disabled = false;
