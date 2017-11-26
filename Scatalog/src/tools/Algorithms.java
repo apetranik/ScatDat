@@ -1,5 +1,6 @@
 package tools;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import scatalogObjects.Course;
@@ -12,7 +13,7 @@ public class Algorithms{
 	//However, the worst case is extremely unlikely. A better runtime estimate for this 
 	//algorithm is an O(n) amortized runtime in the worst case. This discrepancy in runtime
 	//estimates is due to the use of hashSets to find whether a user has already taken a course.
-	public static Vector<Course> getRecommendedCourses(User user, Vector<Course> courses) {
+	public static Vector<Course> getRecommendedCourses(User user, ArrayList<Course> courses) {
 
 		//recommendations will contain the 3 recommended courses and will be returned
 		Vector<Course> recommendations = new Vector<Course>(3); 

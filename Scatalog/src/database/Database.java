@@ -1,23 +1,16 @@
 package database;
 
-import java.awt.RadialGradientPaint;
-import java.security.interfaces.RSAKey;
 import java.sql.Connection;
 import java.util.Date;
 import java.sql.DriverManager;
-import java.sql.PseudoColumnUsage;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
-
-import javax.naming.spi.DirStateFactory.Result;
 
 import com.mysql.jdbc.PreparedStatement;
 
@@ -781,7 +774,7 @@ public class Database {
 	// this.numUsers = numUsers;
 	// }
 
-	public void main(String[] args) {
+	public static void main(String[] args) {
 		Database db = new Database();
 		// db.queryCourses();
 

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="scatalogObjects.User, scatalogObjects.Course, java.util.Vector"
+    pageEncoding="UTF-8" import="scatalogObjects.User, scatalogObjects.Course, java.util.Vector, database.Database, java.util.ArrayList, tools.Algorithms"
 
 %>
 	<script src="https://use.fontawesome.com/b402a83b11.js"></script>
@@ -10,6 +10,13 @@
 <%
 	
 	User currentUser = (User)session.getAttribute("currentUser");
+	Database db = new Database();
+	//uncomment the following after testing
+	ArrayList<Course> courses = (ArrayList<Course>) session.getAttribute("courses"); 
+	if(courses == null) {
+		courses = db.queryCourses(); //SQL Query
+		session.setAttribute("courses", courses);
+	}
 	if(currentUser == null) {
 		//redirect to login page
 		return; 
@@ -34,6 +41,18 @@
 	     	<div class="row">
 	       		<div class="col-lg-12 mx-center">          
 	         		<p class="lead"><%=currentUser.getClassStanding() + ", " +  currentUser.getMajor() + " | " + currentUser.getEmail()%></p>
+					<p class="lead">
+						<b>Recommended for you:</b><br>
+						<%
+							Vector<Course> recommendedCourse = Algorithms.getRecommendedCourses(currentUser, courses);
+							for(int i = 0; i < recommendedCourse.size(); i++){
+						%>
+							<%=recommendedCourse.get(i).getPrefix() +  " " + recommendedCourse.get(i).getCourseId() + recommendedCourse.get(i).getCourseName()%>						
+							<br>
+						<%
+							}
+						%>
+					</p>
 					<!-- Courses Taken/Wishlist Body -->
 					<div class="row">
 						<!-- Courses Taken -->
