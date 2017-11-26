@@ -166,7 +166,9 @@
 	  					</div>
 	  				</form>
 	  				<hr>
-			  		<div id="accordion2" role="tablist" aria-multiselectable="true"> </div>
+			  		<div id="accordion2" role="tablist" aria-multiselectable="true"> 
+			  		
+			  		</div>
 				</div> <!-- Close modal body -->
 				
 	     		<div class="modal-footer">

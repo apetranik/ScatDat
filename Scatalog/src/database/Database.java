@@ -126,6 +126,47 @@ public class Database {
 
 		}
 	}
+	public void addToUserWishlist(User user, Course course) {
+
+		// Select user from database
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		User currentUser = null;
+		int userID = 0;
+		// get the course ID based on the course inputted
+		int courseID = returnCourseID(course.getPrefix(), course.getCourseId());
+
+		// Get the user and their id
+		try {
+			ps = (PreparedStatement) conn.prepareStatement("SELECT * FROM user WHERE email=?");
+			ps.setString(1, user.getEmail());
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				userID = rs.getInt("userID");
+			}
+
+			// Insert course into coursesTaken table
+			try {
+				ps = (PreparedStatement) conn
+						.prepareStatement("INSERT INTO wishlist (userID, courseID) VALUES (?,?)");
+
+				ps.setInt(1, userID);
+				ps.setInt(2, courseID);
+
+				ps.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			finally {
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+
+		}
+	}
 
 	public  void insertReview(Review review, int courseID) {
 		Score score = review.getScore();
