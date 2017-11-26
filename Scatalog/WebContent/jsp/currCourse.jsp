@@ -9,6 +9,8 @@
   //remove comment below later
    
   User currentUser = (User)session.getAttribute("currentUser");
+  session.setAttribute("orderStyle", 0);
+  session.setAttribute("sortStyle", 0);
   String username = currentUser.getUsername();
   System.out.println("username: " + username);
   
@@ -60,32 +62,9 @@
   }
   
   //get sort list
-  currReviewList = db.getSortList(prefix,number,0);
+  currReviewList = db.getSortList(prefix,number,0,0);
   
-  //test course 
-  /* String courseName = "Principles of Software Development";
-  int courseId = 201;
-  String description = "";
-  String prefix = "CSCI";
-  double enjoyment = 0.0;
-  double value = 0.0;
-  double workload = 0.0
-  double difficulty = 0.0;
-  int type = 1;
-  
-  Course currCourse = new Course(courseName,courseId ,description ,prefix , enjoyment, value, workload, difficulty, 1);
-  ArrayList<Review> currReviewList = new ArrayList<>(); //TEST
-  Date d = new Date();
-  Review test1 = new Review("Hellooooooooo", new Score(2.0, 2.0, 3.0, 4.0), new Date(), "zhengxix", new CourseTime("Spring","2015"), null, new Name("Jeffrey","Miller"));
-  Review test2 = new Review("Hiiiiii 201", new Score(4.0, 4.0, 3.0, 4.0), new Date(), "cote", new CourseTime("Spring","2017"), null, new Name("Aaron","Cote"));
-  Review test3 = new Review("Trash course", new Score(1.0, 1.0, 2.0, 2.0), new Date(), "jeffrey", new CourseTime("Fall","2017"), null, new Name("Jeffrey","Miller"));
 
-  currReviewList.add(test1);
-  currReviewList.add(test2);
-  currReviewList.add(test3);
-  currCourse.setReviews(currReviewList);
-  currCourse.updateOverallScore(); */
-  
   
   //variables
   String fullCourseName = currCourse.getPrefix() + " " + currCourse.getCourseId();
@@ -186,13 +165,67 @@
         return;
     }
     
-    function sortReview(){
+    function sortReview(text){
     		var xhttp = new XMLHttpRequest(); 
         var sendStr = "../jsp/sortReview.jsp?";
         sendStr += "prefix=" + "<%=prefix%>";
-        sendStr += "&number=" + "<%=number%>";
+        sendStr += "&number=" + "<%=number%>"
+        
+        
+        //$(document).ready.(function(){
+        
+        	if($("input[name='options']:checked").val() == 0){
+        		sendStr += "&order=" + 0;
+        }else if($("input[name='options']:checked").val() == 1){
+            	sendStr += "&order=" + 1;
+        }
+
+        //alert("final str: " + sendStr);
+        xhttp.open("GET", sendStr, false);
+		xhttp.send();
+		document.getElementById("reviewlist").innerHTML = xhttp.responseText;
+      
     	
     }
+    
+    
+    function sortReview2(){
+    		var xhttp = new XMLHttpRequest(); 
+        var sendStr = "../jsp/sortReview2.jsp?";
+        sendStr += "prefix=" + "<%=prefix%>";
+        sendStr += "&number=" + "<%=number%>";
+        $('.dropdown-menu').one('click', 'a', function(e){
+    	  		var text = this.text;  
+    	  		if(text == "Term"){
+    	  			sendStr += "&sort=" + 0;
+    	  		}else if(text == "Overall Rating"){
+    	  			sendStr += "&sort=" + 1;  
+    	  		}else if(text == "Difficulty"){
+    	  			sendStr += "&sort=" + 2;  
+    	  		}else if(text == "Value"){
+    	  			sendStr += "&sort=" + 3;  
+    	  		}else if(text == "Enjoyment"){
+    	  			sendStr += "&sort=" + 4;  
+    	  		}else if(text == "Workload"){
+    	  			sendStr += "&sort=" + 5;  
+    	  		}
+    	  		
+    	  		xhttp.open("GET", sendStr, false);
+    			xhttp.send();
+    			document.getElementById("dropdownMenuButton").innerHTML = text;
+    			document.getElementById("reviewlist").innerHTML = xhttp.responseText;
+    	  	
+    		});
+    	
+    	
+    }
+    
+    
+    
+    
+
+    
+
     
     </script>
     
@@ -252,21 +285,30 @@
       <div class="col-lg-3" id="info">        
         <div class="dropdown">
           <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Sorting
+              Sorting by
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">Sort by Rating</a>
-              <a class="dropdown-item" href="#">Sort by Term</a>
-            <a class="dropdown-item" href="#">Sort by Date</a>
+              <a id="Rating" class="dropdown-item" name="sort" value="0" onclick="sortReview2()" href="#">Term</a>
+              <a id="Term" class="dropdown-item" name="sort" value="1" onclick="sortReview2()" href="#">Overall Rating</a>
+              <a id="Date" class="dropdown-item" name="sort" value="2" onclick="sortReview2()" href="#">Difficulty</a>
+              <a id="Date" class="dropdown-item" name="sort" value="2" onclick="sortReview2()" href="#">Value</a>
+              <a id="Date" class="dropdown-item" name="sort" value="2" onclick="sortReview2()" href="#">Enjoyment</a>
+              <a id="Date" class="dropdown-item" name="sort" value="2" onclick="sortReview2()" href="#">Workload</a>
           </div>
           </div>
       </div>
           
       <div class="col-lg-3" id="info">
-        <div class="btn-group">
-           <button type="button" value=0 class="btn btn-default btn-sm" id="asc" name="asc" onclick="sortReview()">Ascending</button>
-           <button type="button" value=1 class="btn btn-default btn-sm" id="dec" name="dec" onclick="sortReview()">Descending</button>
-        </div>      
+        <div class="btn-group" data-toggle="buttons">
+	      				<!-- Descending Option -->
+						<label class="btn btn-secondary active" onchange="sortReview()">
+					    		<input type="radio" value="0" name="options" id="des" autocomplete="off" checked> Descending
+					  	</label>
+					  	<!-- Ascending Option -->
+					  	<label class="btn btn-secondary" onchange="sortReview()">
+					   		<input type="radio" value="1" name="options" id="asc" autocomplete="off" > Ascending
+					  	</label>
+					</div>    
       </div>
       
       
