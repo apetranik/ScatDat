@@ -6,8 +6,9 @@
 	User otherUser = (User)session.getAttribute("otherUser");
 	if(otherUser == null) {
 		//redirect to login page
-	    //response.sendRedirect(request.getContextPath() + "/html/dashboard.html");
+	    response.sendRedirect(request.getContextPath() + "/html/dashboard.html");
 	}
+	/*
 	//delete lines below once we get login page working
 		otherUser = new User("Apurva", "Gandhi", "Junior", "apurvaga@usc.edu", "Computer Engineering and Computer Science");
 		otherUser.addCourseTaken(new Course("Discrete Mathematics", 170, "Introduction to logic, proofs, runtime, probability, number theory and cryptography with computer science applications in mind", "CSCI",
@@ -17,6 +18,7 @@
 		otherUser.addToWishlist(new Course("Data Structures", 104, "Redekopp stuff", "CSCI",
 				5, 5, 1, 1, 0)); 
 		//delete above lines once we get login page and queries working
+	*/
 %>
 
 <!DOCTYPE html>

@@ -11,7 +11,13 @@
 	Course currCourse = (Course)db.returnCourse(prefix,number);
 	ArrayList<Review> currList = db.queryAllReview(courseId);
 	currCourse.setReviews(currList);
-	currCourse.updateOverallScore();
+	
+	if(currList.size()>0){
+		currCourse.updateOverallScore();
+		Score overall = currCourse.getOverallScore();
+		db.updateScore(prefix,number,overall);
+	}
+	
 	DecimalFormat df = new DecimalFormat("#0.0");
 	
 %>

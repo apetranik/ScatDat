@@ -322,6 +322,52 @@ public class Database {
 		return currentUser;
 	}
 
+	public Vector<User> queryUsers() {
+		Vector<User> users = new Vector<User>();
+		try {
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery("SELECT * FROM user");
+			while(rs.next()) {
+				String email = rs.getString("email");
+				int userID = rs.getInt("userID");
+				String fname = rs.getString("fname");
+				String lname = rs.getString("lname");
+				Name name = new Name(fname, lname);
+				int classNum = rs.getInt("classstanding");
+				String major = rs.getString("major");
+				String username = rs.getString("username");
+				int preferredRatingStyle = rs.getInt("preferredRatingStyle");
+				Vector<Course> courseList = queryCourseTaken(username);
+				Set<Course> coursesTaken = new HashSet<Course>();
+				for (int i = 0; i < courseList.size(); i++) {
+					coursesTaken.add(courseList.get(i));
+				}
+
+				Vector<Course> coursesEvaluated = queryCourseEvaluated(userID);
+				Vector<Course> wishlist = queryWishlist(userID);
+				ScoreMap scoreMap = new ScoreMap(preferredRatingStyle);
+				Vector<Badge> badges = new Vector();
+				badges.add(new Badge(preferredRatingStyle));
+				String classStanding = "";
+				if (classNum == 0) {
+					classStanding = "Freshman";
+				} else if (classNum == 1) {
+					classStanding = "Sophomore";
+				} else if (classNum == 2) {
+					classStanding = "Junior";
+				} else {
+					classStanding = "Senior";
+				}
+				users.add(new User(name, classStanding, email, badges, wishlist, coursesEvaluated, username,
+						coursesTaken, courseList, scoreMap, major));
+			}
+			
+		}catch(SQLException sqle) {
+			System.out.println(sqle.getMessage());
+		}
+		return users;
+		
+	}
 	public  Vector<Course> queryWishlist(int userID) {
 		Vector<Course> courses = new Vector<Course>();
 		try {
@@ -528,7 +574,7 @@ public class Database {
 		return result;
 	}
 
-	private  ProfCourse querySingleProfCourse(int professorID, int courseID) {
+	private ProfCourse querySingleProfCourse(int professorID, int courseID) {
 		ProfCourse profCourse = null;
 		try {
 			Statement st = conn.createStatement();
@@ -639,6 +685,33 @@ public class Database {
 		}
 		return currCourse;
 
+	}
+	
+	public void updateScore(String prefix, int number, Score score) {
+		try {
+			Statement st = conn.createStatement();
+			st = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+	                   ResultSet.CONCUR_UPDATABLE);
+			ResultSet rs;
+			rs = st.executeQuery("SELECT * FROM course WHERE prefix='" + prefix + "' AND number=" + number);
+			double overall = score.getOverallRating();
+			double enjoyment = score.getEnjoyment();
+			double difficulty = score.getDifficulty();
+			double value = score.getValue();
+			double workload = score.getWorkload();
+			while (rs.next()) {
+				rs.updateDouble("overallSCore",overall);
+				rs.updateDouble("enjoyment",enjoyment);
+				rs.updateDouble("difficulty",difficulty);
+				rs.updateDouble("value",value);
+				rs.updateDouble("workload",workload);
+				rs.updateRow();
+			}
+						
+		}catch (SQLException sqle) {
+			System.out.println(sqle.getMessage());
+		}
+				
 	}
 	//
 	// public ScoreMap queryScoreMap(String username) {
