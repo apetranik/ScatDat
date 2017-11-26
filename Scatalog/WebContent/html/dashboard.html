@@ -63,15 +63,31 @@
 		xhttp.open("GET", "../jsp/signOutUser.jsp", false); 
 		xhttp.send();
 	  }
+    
     		function initialize() {
     			var xhttp = new XMLHttpRequest(); 
     			xhttp.open("GET", "../jsp/dashboardInitialize.jsp", false); 
       		xhttp.send(); 
-      		if(xhttp.responseText.trim() != "")
+      		if(xhttp.responseText.trim() != "") {
       			document.getElementById("about").innerHTML = xhttp.responseText;
+      			var recs = document.getElementsByName("recs");
+      			/*for (i = 0; i < recs.length; i++) {
+      				recs[i].onclick = gTCP(recs[i].id);   
+      			}*/
+      			
+      		}
       		else
       			window.location.href = "../html/login.html";
       		
+    		}
+    		
+    		function goToCoursePage(courseInfo) { 
+    			var xhttp = new XMLHttpRequest(); 
+    				xhttp.open("GET", "../jsp/goToCoursePage.jsp?courseInfo=" +  courseInfo, true); 
+    				xhttp.send(); 
+    		  		xhttp.onreadystatechange = function changePage() {
+    	  			window.location.href = "../jsp/currCourse.jsp"; 
+    	  		};
     		}
     		
     		function srch() {
@@ -208,6 +224,31 @@
 		  		};
     		}
     		
+    		/*
+    			Need an ajax call to a new jsp page. 
+    			In the jsp page, update database by
+    			db.updateUserSettings(String username, int scoringStyle, String fname, String lname, int classStanding, String major, int privacy)
+    			standard is 0 
+    			Try-hard is 3 
+    			Slacker is 2
+    			Front end: need privacy dropdown list 
+    					everything public(default) is 0
+    					badges private is 1
+    					wishlist and courseTaken private is 2
+    					all private is 3 
+    		*/
+    		function saveSettings(){
+    			User user = (User)session.getAttribute(currentUser);
+    			var username = user.getUsername;
+    			var scoringStyle = 
+    			var fname = 
+    			var lname = 
+    			var classStanding = 
+    			var major = 
+    			var privacy = 
+    		}
+    		
+    		
     		
     </script>
   </head>
@@ -265,18 +306,18 @@
 	      		<!-- Body of Modal -->
 	      		<div class="modal-body">
 	     			<h5>Scoring Style</h5>
-	      			<div class="btn-group" data-toggle="buttons">
+	      			<div id= "scoringstyle" class="btn-group" data-toggle="buttons">
 	      				<!-- Standard Option -->
 						<label class="btn btn-secondary active">
-					    		<input type="radio" name="options" id="standard" autocomplete="off" checked> Standard
+					    		<input type="radio" name="options" value = "standard" id="standard" autocomplete="off" checked> Standard
 					  	</label>
 					  	<!-- Try-Hard Option -->
 					  	<label class="btn btn-secondary">
-					   		<input type="radio" name="options" id="try-hard" autocomplete="off"> Try-Hard
+					   		<input type="radio" name="options" value = "try-hard" id="try-hard" autocomplete="off"> Try-Hard
 					  	</label>
 					  	<!-- Slacker Option -->
 					  	<label class="btn btn-secondary">
-					   		<input type="radio" name="options" id="slacker" autocomplete="off"> Slacker
+					   		<input type="radio" name="options" value = "slacker" id="slacker" autocomplete="off"> Slacker
 					  	</label>
 					</div>
 					<hr>
@@ -320,7 +361,7 @@
 				</div> <!-- Close modal body -->
 				
 	     		<div class="modal-footer">
-	     			<button type="button" class="btn btn-secondary">Save</button>
+	     			<button type="button" class="btn btn-secondary" onclick="saveSettings()">Save</button>
 	      		</div>
 	    		</div>  <!-- Close modal content -->
    	 	</div>
