@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="scatalogObjects.*, scatalogObjects.Course,scatalogObjects.Review, java.util.Vector,java.util.Date, java.util.ArrayList, database.*,java.text.DecimalFormat"%>
-
+<%@ page import="java.io.IOException, java.io.ObjectInputStream, java.io.ObjectOutputStream, java.net.Socket" %>
 <%
   //get our new reviews, store it into database and return it 
   String difficulty = request.getParameter("difficulty");
@@ -113,3 +113,17 @@
       </div>
 </div>
 <% }  %>  
+
+<%
+try {
+	Socket socket = (Socket) session.getAttribute("socket");
+	if( socket == null) {
+		 socket = new Socket("localhost", 6789); 
+	}
+	ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream()); 
+	ObjectInputStream ois = new ObjectInputStream(socket.getInputStream()); 
+	oos.writeObject("");
+} catch(IOException ioe){
+	ioe.printStackTrace();
+}
+%>

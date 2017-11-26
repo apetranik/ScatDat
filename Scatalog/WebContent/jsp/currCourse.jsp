@@ -119,6 +119,7 @@
         	  	document.getElementById("modalEntry").disabled = false;
         	  	alert("<%=username%>");
           }
+          clientRead();
     }
     
     
@@ -224,6 +225,17 @@
     	
     }
     
+    function clientRead() {
+    		var xhttp = new XMLHttpRequest(); 
+    		xhttp.open("GET", "../jsp/client.jsp", true); 
+    		xhttp.send();
+    		xhttp.onreadystatechange = function read() {
+    			if(this.readyState == 4 && this.status == 200) {
+    				alert("notification");
+    				clientRead();
+    			}
+    		};
+    }
     
     
     
