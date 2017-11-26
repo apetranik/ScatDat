@@ -41,13 +41,13 @@
 	     	<div class="row">
 	       		<div class="col-lg-12 mx-center">          
 	         		<p class="lead"><%=currentUser.getClassStanding() + ", " +  currentUser.getMajor() + " | " + currentUser.getEmail()%></p>
-					<p class="lead">
+					<p>
 						<b>Recommended for you:</b><br>
 						<%
 							Vector<Course> recommendedCourse = Algorithms.getRecommendedCourses(currentUser, courses);
 							for(int i = 0; i < recommendedCourse.size(); i++){
 						%>
-							<%=recommendedCourse.get(i).getPrefix() +  " " + recommendedCourse.get(i).getCourseId() + recommendedCourse.get(i).getCourseName()%>						
+							<%=recommendedCourse.get(i).getPrefix() +  " " + recommendedCourse.get(i).getCourseId() + " " + recommendedCourse.get(i).getCourseName()%>						
 							<br>
 						<%
 							}

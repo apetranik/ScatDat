@@ -20,7 +20,7 @@ public class Algorithms{
 
 		//create a dummy user with 0 users taking it to initialize recommendations
 		Course dummy = new Course(); 
-		dummy.setNumUsers(0); 
+		dummy.setNumUsers(-1); 
 
 		//initialize the recommendations vector
 		for(int i = 0; i < 3; i++){ 
@@ -33,9 +33,7 @@ public class Algorithms{
 			//the user has not already taken the course 
 			if((course.getType() == 1 || course.getType() == 2) 
 				&& !user.getCoursesTaken().contains(course)) {
-
 				int numUsers = course.getNumUsers(); 
-
 				//recommendations contain the courses that are most popular
 				//so we choose the three with the most number of users
 				if(numUsers > recommendations.get(0).getNumUsers())
