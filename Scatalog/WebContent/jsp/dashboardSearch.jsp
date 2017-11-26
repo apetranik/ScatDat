@@ -34,10 +34,10 @@
 					
 <% 
 	for(User user: users) {
-		if(searchText != null && searchText.length() > 0 && !user.equals(currentUser) && user.getName().getFullName().toLowerCase().contains(searchText)) {
+		if(searchText != null && searchText.length() > 0 && !user.getEmail().equals(currentUser.getEmail()) && user.getName().getFullName().toLowerCase().contains(searchText)) {
 %>
 				
-					<tr><td><a href="../jsp/otherDashBoard.jsp"><%=user.getName().getFullName()%></a></td><td><%=user.getClassStanding()%><td><%=user.getMajor() %></td></tr>
+					<tr><td><a id ="<%=user.getEmail()%>" onclick="otherUser(this.id)" href="javascript:void(0)"><%=user.getName().getFullName()%></a></td><td><%=user.getClassStanding()%><td><%=user.getMajor() %></td></tr>
 
 <%
 		}

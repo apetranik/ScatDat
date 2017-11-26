@@ -199,6 +199,15 @@
     			}
     		}
     		
+    		function otherUser(email) {
+    			var xhttp = new XMLHttpRequest(); 
+  	  			xhttp.open("GET", "../jsp/dashboardSetOtherUser.jsp?Email=" +  email, true); 
+  	  			xhttp.send(); 
+	  	  		xhttp.onreadystatechange = function updateResults() {
+		  			window.location.href = "../jsp/otherDashBoard.jsp"; 
+		  		};
+    		}
+    		
     		
     </script>
   </head>
