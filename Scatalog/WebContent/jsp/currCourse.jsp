@@ -9,8 +9,8 @@
   //remove comment below later
    
   User currentUser = (User)session.getAttribute("currentUser");
-  String username = "zhengxix";
-  //String currentUsername = currentUser.getUsername();
+  String username = currentUser.getUsername();
+  System.out.println("username: " + username);
   
   String prefix = "CSCI";
   int number = 100;
@@ -58,7 +58,10 @@
       session.setAttribute("courses", courses);
     }
   }
-   
+  
+  //get sort list
+  currReviewList = db.getSortList(prefix,number,0);
+  
   //test course 
   /* String courseName = "Principles of Software Development";
   int courseId = 201;
@@ -173,17 +176,23 @@
     
     function updateNum(){
         var xhttp = new XMLHttpRequest(); 
-    var sendStr = "../jsp/updateCourseScoreDiv.jsp?";
-    sendStr += "&prefix=" + "<%=prefix%>";
-    sendStr += "&number=" + "<%=number%>";
-    xhttp.open("GET", sendStr, false);
-    xhttp.send();
-    document.getElementById("courseInfo").innerHTML = xhttp.responseText;
+    		var sendStr = "../jsp/updateCourseScoreDiv.jsp?";
+    		sendStr += "&prefix=" + "<%=prefix%>";
+    		sendStr += "&number=" + "<%=number%>";
+    		xhttp.open("GET", sendStr, false);
+    		xhttp.send();
+    		document.getElementById("courseInfo").innerHTML = xhttp.responseText;
     
         return;
     }
     
-    
+    function sortReview(){
+    		var xhttp = new XMLHttpRequest(); 
+        var sendStr = "../jsp/sortReview.jsp?";
+        sendStr += "prefix=" + "<%=prefix%>";
+        sendStr += "&number=" + "<%=number%>";
+    	
+    }
     
     </script>
     
@@ -243,7 +252,7 @@
       <div class="col-lg-3" id="info">        
         <div class="dropdown">
           <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropdown
+              Sorting
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <a class="dropdown-item" href="#">Sort by Rating</a>
@@ -255,8 +264,8 @@
           
       <div class="col-lg-3" id="info">
         <div class="btn-group">
-           <button type="button" class="btn btn-default btn-sm">Ascending</button>
-           <button type="button" class="btn btn-default btn-sm">Descending</button>
+           <button type="button" value=0 class="btn btn-default btn-sm" id="asc" name="asc" onclick="sortReview()">Ascending</button>
+           <button type="button" value=1 class="btn btn-default btn-sm" id="dec" name="dec" onclick="sortReview()">Descending</button>
         </div>      
       </div>
       

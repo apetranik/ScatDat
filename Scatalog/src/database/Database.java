@@ -713,6 +713,28 @@ public class Database {
 		}
 				
 	}
+	
+	public ArrayList<Review> getSortList(String prefix, int number, int choice) {
+		ArrayList<Review> sortList = new ArrayList<>();
+		int classID = returnCourseID(prefix,number);
+		try {
+			Statement st = conn.createStatement();
+			ResultSet rs;
+			rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
+					+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY year ASC, term ASC");
+			while (rs.next()) {
+				sortList.add(new Review(rs.getString("comment"),
+						new Score(rs.getInt("enjoyment"), rs.getInt("difficulty"), rs.getInt("value"),
+								rs.getInt("workload")),
+						rs.getDate("date"), rs.getString("username"),
+						new CourseTime(rs.getString("term"), rs.getString("year")), rs.getString("emoji"),
+						new Name(rs.getString("p.fname"), rs.getString("p.lname"))));
+			}
+		} catch (SQLException sqle) {
+			System.out.println(sqle.getMessage());
+		}
+		return sortList;
+	}
 	//
 	// public ScoreMap queryScoreMap(String username) {
 	// // get the 20 scores of the user
