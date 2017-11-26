@@ -30,7 +30,7 @@ public class Database {
 	public Database() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/scatdat?user=root&password=root&useSSL=false");
+			conn =  DriverManager.getConnection("jdbc:mysql://localhost/scatdat?user=root&password=root&useSSL=false");
 		} catch (SQLException sqle) {
 			System.out.println(sqle.getMessage());
 		} catch (ClassNotFoundException cnfe) {
@@ -359,8 +359,8 @@ public class Database {
 			System.out.println(sqle.getMessage());
 		}
 		return users;
-		
 	}
+	
 	public  Vector<Course> queryWishlist(int userID) {
 		Vector<Course> courses = new Vector<Course>();
 		try {
@@ -495,7 +495,8 @@ public class Database {
 		}
 		return courses;
 	}
-
+	
+	
 	public  ArrayList<Course> queryCourses() {
 		ArrayList<Course> courses = new ArrayList<Course>();
 		ResultSet rs = null;
@@ -515,17 +516,6 @@ public class Database {
 				double value = rs.getDouble("value");
 				double workload = rs.getDouble("workload");
 				int type = Integer.parseInt(rs.getString("type"));
-				// System.out.println("CourseID: " + courseID);
-				// System.out.println("Prefix: " + prefix);
-				// System.out.println("Number: " + number);
-				// System.out.println("CourseName: " + courseName);
-				// System.out.println("Description: " + description);
-				// System.out.println("Num of Ratings: " + numRatings);
-				// System.out.println("Enjoyment: " + enjoyment);
-				// System.out.println("Difficulty: " + difficulty);
-				// System.out.println("Value: " + value);
-				// System.out.println("Workload: " + workload);
-				// System.out.println("Type: " + type);
 				// Score overallScore = new Score(enjoyment, difficulty, value, workload);
 				// HashMap<Name, ProfCourse> profCourses = queryProfCourseMap(courseID);
 				// ArrayList<Review> reviews = queryAllReview(courseID);
@@ -707,6 +697,27 @@ public class Database {
 				
 	}
 	
+	public void updateUserSettings(String username, int scoringStyle, String fname, String lname, int classStanding, String major, int privacy) {
+		try {
+			Statement st = conn.createStatement();
+			st = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+	                   ResultSet.CONCUR_UPDATABLE);
+			ResultSet rs;
+			rs = st.executeQuery("SELECT * FROM user WHERE username='" + username + "'");
+			if(rs.next()) {
+				rs.updateString("fname", fname);
+				rs.updateString("lname", lname);
+				rs.updateInt("prefferedRatingStyle", scoringStyle);
+				rs.updateInt("classStanding", classStanding);
+				rs.updateString("major", major);
+				rs.updateInt("privacy", privacy);
+				rs.updateRow();
+			}
+		}catch(SQLException sqle) {
+			System.out.println(sqle.getMessage());
+		}
+	}
+	
 	public ArrayList<Review> getSortList(String prefix, int number, int choice, int sort) {
 		ArrayList<Review> sortList = new ArrayList<>();
 		int classID = returnCourseID(prefix,number);
@@ -814,6 +825,17 @@ public class Database {
 	// this.numUsers = numUsers;
 	// }
 
+	public void close() {
+		if(conn != null) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public static void main(String[] args) {
 		Database db = new Database();
 		// db.queryCourses();

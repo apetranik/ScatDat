@@ -46,8 +46,11 @@
 						<%
 							Vector<Course> recommendedCourse = Algorithms.getRecommendedCourses(currentUser, courses);
 							for(int i = 0; i < recommendedCourse.size(); i++){
+								String prefix = recommendedCourse.get(i).getPrefix();
+								int courseID = recommendedCourse.get(i).getCourseId();
 						%>
-							<%=recommendedCourse.get(i).getPrefix() +  " " + recommendedCourse.get(i).getCourseId() + " " + recommendedCourse.get(i).getCourseName()%>						
+							<a style="color: gray" onclick="goToCoursePage(this.id)" href="javascript:void(0)" id ="<%=prefix + "-" + courseID%>" >
+							<%=prefix + " " + courseID + " " + recommendedCourse.get(i).getCourseName()%></a>						
 							<br>
 						<%
 							}
