@@ -11,8 +11,11 @@
   User currentUser = (User)session.getAttribute("currentUser");
   session.setAttribute("orderStyle", 0);
   session.setAttribute("sortStyle", 0);
-  String username = currentUser.getUsername();
-  System.out.println("username: " + username);
+  
+  String username = "";
+  if(currentUser != null){
+  	username = currentUser.getUsername();
+  }
   
   String prefix = (String) session.getAttribute("currCoursePrefix");
   int number = Integer.parseInt((String) session.getAttribute("currCourseNumber"));
@@ -107,16 +110,13 @@
     <!-- script -->
     <script>
     function initialize(){
-          
-      
-        var xhttp = new XMLHttpRequest(); 
-    var sendStr = "../jsp/courseTest.jsp";
-    xhttp.open("GET", sendStr, false); 
-    xhttp.send(); 
-    //if(this.responseText.trim() != "")
-    document.getElementById("reviewlist").innerHTML = xhttp.responseText;
-        
-        
+          if("<%=username%>" == ""){
+        	  	document.getElementById("modalEntry").disabled = true;
+        	  	alert("log in first")
+          }else{
+        	  	document.getElementById("modalEntry").disabled = false;
+        	  	alert("<%=username%>");
+          }
     }
     
     function submitReview(){
@@ -245,7 +245,7 @@
 
   </head>
 
-  <body>
+  <body onload="initialize()">
 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top justify-content-center ">
@@ -317,7 +317,7 @@
       <div class="col-lg-3" id="info">
       
       <!-- Modal -->
-      <button type="button" class="btn btn-default btn-sm"  data-toggle="modal" data-target="#myModal">Submit Review</button>     
+      <button type="button" class="btn btn-default btn-sm"  id="modalEntry" data-toggle="modal" data-target="#myModal">Submit Review</button>     
       <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
           <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
