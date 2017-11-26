@@ -16,6 +16,12 @@
 		currCourse.updateOverallScore();
 		Score overall = currCourse.getOverallScore();
 		db.updateScore(prefix,number,overall);
+		ArrayList<Course> courses = (ArrayList<Course>)session.getAttribute("courses");
+		db = new Database();
+	    if(courses == null) {
+	      courses = db.queryCourses(); //SQL Query
+	      session.setAttribute("courses", courses);
+	    }
 	}
 	
 	DecimalFormat df = new DecimalFormat("#0.0");

@@ -699,7 +699,7 @@ public class Database {
 			double difficulty = score.getDifficulty();
 			double value = score.getValue();
 			double workload = score.getWorkload();
-			while (rs.next()) {
+			if (rs.next()) {
 				rs.updateDouble("overallSCore",overall);
 				rs.updateDouble("enjoyment",enjoyment);
 				rs.updateDouble("difficulty",difficulty);
