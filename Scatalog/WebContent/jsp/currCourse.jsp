@@ -28,6 +28,7 @@
   }
   
   courseId = db.returnCourseID(prefix, number);
+  db.close(); 
   System.out.println(courseId);
   DecimalFormat df = new DecimalFormat("#0.0");
   
@@ -114,11 +115,17 @@
           if("<%=username%>" == ""){
         	  	document.getElementById("modalEntry").disabled = true;
         	  	
-        	  	alert("log in first")
+        	  	//alert("log in first")
           }else{
         	  	document.getElementById("modalEntry").disabled = false;
-        	  	alert("<%=username%>");
+        	  	var username = "<%=username%>";
+        	  	//alert(username);
           }
+          /*window.onbeforeunload = function(){
+        	  	var xhttp = new XMLHttpRequest(); 
+  			xhttp.open("GET", "../jsp/clientCleanup.jsp", false); 
+  			xhttp.send();
+          };*/
           clientRead();
     }
     
@@ -139,7 +146,7 @@
     sendStr += "&review=" + document.myform.reviewbox.value;
     sendStr += "&currentUser=" + "<%=username%>";
     sendStr += "&courseid=" + "<%=courseId%>";
-    alert(sendStr);
+    //alert(sendStr);
     xhttp.open("GET", sendStr, false); 
     xhttp.send();
     document.getElementById("reviewlist").innerHTML = xhttp.responseText;
@@ -153,7 +160,7 @@
     document.getElementById("year").value = "";
     document.getElementById("professor").value = "";
     document.getElementById("reviewbox").value = "";
-    location.reload();
+    //location.reload();
     
       
     }
@@ -231,13 +238,17 @@
     		xhttp.send();
     		xhttp.onreadystatechange = function read() {
     			if(this.readyState == 4 && this.status == 200) {
-    				alert("notification");
-    				clientRead();
+    				//alert("notification");
+    				location.reload();
     			}
     		};
     }
     
-    
+    function closeSocket() {
+    		var xhttp = new XMLHttpRequest(); 
+			xhttp.open("GET", "../jsp/clientCleanup.jsp", false); 
+			xhttp.send();
+    }
     
     
 
