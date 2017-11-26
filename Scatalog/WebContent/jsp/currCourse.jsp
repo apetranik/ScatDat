@@ -14,8 +14,8 @@
   String username = currentUser.getUsername();
   System.out.println("username: " + username);
   
-  String prefix = "CSCI";
-  int number = 100;
+  String prefix = (String) session.getAttribute("currCoursePrefix");
+  int number = Integer.parseInt((String) session.getAttribute("currCourseNumber"));
   int courseId;
   ArrayList<Course> courses = (ArrayList<Course>)session.getAttribute("courses"); 
   Database db = new Database();
