@@ -166,7 +166,7 @@
     document.getElementById("year").value = "";
     document.getElementById("professor").value = "";
     document.getElementById("reviewbox").value = "";
-    
+    location.reload();
     
       
     }
