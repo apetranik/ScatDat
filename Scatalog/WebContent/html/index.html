@@ -86,6 +86,15 @@
 		xhttp.open("GET", "../jsp/signOutUser.jsp", false); 
 		xhttp.send();
 	  }
+	
+	function goToCoursePage(courseInfo) { 
+		var xhttp = new XMLHttpRequest(); 
+			xhttp.open("GET", "../jsp/goToCoursePage.jsp?courseInfo=" +  courseInfo, true); 
+			xhttp.send(); 
+	  		xhttp.onreadystatechange = function changePage() {
+  			window.location.href = "../jsp/currCourse.jsp"; 
+  		};
+	}
 	</script>
     <title>Scatalog</title>
 

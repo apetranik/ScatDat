@@ -54,7 +54,8 @@
 				  		<div id="collapse<%=count%>" class="collapse">
 				    			<div class="card-body">
 				        		<!-- Description goes here -->
-				        			<%=course.getDescription() %>
+				        			<%=course.getDescription() %><hr />
+				        			<a style="color: gray" onclick="goToCoursePage(this.id)" href="javascript:void(0)" id ="<%=course.getPrefix() + "-" + course.getCourseId()%>" >Go to course page!</a>
 				    			</div>
 				    		</div>
 		</div>

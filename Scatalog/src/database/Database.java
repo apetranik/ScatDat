@@ -707,14 +707,54 @@ public class Database {
 				
 	}
 	
-	public ArrayList<Review> getSortList(String prefix, int number, int choice) {
+	public ArrayList<Review> getSortList(String prefix, int number, int choice, int sort) {
 		ArrayList<Review> sortList = new ArrayList<>();
 		int classID = returnCourseID(prefix,number);
 		try {
 			Statement st = conn.createStatement();
-			ResultSet rs;
-			rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
-					+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY year ASC, term ASC");
+			ResultSet rs = null;
+			if(choice == 0) {
+				if(sort == 0) {
+					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
+							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY year DESC, term DESC");
+				}else if(sort == 1) {
+					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
+							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY overallScore DESC");
+				}else if(sort == 2) {
+					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
+							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY difficulty DESC");
+				}else if(sort == 3) {
+					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
+							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY value DESC");
+				}else if(sort == 4) {
+					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
+							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY enjoyment DESC");
+				}else if(sort == 5) {
+					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
+							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY workload DESC");
+				}
+
+			}else if(choice == 1){
+				if(sort == 0) {
+					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
+							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY year ASC, term ASC");
+				}else if(sort == 1) {
+					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
+							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY overallScore ASC");
+				}else if(sort == 2) {
+					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
+							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY difficulty ASC");
+				}else if(sort == 3) {
+					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
+							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY value ASC");
+				}else if(sort == 4) {
+					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
+							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY enjoyment ASC");
+				}else if(sort == 5) {
+					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
+							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY workload ASC");
+				}
+			}
 			while (rs.next()) {
 				sortList.add(new Review(rs.getString("comment"),
 						new Score(rs.getInt("enjoyment"), rs.getInt("difficulty"), rs.getInt("value"),
