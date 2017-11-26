@@ -630,6 +630,7 @@ public class Database {
 	public Course returnCourse(String prefix, int number) {
 		ArrayList<Course> courses = queryCourses();
 		Course currCourse = null;
+		prefix = prefix.toUpperCase(); 
 		for (int i = 0; i < courses.size(); i++) {
 			currCourse = courses.get(i);
 			if (currCourse.getPrefix().equals(prefix) && currCourse.getCourseId() == number) {
