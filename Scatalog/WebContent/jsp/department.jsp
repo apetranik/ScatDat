@@ -5,8 +5,12 @@
 
 <%
 
-    QueryDepartments departmentRequest = new QueryDepartments(); 
-	List<Department> departments = departmentRequest.getAllDepartments();
+	List<Department> departments = (List<Department>) session.getAttribute("departments");
+	if(departments == null) {
+	    QueryDepartments departmentRequest = new QueryDepartments(); 
+		departments = departmentRequest.getAllDepartments();
+		session.setAttribute("departments", departments); 
+	}
 	
 	if(departments == null) System.out.println("hmmm");
 	List<Course> courses = null;
