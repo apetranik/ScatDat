@@ -1,12 +1,12 @@
 <%@page import="database.Database"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList, java.util.List, scatalogObjects.Course, scatalogObjects.AllDepartments, scatalogObjects.Department, java.text.DecimalFormat"  %>
+<%@ page import="java.util.ArrayList, java.util.List, scatalogObjects.*, java.text.DecimalFormat"  %>
 
 <%
 
-    
-	ArrayList<Department> departments = scatalogObjects.AllDepartments.getAllDepartments();
+    QueryDepartments departmentRequest = new QueryDepartments(); 
+	List<Department> departments = departmentRequest.getAllDepartments();
 	
 	if(departments == null) System.out.println("hmmm");
 	List<Course> courses = null;

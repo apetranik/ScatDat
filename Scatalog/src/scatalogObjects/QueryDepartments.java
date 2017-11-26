@@ -14,7 +14,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class AllDepartments {
+public class QueryDepartments {
+	
 	private static String readAll(Reader rd) throws IOException {
 		StringBuilder sb = new StringBuilder();
 		int cp;
@@ -36,7 +37,7 @@ public class AllDepartments {
 		}
 	}
 	
-	public static List<Department> getAllDepartments() {
+	public List<Department> getAllDepartments() {
 		List<Department> AllDepartments = new ArrayList<Department>();
 		try {
 			JSONObject json = readJsonFromUrl("http://web-app.usc.edu/web/soc/api/departments/20173");
