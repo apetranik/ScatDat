@@ -686,6 +686,33 @@ public class Database {
 		return currCourse;
 
 	}
+	
+	public void updateScore(String prefix, int number, Score score) {
+		try {
+			Statement st = conn.createStatement();
+			st = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+	                   ResultSet.CONCUR_UPDATABLE);
+			ResultSet rs;
+			rs = st.executeQuery("SELECT * FROM course WHERE prefix='" + prefix + "' AND number=" + number);
+			double overall = score.getOverallRating();
+			double enjoyment = score.getEnjoyment();
+			double difficulty = score.getDifficulty();
+			double value = score.getValue();
+			double workload = score.getWorkload();
+			while (rs.next()) {
+				rs.updateDouble("overallSCore",overall);
+				rs.updateDouble("enjoyment",enjoyment);
+				rs.updateDouble("difficulty",difficulty);
+				rs.updateDouble("value",value);
+				rs.updateDouble("workload",workload);
+				rs.updateRow();
+			}
+						
+		}catch (SQLException sqle) {
+			System.out.println(sqle.getMessage());
+		}
+				
+	}
 	//
 	// public ScoreMap queryScoreMap(String username) {
 	// // get the 20 scores of the user
