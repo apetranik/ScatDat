@@ -4,7 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%
-while(true) {
+//while(true) {
 try {
 	Socket s = (Socket) session.getAttribute("socket1");
 	if( s == null) {
@@ -21,11 +21,18 @@ try {
 		ois = new ObjectInputStream(s.getInputStream()); 
 		session.setAttribute("ois1", ois); 
 	}
-	ois.readObject();
-	break; 
+	//if(s.isClosed())
+		//break; 
+	String read = (String) ois.readObject();
+%>
+	<%=read%>
+<%
+	
+	//break; 
 } catch(IOException ioe){
 	ioe.printStackTrace();
+	session.setAttribute("socket1", null); 
 }
-}
+//}
 
 %>

@@ -9,14 +9,20 @@
  ObjectInputStream ois2 = (ObjectInputStream) session.getAttribute("ois2");
  Socket s1 =  (Socket) session.getAttribute("socket1"); 
  Socket s2 = (Socket) session.getAttribute("socket2");
+ 
  if(oos1 != null) {
 	 oos1.close(); 
 	 session.setAttribute("oos1", null); 
  }
  if(oos2 != null) {
-	 oos1.close(); 
-	 session.setAttribute("oos2", null); 
- }
+		 try {
+		 	oos2.writeObject("break");
+		 } catch (Exception e) {
+			 e.printStackTrace();
+		 }
+		 oos2.close(); 
+		 session.setAttribute("oos2", null); 
+	 }
  if(ois1 != null) {
 	 ois1.close(); 
 	 session.setAttribute("ois1", null); 
@@ -27,11 +33,11 @@
  }
  if(s1 != null) {
 	 s1.close(); 
-	 session.setAttribute("s1", null); 
+	 session.setAttribute("socket1", null); 
  }
  if(s2 != null) {
 	 s2.close(); 
-	 session.setAttribute("s2", null); 
+	 session.setAttribute("socket2", null); 
  }
 
 %>

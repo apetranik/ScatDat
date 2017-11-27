@@ -28,7 +28,6 @@
   }
   
   courseId = db.returnCourseID(prefix, number);
-  db.close(); 
   System.out.println(courseId);
   DecimalFormat df = new DecimalFormat("#0.0");
   
@@ -75,7 +74,7 @@
   
   
 
-
+  db.close(); 
 
 
 %>
@@ -121,11 +120,11 @@
         	  	var username = "<%=username%>";
         	  	//alert(username);
           }
-          /*window.onbeforeunload = function(){
+          window.onbeforeunload = function(){
         	  	var xhttp = new XMLHttpRequest(); 
   			xhttp.open("GET", "../jsp/clientCleanup.jsp", false); 
   			xhttp.send();
-          };*/
+          };
           clientRead();
     }
     
@@ -238,8 +237,10 @@
     		xhttp.send();
     		xhttp.onreadystatechange = function read() {
     			if(this.readyState == 4 && this.status == 200) {
-    				//alert("notification");
-    				location.reload();
+    				if(xhttp.responseText.trim() < 1) {
+	    				//alert("notification");
+	    				location.reload();
+    				}	
     			}
     		};
     }
