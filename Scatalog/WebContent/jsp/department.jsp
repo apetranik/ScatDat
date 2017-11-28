@@ -12,6 +12,7 @@
 		session.setAttribute("departments", departments); 
 	
 	ArrayList<School> schools = departmentRequest.getAllSchools();
+	System.out.println("schools: " + schools.get(0).getDepts().get(57).getName());
 	
 	if(departments == null) System.out.println("hmmm");
 	List<Course> courses = null;

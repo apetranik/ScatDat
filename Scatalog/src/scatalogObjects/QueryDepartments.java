@@ -90,11 +90,19 @@ public class QueryDepartments {
 		ArrayList<School> schools = new ArrayList<School>();
 		
 		School dornsife = new School("Dornsife College of Letters, Arts and Sciences");
-		for(int i = 1; i < 58; i++)
+		schools.add(dornsife);
+		for(int i = 0; i < 58; i++)
 		{
 			dornsife.addDept(departments.get(i));
 			System.out.println("dept: " + departments.get(i).getName());
+			
 		}
+		
+		School accounting = new School("Leventhal School of Accounting");
+		dornsife.addDept(departments.get(58));
+			System.out.println("dept: " + departments.get(58).getName());
+			
+		
 		
 		return schools;
 
