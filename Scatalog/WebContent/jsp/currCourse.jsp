@@ -307,44 +307,57 @@
     <!-- Page Content -->
    <div class="container">
     <div class="row">
-      <div class="col-lg-6" id="courseInfo"> <b><%=fullCourseName %></b> &nbsp;&nbsp; <%=df.format(currCourse.getOverallScore().getOverallRating())%> &nbsp;&nbsp; (<%=currReviewList.size() %> reviews)</div>
-
-      <div class="col-lg-3" id="info">        
-        <div class="dropdown">
-          <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Sorting by
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a id="Rating" class="dropdown-item" name="sort" value="0" onclick="sortReview2()" href="#">Term</a>
-              <a id="Term" class="dropdown-item" name="sort" value="1" onclick="sortReview2()" href="#">Overall Rating</a>
-              <a id="Date" class="dropdown-item" name="sort" value="2" onclick="sortReview2()" href="#">Difficulty</a>
-              <a id="Date" class="dropdown-item" name="sort" value="2" onclick="sortReview2()" href="#">Value</a>
-              <a id="Date" class="dropdown-item" name="sort" value="2" onclick="sortReview2()" href="#">Enjoyment</a>
-              <a id="Date" class="dropdown-item" name="sort" value="2" onclick="sortReview2()" href="#">Workload</a>
-          </div>
-          </div>
+      <div class="col-lg-2" id="courseInfo"> 
+      	<span><h3><%=fullCourseName %></h3> <p> &nbsp;&nbsp; <%=df.format(currCourse.getOverallScore().getOverallRating())%> &nbsp;&nbsp; (<%=currReviewList.size() %> reviews)</p></span>
       </div>
+      <div class="col-lg-10" id="info">
+      	<p><%=currCourse.getDescription() %></p>
+      </div>
+     </div><!-- close row -->
+     <br />
+     <div class="row">
+  
+	 	<div class="col-lg-2">
+	   		<button type="button" class="btn btn-secondary btn-sm"  id="modalEntry" data-toggle="modal" data-target="#myModal">Submit Review</button>     
+	  	</div>
+	  	<div class="col-lg-4">
+	  	<!-- Empty space -->
+	  	</div>
+      	<div class="col-lg-2" id="info">        
+       		<div class="dropdown">
+          		<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              		Sorting by
+          		</button>
+	          	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+	              <a id="Rating" class="dropdown-item" name="sort" value="0" onclick="sortReview2()" href="#">Term</a>
+	              <a id="Term" class="dropdown-item" name="sort" value="1" onclick="sortReview2()" href="#">Overall Rating</a>
+	              <a id="Date" class="dropdown-item" name="sort" value="2" onclick="sortReview2()" href="#">Difficulty</a>
+	              <a id="Date" class="dropdown-item" name="sort" value="2" onclick="sortReview2()" href="#">Value</a>
+	              <a id="Date" class="dropdown-item" name="sort" value="2" onclick="sortReview2()" href="#">Enjoyment</a>
+	              <a id="Date" class="dropdown-item" name="sort" value="2" onclick="sortReview2()" href="#">Workload</a>
+	          	</div>
+      		</div>
+      	</div><!-- close col -->
           
-      <div class="col-lg-3" id="info">
-        <div class="btn-group" data-toggle="buttons">
-	      				<!-- Descending Option -->
-						<label class="btn btn-secondary active" onchange="sortReview()">
-					    		<input type="radio" value="0" name="options" id="des" autocomplete="off" checked> Descending
-					  	</label>
-					  	<!-- Ascending Option -->
-					  	<label class="btn btn-secondary" onchange="sortReview()">
-					   		<input type="radio" value="1" name="options" id="asc" autocomplete="off" > Ascending
-					  	</label>
-					</div>    
-      </div>
-      
-      
-    </div>
+      	<div class="col-lg-4 mx-right" id="info">
+        		<div class="btn-group" data-toggle="buttons">
+	      			<!-- Descending Option -->
+					<label class="btn btn-secondary active" onchange="sortReview()">
+				    		<input type="radio" value="0" name="options" id="des" autocomplete="off" checked> Descending
+				  	</label>
+				  	<!-- Ascending Option -->
+				  	<label class="btn btn-secondary" onchange="sortReview()">
+				   		<input type="radio" value="1" name="options" id="asc" autocomplete="off" > Ascending
+				  	</label>
+			</div>    
+     	 </div><!-- close col -->
+	</div><!-- close row -->
+	<hr>
     <div class="row">
       <div class="col-lg-3" id="info">
       
       <!-- Modal -->
-      <button type="button" class="btn btn-default btn-sm"  id="modalEntry" data-toggle="modal" data-target="#myModal">Submit Review</button>     
+     
       <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
           <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
@@ -466,11 +479,7 @@
       
       
     </div>
-    <div class="row" id= "description">
-      <div class="col-lg-12" id="info">
-      <p><%=currCourse.getDescription() %></p>
-      </div>
-    </div>
+    
     
     <!-- rows below can be regarded as a block for a single review, put it in a loop to print all reviews. Please don't forget to change the 
       hard-coded things to SQL variables -->
@@ -490,11 +499,12 @@
         }
    
 %>
+	
       <div class="row" id= "reviewerSection">
         <div class="col-lg-3" id="reviewer">
           <div class = "row">
-            <div class="col-lg-6"><b><%=currReview.getUsername()%></b></div>
-            <div class="col-lg-6 text-right"><b>Total: <%=df.format(currScore.getOverallRating())%></b></div>
+            <div class="col-lg-6"><h5><%=currReview.getUsername()%></h5></div>
+            <div class="col-lg-6 text-right">Total: <%=df.format(currScore.getOverallRating())%></div>
           </div>    
         </div>
         <div class="col-lg-5"></div>
@@ -510,11 +520,13 @@
           <p class="text-right">Enjoyment:  <%=currScore.getEnjoyment()%></p>
           <p class="text-right">Workload:   <%=currScore.getWorkload()%></p>      
         </div>
-        <div class= "col-lg-1"></div>
+        <div class= "col-lg-1">
+        </div>
         <div class="col-lg-8" id="review">
           <p><%=currReview.getReview() %></p>   
         </div>
       </div>
+      <hr>
 <%      }  %>  
     </section>
     
