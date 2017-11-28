@@ -237,9 +237,10 @@
     		xhttp.send();
     		xhttp.onreadystatechange = function read() {
     			if(this.readyState == 4 && this.status == 200) {
-    				if(xhttp.responseText.trim() < 1) {
+    				if(xhttp.responseText.trim().length < 3) {
 	    				//alert("notification");
-	    				location.reload();
+	    				//location.reload();
+	    				sortReview(); 
     				}	
     			}
     		};

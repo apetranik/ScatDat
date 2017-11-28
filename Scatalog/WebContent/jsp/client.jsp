@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.io.IOException, java.io.ObjectInputStream, java.io.ObjectOutputStream, java.net.Socket" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%
 //while(true) {
@@ -22,8 +21,12 @@ try {
 		session.setAttribute("ois1", ois); 
 	}
 	//if(s.isClosed())
-		//break; 
-	String read = (String) ois.readObject();
+		//break;
+	String read = ""; 
+	if(session.getAttribute("?") == null)
+	  read = (String) ois.readObject();
+	if(read.length() > 0)
+		session.setAttribute("?", "no"); 
 %>
 	<%=read%>
 <%

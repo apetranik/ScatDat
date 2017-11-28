@@ -39,5 +39,5 @@
 	 s2.close(); 
 	 session.setAttribute("socket2", null); 
  }
-
+session.setAttribute("?", null); 
 %>
