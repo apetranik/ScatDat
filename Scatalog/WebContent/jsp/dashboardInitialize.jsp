@@ -156,15 +156,11 @@
 			  		</form>
 			  		<hr>
 			  		<div id="accordion" role="tablist" aria-multiselectable="true">
-			  		
+			  		<!-- THINGS FROM dashboardCOurse.jsp -->
 			  		</div>
 				</div> <!-- Close modal body -->
 				
-	
-				<!-- Modal Footer -->
-	     		<div class="modal-footer">
-	     			<button type="button" class="btn btn-secondary" onclick="submitCourse()">Save</button>
-	      		</div>
+	     		
 	    		</div>  <!-- Close modal content -->
    	 	</div>
 	</div>
@@ -189,13 +185,11 @@
 	  				</form>
 	  				<hr>
 			  		<div id="accordion2" role="tablist" aria-multiselectable="true"> 
-			  		
+			  		<!-- all the stuff from dashboardWishlistSearch -->
 			  		</div>
 				</div> <!-- Close modal body -->
 				
-	     		<div class="modal-footer">
-	     			<button type="button" class="btn btn-secondary" onclick="">Save</button>
-	      		</div>
+	     		
 	    		</div>  <!-- Close modal content -->
    	 	</div>
 	</div>

@@ -19,6 +19,7 @@
 				5, 5, 1, 1, 0)); 
 		//delete above lines once we get login page and queries working
 	*/
+	
 %>
 
 <!DOCTYPE html>
@@ -29,6 +30,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+	
+	<meta name="google-signin-client_id" content="647589413183-bdfcadf4bm2vugreeo6a8n4hj3ath8rg.apps.googleusercontent.com">
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
 	
     <title>Scatalog</title>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -49,7 +53,44 @@
 	
     <!-- Custom styles for this template -->
     <script type="text/javascript" src="js/materialize.min.js"></script>
-    
+    <script>
+ // GOOD
+    function signOut() {
+	    var auth2 = gapi.auth2.getAuthInstance();
+	    auth2.signOut().then(function () {
+	      console.log('User signed out.');
+	    });
+	    var xhttp = new XMLHttpRequest();
+		xhttp.open("GET", "../jsp/signOutUser.jsp", false); 
+		xhttp.send();
+	  }
+    // GOOD
+    function onSignIn(googleUser) {
+		var profile = googleUser.getBasicProfile();
+		document.getElementById("userHello").innerHTML = "Hello, "+ profile.getName()+ "!";
+		console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+		console.log('Name: ' + profile.getName());
+		console.log('Image URL: ' + profile.getImageUrl());
+		console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+	  	var xhttp = new XMLHttpRequest();
+		xhttp.open("GET", "../jsp/authUser.jsp?email=" +  profile.getEmail(), true); 
+		xhttp.send();
+		xhttp.onreadystatechange = function updateResults() {
+				if(this.readyState == 4 && this.status == 200) {
+					var result = xhttp.responseText.trim();
+					
+					if(result == '1') {
+						
+						window.location.href = "../html/login.html";
+					}
+					else {
+					
+					}
+				}
+		};
+		return true;
+	}
+    </script>
     </head>
     <body>
     <div class = "nav-bar">
@@ -64,10 +105,10 @@
                 			<a class="nav-link" href="<%=request.getContextPath() + "/html/index.html"%>">HOME</a>
             			</li>
             			<li class="nav-item">
-                			<a class="nav-link" href="<%=request.getContextPath() + "/html/explore.html"%>">EXPLORE</a>
-            			</li>
+        					<a class="nav-link" id="userHello"></a>
+        				</li>
             			<li class="nav-item">
-               			<a class="nav-link" href="<%=request.getContextPath() + "/html/department.html"%>">BY DEPARTMENT</a>
+               			<a class="nav-link" href="<%=request.getContextPath() + "/html/department.html"%>">ALL SCHOOLS</a>
             			</li>
         			</ul>
         			<ul class="nav navbar-nav ml-auto w-100 justify-content-end">
@@ -75,8 +116,11 @@
                 			<a class="nav-link" href="<%=request.getContextPath() + "/html/dashboard.html"%>">User Dashboard</a>
            			</li>
             			<li class="nav-item">
-                			<a class="nav-link" href="<%=request.getContextPath() + "/html/login.html"%>">Sign-In</a>
-            			</li>  
+                			<div class="g-signin2" data-onsuccess="onSignIn"></div>
+            			</li> 
+            			<li class="nav-item">
+						<a class="nav-link" href="#" onclick="signOut();">Sign Out</a>
+					</li>
         			</ul>
     			</div>
     		</nav>

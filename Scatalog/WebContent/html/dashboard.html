@@ -195,6 +195,7 @@
   	  			xhttp.send(); 
 	  	  		xhttp.onreadystatechange = function updateResults() {
 		  				if(this.readyState == 4 && this.status == 200) {
+		  					
 		  					document.getElementById("accordion").innerHTML = xhttp.responseText; 
 		  					
 		  			};
@@ -297,10 +298,13 @@
             			</li>
             			
             			<li class="nav-item">
-               			<a class="nav-link" href="department.html">ALL COURSES</a>
+               			<a class="nav-link" href="department.html">ALL SCHOOLS</a>
             			</li>
         			</ul>
         			<ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+        				<li class="nav-item">
+        					<a class="nav-link" id="userHello"></a>
+        				</li>
            			<li class="nav-item">
                 			<a class="nav-link active" href="#">User Dashboard</a>
            			</li>
@@ -537,7 +541,8 @@
  			xhttp.send(); 
 	  		xhttp.onreadystatechange = function updateResults() {
 	  				if(this.readyState == 4 && this.status == 200) {
-	  					document.getElementById("accordion").innerHTML = xhttp.responseText; 
+	  					 document.location.reload();
+	  					 $('#courseModal').modal('toggle');
 	  					
 	  			};
 			
@@ -551,7 +556,8 @@
  			xhttp.send(); 
 	  		xhttp.onreadystatechange = function updateResults() {
 	  				if(this.readyState == 4 && this.status == 200) {
-	  					document.getElementById("accordion2").innerHTML = xhttp.responseText; 
+	  					document.location.reload();
+	  					 $('#wishlistModal').modal('toggle'); 
 	  					
 	  			};
 			
