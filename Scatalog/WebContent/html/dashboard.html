@@ -64,30 +64,32 @@
 		xhttp.send();
 	  }
     
-    		function initialize() {
-    			var xhttp = new XMLHttpRequest(); 
-    			xhttp.open("GET", "../jsp/dashboardInitialize.jsp", false); 
-      		xhttp.send(); 
-      		if(xhttp.responseText.trim() != "") {
-      			document.getElementById("about").innerHTML = xhttp.responseText;
-      			var recs = document.getElementsByName("recs");
-      			/*for (i = 0; i < recs.length; i++) {
-      				recs[i].onclick = gTCP(recs[i].id);   
-      			}*/
-      			
-      		}
-      		else
-      			window.location.href = "../html/login.html";
-      		
-    		}
+	function initialize() {
+		var xhttp = new XMLHttpRequest(); 
+		xhttp.open("GET", "../jsp/dashboardInitialize.jsp", false); 
+ 		xhttp.send(); 
+ 		if(xhttp.responseText.trim() != "") {
+ 			document.getElementById("about").innerHTML = xhttp.responseText;
+ 			var recs = document.getElementsByName("recs");
+ 			/*for (i = 0; i < recs.length; i++) {
+ 				recs[i].onclick = gTCP(recs[i].id);   
+ 			}*/
+ 			
+ 		}
+ 		else
+ 			window.location.href = "../html/login.html";
+ 		
+	}
     		
     		function goToCoursePage(courseInfo) { 
     			var xhttp = new XMLHttpRequest(); 
     				xhttp.open("GET", "../jsp/goToCoursePage.jsp?courseInfo=" +  courseInfo, true); 
     				xhttp.send(); 
     		  		xhttp.onreadystatechange = function changePage() {
-    	  			window.location.href = "../jsp/currCourse.jsp"; 
-    	  		};
+    		  			if(this.readyState == 4 && this.status == 200) {
+    	  					window.location.href = "../jsp/currCourse.jsp"; 
+    		  			}
+    	  			};
     		}
     		
     		function srch() {
