@@ -48,9 +48,10 @@ public class QueryDepartments {
 					for(int j = 0; j < innerDepartment.length(); j++) {
 //						System.out.println(j + " " + innerDepartment.length());
 						String code = innerDepartment.getJSONObject(j).getString("code");
+						String name = innerDepartment.getJSONObject(j).getString("name");
 //						System.out.println(code);
 						String url = "http://web-app.usc.edu/web/soc/api/classes/" + code + "/20173";
-						Department department = new Department(code);
+						Department department = new Department(code, name);
 //						System.out.println(url);
 						try {
 							JSONObject json2 = readJsonFromUrl(url);

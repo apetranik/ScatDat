@@ -28,7 +28,19 @@
     <!-- Custom styles for this template -->
     <script type="text/javascript" src="js/materialize.min.js"></script>
     
-    <script>
+    <script type="text/javascript">
+    
+    // GOOD
+    function signOut() {
+	    var auth2 = gapi.auth2.getAuthInstance();
+	    auth2.signOut().then(function () {
+	      console.log('User signed out.');
+	    });
+	    var xhttp = new XMLHttpRequest();
+		xhttp.open("GET", "../jsp/signOutUser.jsp", false); 
+		xhttp.send();
+	  }
+    // GOOD
     function onSignIn(googleUser) {
 		var profile = googleUser.getBasicProfile();
 		document.getElementById("userHello").innerHTML = "Hello, "+ profile.getName()+ "!";
@@ -54,44 +66,29 @@
 		};
 		return true;
 	}
-    function signOut() {
-	    var auth2 = gapi.auth2.getAuthInstance();
-	    auth2.signOut().then(function () {
-	      console.log('User signed out.');
-	    });
-	    var xhttp = new XMLHttpRequest();
-		xhttp.open("GET", "../jsp/signOutUser.jsp", false); 
-		xhttp.send();
-	  }
     
-	function initialize() {
+    // GOOD
+    function initialize() {
 		var xhttp = new XMLHttpRequest(); 
 		xhttp.open("GET", "../jsp/dashboardInitialize.jsp", false); 
- 		xhttp.send(); 
- 		if(xhttp.responseText.trim() != "") {
- 			document.getElementById("about").innerHTML = xhttp.responseText;
- 			var recs = document.getElementsByName("recs");
- 			/*for (i = 0; i < recs.length; i++) {
- 				recs[i].onclick = gTCP(recs[i].id);   
- 			}*/
- 			
- 		}
- 		else
- 			window.location.href = "../html/login.html";
- 		
-	}
-    		
+		xhttp.send(); 
+		if(xhttp.responseText.trim() != "") {
+			document.getElementById("about").innerHTML = xhttp.responseText;			
+		}
+		else {
+			window.location.href = "../html/login.html";
+		}
+    }
+    // GOOD
     		function goToCoursePage(courseInfo) { 
     			var xhttp = new XMLHttpRequest(); 
     				xhttp.open("GET", "../jsp/goToCoursePage.jsp?courseInfo=" +  courseInfo, true); 
     				xhttp.send(); 
     		  		xhttp.onreadystatechange = function changePage() {
-    		  			if(this.readyState == 4 && this.status == 200) {
-    	  					window.location.href = "../jsp/currCourse.jsp"; 
-    		  			}
-    	  			};
+    	  			window.location.href = "../jsp/currCourse.jsp"; 
+    	  		};
     		}
-    		
+    		// GOOD
     		function srch() {
     			var searchText = document.getElementById("searchText").value; 
     			if(searchText.length > 0)
@@ -109,7 +106,7 @@
       				}
       			};
     		}
-    		
+    		// GOOD
     		function searchCourses()
     		{
     			console.log("courseSearch");
@@ -149,6 +146,7 @@
           		    }, 200);
           		};
     		}
+    		// GOOD
     		function searchWishlist()
     		{
     			console.log("searchwishlist");
@@ -188,6 +186,7 @@
           		    }, 200);
           		};
     		}
+    		// GOOD
     		function addToCourses(courseName)
     		{
     			console.log(courseName);
@@ -202,6 +201,7 @@
     			
     			}
     		}
+    		// GOOD
     		function addToWishlist(courseName)
     		{
     			console.log(courseName);
@@ -239,6 +239,7 @@
     					wishlist and courseTaken private is 2
     					all private is 3 
     		*/
+    		/*
     		function saveSettings(){
     			User user = (User)session.getAttribute(currentUser);
     			var username = user.getUsername;
@@ -249,12 +250,16 @@
     			var major = 
     			var privacy = 
     		}
+    		*/
     		
     		
     		
     </script>
   </head>
 <body onload="initialize()">
+<script>
+
+</script>
 <!-- Navigation -->
 	<div class = "nav-bar">
     		<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top justify-content-center ">
@@ -368,7 +373,194 @@
 	    		</div>  <!-- Close modal content -->
    	 	</div>
 	</div>
-	
+	<script>
+	function initialize() {
+		var xhttp = new XMLHttpRequest(); 
+		xhttp.open("GET", "../jsp/dashboardInitialize.jsp", false); 
+		xhttp.send(); 
+		if(xhttp.responseText.trim() != "") {
+			document.getElementById("about").innerHTML = xhttp.responseText;			
+		}
+		else {
+			window.location.href = "../html/login.html";
+		}
+	}
+	 function onSignIn(googleUser) {
+			var profile = googleUser.getBasicProfile();
+			document.getElementById("userHello").innerHTML = "Hello, "+ profile.getName()+ "!";
+			console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+			console.log('Name: ' + profile.getName());
+			console.log('Image URL: ' + profile.getImageUrl());
+			console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+		  	var xhttp = new XMLHttpRequest();
+			xhttp.open("GET", "../jsp/authUser.jsp?email=" +  profile.getEmail(), true); 
+			xhttp.send();
+			xhttp.onreadystatechange = function updateResults() {
+					if(this.readyState == 4 && this.status == 200) {
+						var result = xhttp.responseText.trim();
+						
+						if(result == '1') {
+							
+							window.location.href = "../html/login.html";
+						}
+						else {
+						
+						}
+					}
+			};
+			return true;
+		}
+	 function signOut() {
+		    var auth2 = gapi.auth2.getAuthInstance();
+		    auth2.signOut().then(function () {
+		      console.log('User signed out.');
+		    });
+		    var xhttp = new XMLHttpRequest();
+			xhttp.open("GET", "../jsp/signOutUser.jsp", false); 
+			xhttp.send();
+		  }
+	 
+	 function goToCoursePage(courseInfo) { 
+			var xhttp = new XMLHttpRequest(); 
+				xhttp.open("GET", "../jsp/goToCoursePage.jsp?courseInfo=" +  courseInfo, true); 
+				xhttp.send(); 
+		  		xhttp.onreadystatechange = function changePage() {
+	  			window.location.href = "../jsp/currCourse.jsp"; 
+	  		};
+		}
+	 
+	 function srch() {
+			var searchText = document.getElementById("searchText").value; 
+			if(searchText.length > 0)
+				document.getElementById("searchText").style.borderColor = "#4292f4"; 
+			else
+				document.getElementById("searchText").style.borderColor = "black"; 
+			var xhttp = new XMLHttpRequest(); 
+			xhttp.open("GET", "../jsp/dashboardSearch.jsp?searchText=" +  document.getElementById("searchText").value, true); 
+			xhttp.send(); 
+			xhttp.onreadystatechange = function updateResults() {
+				if(this.readyState == 4 && this.status == 200) {
+					document.getElementById("searchResults").innerHTML = xhttp.responseText; 
+					if(this.responseText.trim().length < 1 && searchText.length > 1)
+						document.getElementById("searchText").style.borderColor = "#dc3545"; 
+				}
+			};
+		}
+	 function searchCourses()
+		{
+			console.log("courseSearch");
+			var theElement = document.getElementById("courseSearchText");
+
+			
+			var textInput = document.getElementById("courseSearchText"); 
+   		// Init a timeout variable to be used below
+   		var timeout = null;
+
+   		// Listen for keystroke events
+   		textInput.oninput = function (e) {
+
+   		    // Clear the timeout if it has already been set.
+   		    // This will prevent the previous task from executing
+   		    // if it has been less than <MILLISECONDS>
+   		    clearTimeout(timeout);
+
+   		    // Make a new timeout set to go off in 800ms
+   		    timeout = setTimeout(function () {
+   		    	var searchText = document.getElementById("courseSearchText").value; 
+   				
+   				var xhttp = new XMLHttpRequest(); 
+   	  			xhttp.open("GET", "../jsp/dashboardCourseSearch.jsp?searchText=" +  document.getElementById("courseSearchText").value, true); 
+   	  			xhttp.send(); 
+   	  			xhttp.onreadystatechange = function updateResults() {
+   	  				if(this.readyState == 4 && this.status == 200) {
+   	  					document.getElementById("accordion").innerHTML = xhttp.responseText; 
+   	  					if(this.responseText.trim().length < 1 && searchText.length > 0)
+   	  						document.getElementById("courseSearchText").style.borderColor = "#dc3545"; 
+   	  					else if(searchText.length > 0)
+   	  						document.getElementById("courseSearchText").style.borderColor = "#4292f4"; 
+   	  					else 
+   	  						document.getElementById("courseSearchText").style.borderColor = "black"; 
+   	  				}
+   	  			};
+   		    }, 200);
+   		};
+		}
+	 function searchWishlist()
+		{
+			console.log("searchwishlist");
+			var theElement = document.getElementById("wishlistSearchText");
+
+			
+			var textInput = document.getElementById("wishlistSearchText"); 
+   		// Init a timeout variable to be used below
+   		var timeout = null;
+
+   		// Listen for keystroke events
+   		textInput.oninput = function (e) {
+
+   		    // Clear the timeout if it has already been set.
+   		    // This will prevent the previous task from executing
+   		    // if it has been less than <MILLISECONDS>
+   		    clearTimeout(timeout);
+
+   		    // Make a new timeout set to go off in 800ms
+   		    timeout = setTimeout(function () {
+   		    	var searchText = document.getElementById("wishlistSearchText").value; 
+   				
+   				var xhttp = new XMLHttpRequest(); 
+   	  			xhttp.open("GET", "../jsp/dashboardWishlistSearch.jsp?searchText=" +  document.getElementById("wishlistSearchText").value, true); 
+   	  			xhttp.send(); 
+   	  			xhttp.onreadystatechange = function updateResults() {
+   	  				if(this.readyState == 4 && this.status == 200) {
+   	  					document.getElementById("accordion2").innerHTML = xhttp.responseText; 
+   	  					if(this.responseText.trim().length < 1 && searchText.length > 0)
+   	  						document.getElementById("wishlistSearchText").style.borderColor = "#dc3545"; 
+   	  					else if(searchText.length > 0)
+   	  						document.getElementById("wishlistSearchText").style.borderColor = "#4292f4"; 
+   	  					else 
+   	  						document.getElementById("wishlistSearchText").style.borderColor = "black"; 
+   	  				}
+   	  			};
+   		    }, 200);
+   		};
+		}
+	 function addToCourses(courseName)
+		{
+			console.log(courseName);
+			var xhttp = new XMLHttpRequest(); 
+ 			xhttp.open("GET", "../jsp/dashboardCourseAdd.jsp?newCourse=" +  courseName, true); 
+ 			xhttp.send(); 
+	  		xhttp.onreadystatechange = function updateResults() {
+	  				if(this.readyState == 4 && this.status == 200) {
+	  					document.getElementById("accordion").innerHTML = xhttp.responseText; 
+	  					
+	  			};
+			
+			}
+		}
+	 function addToWishlist(courseName)
+		{
+			console.log(courseName);
+			var xhttp = new XMLHttpRequest(); 
+ 			xhttp.open("GET", "../jsp/dashboardWishlistAdd.jsp?newCourse=" +  courseName, true); 
+ 			xhttp.send(); 
+	  		xhttp.onreadystatechange = function updateResults() {
+	  				if(this.readyState == 4 && this.status == 200) {
+	  					document.getElementById("accordion2").innerHTML = xhttp.responseText; 
+	  					
+	  			};
+			
+			}
+		}
+	 function otherUser(email) {
+			var xhttp = new XMLHttpRequest(); 
+ 			xhttp.open("GET", "../jsp/dashboardSetOtherUser.jsp?Email=" +  email, true); 
+ 			xhttp.send(); 
+	  		xhttp.onreadystatechange = function updateResults() {
+	  			window.location.href = "../jsp/otherDashBoard.jsp"; 
+	  		};
+		}
+	</script>
 	
 </body>
 </html>
