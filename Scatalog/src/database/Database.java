@@ -717,6 +717,27 @@ public class Database {
 			System.out.println(sqle.getMessage());
 		}
 	}
+	// second one with diff params
+	public void updateUserSettings(String username, String fname, String lname, int classStanding, String major) {
+		try {
+			Statement st = conn.createStatement();
+			st = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+	                   ResultSet.CONCUR_UPDATABLE);
+			ResultSet rs;
+			rs = st.executeQuery("SELECT * FROM user WHERE username='" + username + "'");
+			if(rs.next()) {
+				rs.updateString("fname", fname);
+				rs.updateString("lname", lname);
+				System.out.println("class: " + classStanding);
+				rs.updateInt("classstanding", classStanding);
+				rs.updateString("major", major);
+				
+				rs.updateRow();
+			}
+		}catch(SQLException sqle) {
+			System.out.println(sqle.getMessage());
+		}
+	}
 	
 	public ArrayList<Review> getSortList(String prefix, int number, int choice, int sort) {
 		ArrayList<Review> sortList = new ArrayList<>();

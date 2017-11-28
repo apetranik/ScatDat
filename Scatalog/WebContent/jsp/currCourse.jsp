@@ -277,7 +277,7 @@
 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top justify-content-center ">
-        <a href="/" class="navbar-brand d-flex w-20 mr-auto">Scatalog</a>
+        <a href="/" class="navbar-brand d-flex w-20 mr-auto">SCatalog</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -286,11 +286,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="../html/index.html">HOME</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../html/explore.html">EXPLORE</a>
-            </li>
+            
             <li class="nav-item active">
-                <a class="nav-link" href="#">BY DEPARTMENT</a>
+                <a class="nav-link" href="#">ALL COURSES</a>
             </li>
         </ul>
         <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
@@ -300,6 +298,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="../html/login.html">Sign-In</a>
             </li>
+            <li class="nav-item">
+                			<div class="g-signin2" data-onsuccess="onSignIn"></div>
+            </li> 
+            	<li class="nav-item">
+				<a class="nav-link" href="#" onclick="signOut();">Sign Out</a>
+			</li> 
             
         </ul>
     </div>
