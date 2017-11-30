@@ -28,7 +28,19 @@
     <!-- Custom styles for this template -->
     <script type="text/javascript" src="js/materialize.min.js"></script>
     
-    <script>
+    <script type="text/javascript">
+    
+    // GOOD
+    function signOut() {
+	    var auth2 = gapi.auth2.getAuthInstance();
+	    auth2.signOut().then(function () {
+	      console.log('User signed out.');
+	    });
+	    var xhttp = new XMLHttpRequest();
+		xhttp.open("GET", "../jsp/signOutUser.jsp", false); 
+		xhttp.send();
+	  }
+    // GOOD
     function onSignIn(googleUser) {
 		var profile = googleUser.getBasicProfile();
 		document.getElementById("userHello").innerHTML = "Hello, "+ profile.getName()+ "!";
@@ -54,33 +66,20 @@
 		};
 		return true;
 	}
-    function signOut() {
-	    var auth2 = gapi.auth2.getAuthInstance();
-	    auth2.signOut().then(function () {
-	      console.log('User signed out.');
-	    });
-	    var xhttp = new XMLHttpRequest();
-		xhttp.open("GET", "../jsp/signOutUser.jsp", false); 
-		xhttp.send();
-	  }
     
-    		function initialize() {
-    			var xhttp = new XMLHttpRequest(); 
-    			xhttp.open("GET", "../jsp/dashboardInitialize.jsp", false); 
-      		xhttp.send(); 
-      		if(xhttp.responseText.trim() != "") {
-      			document.getElementById("about").innerHTML = xhttp.responseText;
-      			var recs = document.getElementsByName("recs");
-      			/*for (i = 0; i < recs.length; i++) {
-      				recs[i].onclick = gTCP(recs[i].id);   
-      			}*/
-      			
-      		}
-      		else
-      			window.location.href = "../html/login.html";
-      		
-    		}
-    		
+    // GOOD
+    function initialize() {
+		var xhttp = new XMLHttpRequest(); 
+		xhttp.open("GET", "../jsp/dashboardInitialize.jsp", false); 
+		xhttp.send(); 
+		if(xhttp.responseText.trim() != "") {
+			document.getElementById("about").innerHTML = xhttp.responseText;			
+		}
+		else {
+			window.location.href = "../html/login.html";
+		}
+    }
+    // GOOD
     		function goToCoursePage(courseInfo) { 
     			var xhttp = new XMLHttpRequest(); 
     				xhttp.open("GET", "../jsp/goToCoursePage.jsp?courseInfo=" +  courseInfo, true); 
@@ -89,7 +88,7 @@
     	  			window.location.href = "../jsp/currCourse.jsp"; 
     	  		};
     		}
-    		
+    		// GOOD
     		function srch() {
     			var searchText = document.getElementById("searchText").value; 
     			if(searchText.length > 0)
@@ -107,7 +106,7 @@
       				}
       			};
     		}
-    		
+    		// GOOD
     		function searchCourses()
     		{
     			console.log("courseSearch");
@@ -147,6 +146,7 @@
           		    }, 200);
           		};
     		}
+    		// GOOD
     		function searchWishlist()
     		{
     			console.log("searchwishlist");
@@ -186,6 +186,7 @@
           		    }, 200);
           		};
     		}
+    		// GOOD
     		function addToCourses(courseName)
     		{
     			console.log(courseName);
@@ -194,12 +195,14 @@
   	  			xhttp.send(); 
 	  	  		xhttp.onreadystatechange = function updateResults() {
 		  				if(this.readyState == 4 && this.status == 200) {
+		  					
 		  					document.getElementById("accordion").innerHTML = xhttp.responseText; 
 		  					
 		  			};
     			
     			}
     		}
+    		// GOOD
     		function addToWishlist(courseName)
     		{
     			console.log(courseName);
@@ -224,6 +227,29 @@
 		  		};
     		}
     		
+    		function saveSettings()
+    		{
+    			console.log("save");
+    			var fname = document.getElementById("fname").value;
+    			var lname = document.getElementById("lname").value;
+    			var standing = document.getElementById("classStanding").value;
+    			console.log(standing);
+    			var major = document.getElementById("major").value;
+    			var xhttp = new XMLHttpRequest(); 
+  	  			xhttp.open("GET", "../jsp/saveUserSettings.jsp?fname="+fname + "&lname="+lname+ "&standing="+standing + "&major="+major, true); 
+  	  			xhttp.send(); 
+	  	  		xhttp.onreadystatechange = function updateResults() {
+	  	  			if(this.readyState == 4 && this.status == 200) 
+	  	  				{
+	  	  					
+	  	  					document.location.reload();
+	  	  					
+	  	  				}
+	  	  				
+		  		};
+    		}
+    		
+    		
     		/*
     			Need an ajax call to a new jsp page. 
     			In the jsp page, update database by
@@ -237,6 +263,7 @@
     					wishlist and courseTaken private is 2
     					all private is 3 
     		*/
+    		/*
     		function saveSettings(){
     			User user = (User)session.getAttribute(currentUser);
     			var username = user.getUsername;
@@ -247,16 +274,20 @@
     			var major = 
     			var privacy = 
     		}
+    		*/
     		
     		
     		
     </script>
   </head>
 <body onload="initialize()">
+<script>
+
+</script>
 <!-- Navigation -->
 	<div class = "nav-bar">
     		<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top justify-content-center ">
-        		<a href="/" class="navbar-brand d-flex w-20 mr-auto">Scatalog</a>
+        		<a href="/" class="navbar-brand d-flex w-20 mr-auto">SCatalog</a>
     			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
         			<span class="navbar-toggler-icon"></span>
     			</button>
@@ -265,14 +296,15 @@
             			<li class="nav-item">
                 			<a class="nav-link" href="index.html">HOME</a>
             			</li>
+            			
             			<li class="nav-item">
-                			<a class="nav-link" href="explore.html">EXPLORE</a>
-            			</li>
-            			<li class="nav-item">
-               			<a class="nav-link" href="department.html">BY DEPARTMENT</a>
+               			<a class="nav-link" href="department.html">ALL SCHOOLS</a>
             			</li>
         			</ul>
         			<ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+        				<li class="nav-item">
+        					<a class="nav-link" id="userHello"></a>
+        				</li>
            			<li class="nav-item">
                 			<a class="nav-link active" href="#">User Dashboard</a>
            			</li>
@@ -299,28 +331,12 @@
    			<!-- Modal content-->  
 			<div class="modal-content">
 	      		<div class="modal-header">
-	      			<h4 class="modal-title">Add Course</h4>
+	      			<h4 class="modal-title">User Settings</h4>
 	        			<button type="button" class="close" data-dismiss="modal">&times;</button>
 	      		</div> <!-- Close modal header -->
 	      		
 	      		<!-- Body of Modal -->
 	      		<div class="modal-body">
-	     			<h5>Scoring Style</h5>
-	      			<div id= "scoringstyle" class="btn-group" data-toggle="buttons">
-	      				<!-- Standard Option -->
-						<label class="btn btn-secondary active">
-					    		<input type="radio" name="options" value = "standard" id="standard" autocomplete="off" checked> Standard
-					  	</label>
-					  	<!-- Try-Hard Option -->
-					  	<label class="btn btn-secondary">
-					   		<input type="radio" name="options" value = "try-hard" id="try-hard" autocomplete="off"> Try-Hard
-					  	</label>
-					  	<!-- Slacker Option -->
-					  	<label class="btn btn-secondary">
-					   		<input type="radio" name="options" value = "slacker" id="slacker" autocomplete="off"> Slacker
-					  	</label>
-					</div>
-					<hr>
 					<!-- Edit User Info Body Section -->
 					<h5>Edit User Info</h5>
 					<form>
@@ -335,7 +351,7 @@
 						<div class="form-group row">
 							<label for="fname" class="col-4 col-form-label">Last Name</label>
 							<div class="col-8">
-								<input type="text" class="form-control" id="fname" placeholder="">
+								<input type="text" class="form-control" id="lname" placeholder="">
 							</div>
 						</div>
 						<!-- Class Standing-->
@@ -343,10 +359,10 @@
 							<label for="classStanding" class="col-4 col-form-label">Class Standing</label>
 							 <div class="col-8">
 							    <select class="form-control" id="classStanding">
-									<option>Freshman</option>
-							      	<option>Sophomore</option>
-							      	<option>Junior</option>
-							      	<option>Senior</option>
+									<option value="1">Freshman</option>
+							      	<option value="2">Sophomore</option>
+							      	<option value="3">Junior</option>
+							      	<option value="4">Senior</option>
 							    </select>
 							 </div>
 						</div>
@@ -354,19 +370,208 @@
 						<div class="form-group row">
 							<label for="fname" class="col-4 col-form-label">Major</label>
 							<div class="col-8">
-								<input type="text" class="form-control" id="fname" placeholder="">
+								<input type="text" class="form-control" id="major" placeholder="">
 							</div>
 						</div>
 					</form>	
 				</div> <!-- Close modal body -->
 				
 	     		<div class="modal-footer">
-	     			<button type="button" class="btn btn-secondary" onclick="saveSettings()">Save</button>
+	     			<button type="submit" class="btn btn-secondary" onclick="saveSettings()">Save</button>
 	      		</div>
 	    		</div>  <!-- Close modal content -->
    	 	</div>
 	</div>
-	
+	<script>
+	function initialize() {
+		var xhttp = new XMLHttpRequest(); 
+		xhttp.open("GET", "../jsp/dashboardInitialize.jsp", false); 
+		xhttp.send(); 
+		if(xhttp.responseText.trim() != "") {
+			document.getElementById("about").innerHTML = xhttp.responseText;			
+		}
+		else {
+			window.location.href = "../html/login.html";
+		}
+	}
+	 function onSignIn(googleUser) {
+			var profile = googleUser.getBasicProfile();
+			document.getElementById("userHello").innerHTML = "Hello, "+ profile.getName()+ "!";
+			console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+			console.log('Name: ' + profile.getName());
+			console.log('Image URL: ' + profile.getImageUrl());
+			console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+		  	var xhttp = new XMLHttpRequest();
+			xhttp.open("GET", "../jsp/authUser.jsp?email=" +  profile.getEmail(), true); 
+			xhttp.send();
+			xhttp.onreadystatechange = function updateResults() {
+					if(this.readyState == 4 && this.status == 200) {
+						var result = xhttp.responseText.trim();
+						
+						if(result == '1') {
+							
+							window.location.href = "../html/login.html";
+						}
+						else {
+						
+						}
+					}
+			};
+			return true;
+		}
+	 function signOut() {
+		    var auth2 = gapi.auth2.getAuthInstance();
+		    auth2.signOut().then(function () {
+		      console.log('User signed out.');
+		    });
+		    var xhttp = new XMLHttpRequest();
+			xhttp.open("GET", "../jsp/signOutUser.jsp", false); 
+			xhttp.send();
+		  }
+	 
+	 function goToCoursePage(courseInfo) { 
+			var xhttp = new XMLHttpRequest(); 
+				xhttp.open("GET", "../jsp/goToCoursePage.jsp?courseInfo=" +  courseInfo, true); 
+				xhttp.send(); 
+		  		xhttp.onreadystatechange = function changePage() {
+	  			window.location.href = "../jsp/currCourse.jsp"; 
+	  		};
+		}
+	 
+	 function srch() {
+			var searchText = document.getElementById("searchText").value; 
+			if(searchText.length > 0)
+				document.getElementById("searchText").style.borderColor = "#4292f4"; 
+			else
+				document.getElementById("searchText").style.borderColor = "black"; 
+			var xhttp = new XMLHttpRequest(); 
+			xhttp.open("GET", "../jsp/dashboardSearch.jsp?searchText=" +  document.getElementById("searchText").value, true); 
+			xhttp.send(); 
+			xhttp.onreadystatechange = function updateResults() {
+				if(this.readyState == 4 && this.status == 200) {
+					document.getElementById("searchResults").innerHTML = xhttp.responseText; 
+					if(this.responseText.trim().length < 1 && searchText.length > 1)
+						document.getElementById("searchText").style.borderColor = "#dc3545"; 
+				}
+			};
+		}
+	 function searchCourses()
+		{
+			console.log("courseSearch");
+			var theElement = document.getElementById("courseSearchText");
+
+			
+			var textInput = document.getElementById("courseSearchText"); 
+   		// Init a timeout variable to be used below
+   		var timeout = null;
+
+   		// Listen for keystroke events
+   		textInput.oninput = function (e) {
+
+   		    // Clear the timeout if it has already been set.
+   		    // This will prevent the previous task from executing
+   		    // if it has been less than <MILLISECONDS>
+   		    clearTimeout(timeout);
+
+   		    // Make a new timeout set to go off in 800ms
+   		    timeout = setTimeout(function () {
+   		    	var searchText = document.getElementById("courseSearchText").value; 
+   				
+   				var xhttp = new XMLHttpRequest(); 
+   	  			xhttp.open("GET", "../jsp/dashboardCourseSearch.jsp?searchText=" +  document.getElementById("courseSearchText").value, true); 
+   	  			xhttp.send(); 
+   	  			xhttp.onreadystatechange = function updateResults() {
+   	  				if(this.readyState == 4 && this.status == 200) {
+   	  					document.getElementById("accordion").innerHTML = xhttp.responseText; 
+   	  					if(this.responseText.trim().length < 1 && searchText.length > 0)
+   	  						document.getElementById("courseSearchText").style.borderColor = "#dc3545"; 
+   	  					else if(searchText.length > 0)
+   	  						document.getElementById("courseSearchText").style.borderColor = "#4292f4"; 
+   	  					else 
+   	  						document.getElementById("courseSearchText").style.borderColor = "black"; 
+   	  				}
+   	  			};
+   		    }, 200);
+   		};
+		}
+	 function searchWishlist()
+		{
+			console.log("searchwishlist");
+			var theElement = document.getElementById("wishlistSearchText");
+
+			
+			var textInput = document.getElementById("wishlistSearchText"); 
+   		// Init a timeout variable to be used below
+   		var timeout = null;
+
+   		// Listen for keystroke events
+   		textInput.oninput = function (e) {
+
+   		    // Clear the timeout if it has already been set.
+   		    // This will prevent the previous task from executing
+   		    // if it has been less than <MILLISECONDS>
+   		    clearTimeout(timeout);
+
+   		    // Make a new timeout set to go off in 800ms
+   		    timeout = setTimeout(function () {
+   		    	var searchText = document.getElementById("wishlistSearchText").value; 
+   				
+   				var xhttp = new XMLHttpRequest(); 
+   	  			xhttp.open("GET", "../jsp/dashboardWishlistSearch.jsp?searchText=" +  document.getElementById("wishlistSearchText").value, true); 
+   	  			xhttp.send(); 
+   	  			xhttp.onreadystatechange = function updateResults() {
+   	  				if(this.readyState == 4 && this.status == 200) {
+   	  					document.getElementById("accordion2").innerHTML = xhttp.responseText; 
+   	  					if(this.responseText.trim().length < 1 && searchText.length > 0)
+   	  						document.getElementById("wishlistSearchText").style.borderColor = "#dc3545"; 
+   	  					else if(searchText.length > 0)
+   	  						document.getElementById("wishlistSearchText").style.borderColor = "#4292f4"; 
+   	  					else 
+   	  						document.getElementById("wishlistSearchText").style.borderColor = "black"; 
+   	  				}
+   	  			};
+   		    }, 200);
+   		};
+		}
+	 function addToCourses(courseName)
+		{
+			console.log(courseName);
+			var xhttp = new XMLHttpRequest(); 
+ 			xhttp.open("GET", "../jsp/dashboardCourseAdd.jsp?newCourse=" +  courseName, true); 
+ 			xhttp.send(); 
+	  		xhttp.onreadystatechange = function updateResults() {
+	  				if(this.readyState == 4 && this.status == 200) {
+	  					 document.location.reload();
+	  					 $('#courseModal').modal('toggle');
+	  					
+	  			};
+			
+			}
+		}
+	 function addToWishlist(courseName)
+		{
+			console.log(courseName);
+			var xhttp = new XMLHttpRequest(); 
+ 			xhttp.open("GET", "../jsp/dashboardWishlistAdd.jsp?newCourse=" +  courseName, true); 
+ 			xhttp.send(); 
+	  		xhttp.onreadystatechange = function updateResults() {
+	  				if(this.readyState == 4 && this.status == 200) {
+	  					document.location.reload();
+	  					 $('#wishlistModal').modal('toggle'); 
+	  					
+	  			};
+			
+			}
+		}
+	 function otherUser(email) {
+			var xhttp = new XMLHttpRequest(); 
+ 			xhttp.open("GET", "../jsp/dashboardSetOtherUser.jsp?Email=" +  email, true); 
+ 			xhttp.send(); 
+	  		xhttp.onreadystatechange = function updateResults() {
+	  			window.location.href = "../jsp/otherDashBoard.jsp"; 
+	  		};
+		}
+	</script>
 	
 </body>
 </html>

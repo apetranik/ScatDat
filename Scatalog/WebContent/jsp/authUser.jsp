@@ -38,7 +38,7 @@ try {
 		User currentUser = db.queryUser(email);
 		System.out.println(currentUser.getName().getFname());
 		session.setAttribute("currentUser", currentUser);
-		
+		session.setAttribute("sign", "signin");
 		%>0<%
 	}
 	else {

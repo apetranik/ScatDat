@@ -37,20 +37,23 @@ public class QueryDepartments {
 		}
 	}
 	
-	public List<Department> getAllDepartments() {
-		List<Department> AllDepartments = new ArrayList<Department>();
+	public ArrayList<Department> getAllDepartments() {
+		ArrayList<Department> AllDepartments = new ArrayList<Department>();
 		try {
 			JSONObject json = readJsonFromUrl("http://web-app.usc.edu/web/soc/api/departments/20173");
 			JSONArray outerDepartment = json.getJSONArray("department");
+			
 			for (int i = 0; i < outerDepartment.length(); i++) {
 				try {
 					JSONArray innerDepartment = outerDepartment.getJSONObject(i).getJSONArray("department");
+					String schoolName = outerDepartment.getJSONObject(i).getString("code");
 					for(int j = 0; j < innerDepartment.length(); j++) {
 //						System.out.println(j + " " + innerDepartment.length());
 						String code = innerDepartment.getJSONObject(j).getString("code");
+						String deptName = innerDepartment.getJSONObject(j).getString("name");
 //						System.out.println(code);
 						String url = "http://web-app.usc.edu/web/soc/api/classes/" + code + "/20173";
-						Department department = new Department(code);
+						Department department = new Department(code, deptName, schoolName);
 //						System.out.println(url);
 						try {
 							JSONObject json2 = readJsonFromUrl(url);
@@ -81,4 +84,30 @@ public class QueryDepartments {
 		}
 		return AllDepartments;
 	}
+	public ArrayList<School> getAllSchools()
+	{
+		ArrayList<Department> departments = this.getAllDepartments();
+		ArrayList<School> schools = new ArrayList<School>();
+		
+		School dornsife = new School("Dornsife College of Letters, Arts and Sciences");
+		schools.add(dornsife);
+		for(int i = 0; i < 58; i++)
+		{
+			dornsife.addDept(departments.get(i));
+			System.out.println("dept: " + departments.get(i).getName());
+			
+		}
+		
+		School accounting = new School("Leventhal School of Accounting");
+		dornsife.addDept(departments.get(58));
+			System.out.println("dept: " + departments.get(58).getName());
+			
+		
+		
+		return schools;
+
+		
+		
+	}
 }
+

@@ -74,7 +74,7 @@
   
   
 
-
+  db.close(); 
 
 
 %>
@@ -96,7 +96,9 @@
    <!--   <script type="text/javascript" src="../js/course.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
-    
+     	<meta name="google-signin-client_id" content="647589413183-bdfcadf4bm2vugreeo6a8n4hj3ath8rg.apps.googleusercontent.com">
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+	
      <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
   <!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">-->
@@ -114,11 +116,17 @@
           if("<%=username%>" == ""){
         	  	document.getElementById("modalEntry").disabled = true;
         	  	
-        	  	alert("log in first")
+        	  	//alert("log in first")
           }else{
         	  	document.getElementById("modalEntry").disabled = false;
-        	  	alert("<%=username%>");
+        	  	var username = "<%=username%>";
+        	  	//alert(username);
           }
+          window.onbeforeunload = function(){
+        	  	var xhttp = new XMLHttpRequest(); 
+  			xhttp.open("GET", "../jsp/clientCleanup.jsp", false); 
+  			xhttp.send();
+          };
           clientRead();
     }
     
@@ -139,7 +147,7 @@
     sendStr += "&review=" + document.myform.reviewbox.value;
     sendStr += "&currentUser=" + "<%=username%>";
     sendStr += "&courseid=" + "<%=courseId%>";
-    alert(sendStr);
+    //alert(sendStr);
     xhttp.open("GET", sendStr, false); 
     xhttp.send();
     document.getElementById("reviewlist").innerHTML = xhttp.responseText;
@@ -153,7 +161,7 @@
     document.getElementById("year").value = "";
     document.getElementById("professor").value = "";
     document.getElementById("reviewbox").value = "";
-    location.reload();
+    //location.reload();
     
       
     }
@@ -231,15 +239,56 @@
     		xhttp.send();
     		xhttp.onreadystatechange = function read() {
     			if(this.readyState == 4 && this.status == 200) {
-    				alert("notification");
-    				clientRead();
+    				if(xhttp.responseText.trim().length < 3) {
+	    				//alert("notification");
+	    				//location.reload();
+	    				sortReview(); 
+    				}	
     			}
     		};
     }
     
+    function closeSocket() {
+    		var xhttp = new XMLHttpRequest(); 
+			xhttp.open("GET", "../jsp/clientCleanup.jsp", false); 
+			xhttp.send();
+    }
     
+    function onSignIn(googleUser) {
+		var profile = googleUser.getBasicProfile();
+		document.getElementById("userHello").innerHTML = "Hello, "+ profile.getName()+ "!";
+		console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+		console.log('Name: ' + profile.getName());
+		console.log('Image URL: ' + profile.getImageUrl());
+		console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+	  	var xhttp = new XMLHttpRequest();
+		xhttp.open("GET", "../jsp/authUser.jsp?email=" +  profile.getEmail(), true); 
+		xhttp.send();
+		xhttp.onreadystatechange = function updateResults() {
+				if(this.readyState == 4 && this.status == 200) {
+					var result = xhttp.responseText.trim();
+					
+					if(result == '1') {
+						
+						window.location.href = "../html/login.html";
+					}
+					else {
+					
+					}
+				}
+		};
+		return true;
+	}
     
-    
+	function signOut() {
+	    var auth2 = gapi.auth2.getAuthInstance();
+	    auth2.signOut().then(function () {
+	      console.log('User signed out.');
+	    });
+	    var xhttp = new XMLHttpRequest();
+		xhttp.open("GET", "../jsp/signOutUser.jsp", false); 
+		xhttp.send();
+	  }
 
     
     </script>
@@ -264,7 +313,7 @@
 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top justify-content-center ">
-        <a href="/" class="navbar-brand d-flex w-20 mr-auto">Scatalog</a>
+        <a href="/" class="navbar-brand d-flex w-20 mr-auto">SCatalog</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -273,20 +322,27 @@
             <li class="nav-item">
                 <a class="nav-link" href="../html/index.html">HOME</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../html/explore.html">EXPLORE</a>
-            </li>
+            
             <li class="nav-item active">
-                <a class="nav-link" href="#">BY DEPARTMENT</a>
+                <a class="nav-link" href="#">ALL COURSES</a>
             </li>
         </ul>
         <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+        		<li class="nav-item">
+        			<a class="nav-link" id="userHello"></a>
+        		</li>
             <li class="nav-item">
                 <a class="nav-link" href="../html/dashboard.html">User Dashboard</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="../html/login.html">Sign-In</a>
             </li>
+            <li class="nav-item">
+                			<div class="g-signin2" data-onsuccess="onSignIn"></div>
+            </li> 
+            	<li class="nav-item">
+				<a class="nav-link" href="#" onclick="signOut();">Sign Out</a>
+			</li> 
             
         </ul>
     </div>
@@ -295,44 +351,57 @@
     <!-- Page Content -->
    <div class="container">
     <div class="row">
-      <div class="col-lg-6" id="courseInfo"> <b><%=fullCourseName %></b> &nbsp;&nbsp; <%=df.format(currCourse.getOverallScore().getOverallRating())%> &nbsp;&nbsp; (<%=currReviewList.size() %> reviews)</div>
-
-      <div class="col-lg-3" id="info">        
-        <div class="dropdown">
-          <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Sorting by
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a id="Rating" class="dropdown-item" name="sort" value="0" onclick="sortReview2()" href="#">Term</a>
-              <a id="Term" class="dropdown-item" name="sort" value="1" onclick="sortReview2()" href="#">Overall Rating</a>
-              <a id="Date" class="dropdown-item" name="sort" value="2" onclick="sortReview2()" href="#">Difficulty</a>
-              <a id="Date" class="dropdown-item" name="sort" value="2" onclick="sortReview2()" href="#">Value</a>
-              <a id="Date" class="dropdown-item" name="sort" value="2" onclick="sortReview2()" href="#">Enjoyment</a>
-              <a id="Date" class="dropdown-item" name="sort" value="2" onclick="sortReview2()" href="#">Workload</a>
-          </div>
-          </div>
+      <div class="col-lg-2" id="courseInfo"> 
+      	<span><h3><%=fullCourseName %></h3> <p> &nbsp;&nbsp; <%=df.format(currCourse.getOverallScore().getOverallRating())%> &nbsp;&nbsp; (<%=currReviewList.size() %> reviews)</p></span>
       </div>
+      <div class="col-lg-10" id="info">
+      	<p><%=currCourse.getDescription() %></p>
+      </div>
+     </div><!-- close row -->
+     <br />
+     <div class="row">
+  
+	 	<div class="col-lg-2">
+	   		<button type="button" class="btn btn-secondary btn-sm"  id="modalEntry" data-toggle="modal" data-target="#myModal">Submit Review</button>     
+	  	</div>
+	  	<div class="col-lg-4">
+	  	<!-- Empty space -->
+	  	</div>
+      	<div class="col-lg-2" id="info">        
+       		<div class="dropdown">
+          		<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              		Sorting by
+          		</button>
+	          	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+	              <a id="Rating" class="dropdown-item" name="sort" value="0" onclick="sortReview2()" href="#">Term</a>
+	              <a id="Term" class="dropdown-item" name="sort" value="1" onclick="sortReview2()" href="#">Overall Rating</a>
+	              <a id="Date" class="dropdown-item" name="sort" value="2" onclick="sortReview2()" href="#">Difficulty</a>
+	              <a id="Date" class="dropdown-item" name="sort" value="2" onclick="sortReview2()" href="#">Value</a>
+	              <a id="Date" class="dropdown-item" name="sort" value="2" onclick="sortReview2()" href="#">Enjoyment</a>
+	              <a id="Date" class="dropdown-item" name="sort" value="2" onclick="sortReview2()" href="#">Workload</a>
+	          	</div>
+      		</div>
+      	</div><!-- close col -->
           
-      <div class="col-lg-3" id="info">
-        <div class="btn-group" data-toggle="buttons">
-	      				<!-- Descending Option -->
-						<label class="btn btn-secondary active" onchange="sortReview()">
-					    		<input type="radio" value="0" name="options" id="des" autocomplete="off" checked> Descending
-					  	</label>
-					  	<!-- Ascending Option -->
-					  	<label class="btn btn-secondary" onchange="sortReview()">
-					   		<input type="radio" value="1" name="options" id="asc" autocomplete="off" > Ascending
-					  	</label>
-					</div>    
-      </div>
-      
-      
-    </div>
+      	<div class="col-lg-4 mx-right" id="info">
+        		<div class="btn-group" data-toggle="buttons">
+	      			<!-- Descending Option -->
+					<label class="btn btn-secondary active" onchange="sortReview()">
+				    		<input type="radio" value="0" name="options" id="des" autocomplete="off" checked> Descending
+				  	</label>
+				  	<!-- Ascending Option -->
+				  	<label class="btn btn-secondary" onchange="sortReview()">
+				   		<input type="radio" value="1" name="options" id="asc" autocomplete="off" > Ascending
+				  	</label>
+			</div>    
+     	 </div><!-- close col -->
+	</div><!-- close row -->
+	<hr>
     <div class="row">
       <div class="col-lg-3" id="info">
       
       <!-- Modal -->
-      <button type="button" class="btn btn-default btn-sm"  id="modalEntry" data-toggle="modal" data-target="#myModal">Submit Review</button>     
+     
       <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
           <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
@@ -454,11 +523,7 @@
       
       
     </div>
-    <div class="row" id= "description">
-      <div class="col-lg-12" id="info">
-      <p><%=currCourse.getDescription() %></p>
-      </div>
-    </div>
+    
     
     <!-- rows below can be regarded as a block for a single review, put it in a loop to print all reviews. Please don't forget to change the 
       hard-coded things to SQL variables -->
@@ -478,11 +543,12 @@
         }
    
 %>
+	
       <div class="row" id= "reviewerSection">
         <div class="col-lg-3" id="reviewer">
           <div class = "row">
-            <div class="col-lg-6"><b><%=currReview.getUsername()%></b></div>
-            <div class="col-lg-6 text-right"><b>Total: <%=df.format(currScore.getOverallRating())%></b></div>
+            <div class="col-lg-6"><h5><%=currReview.getUsername()%></h5></div>
+            <div class="col-lg-6 text-right">Total: <%=df.format(currScore.getOverallRating())%></div>
           </div>    
         </div>
         <div class="col-lg-5"></div>
@@ -498,11 +564,13 @@
           <p class="text-right">Enjoyment:  <%=currScore.getEnjoyment()%></p>
           <p class="text-right">Workload:   <%=currScore.getWorkload()%></p>      
         </div>
-        <div class= "col-lg-1"></div>
+        <div class= "col-lg-1">
+        </div>
         <div class="col-lg-8" id="review">
           <p><%=currReview.getReview() %></p>   
         </div>
       </div>
+      <hr>
 <%      }  %>  
     </section>
     

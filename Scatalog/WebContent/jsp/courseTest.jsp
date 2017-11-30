@@ -116,12 +116,21 @@
 
 <%
 try {
-	Socket socket = (Socket) session.getAttribute("socket");
+	Socket socket = (Socket) session.getAttribute("socket2");
 	if( socket == null) {
 		 socket = new Socket("localhost", 6789); 
+		 session.setAttribute("socket2", socket);
 	}
-	ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream()); 
-	ObjectInputStream ois = new ObjectInputStream(socket.getInputStream()); 
+	ObjectOutputStream oos = (ObjectOutputStream) session.getAttribute("oos2"); 
+	if(oos == null) {
+		oos = new ObjectOutputStream(socket.getOutputStream()); 
+		session.setAttribute("oos2", oos);
+	}
+	ObjectInputStream ois = (ObjectInputStream) session.getAttribute("ois2"); 
+	if(ois == null) {
+		ois = new ObjectInputStream(socket.getInputStream()); 
+		session.setAttribute("ois2", ois); 
+	}
 	oos.writeObject("");
 } catch(IOException ioe){
 	ioe.printStackTrace();

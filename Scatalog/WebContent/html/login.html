@@ -31,7 +31,11 @@
 		xhttp.onreadystatechange = function addUser() {
 				if(this.readyState == 4 && this.status == 200) {
 					
-					return true; 
+					var xhttp2 = new XMLHttpRequest();
+					
+					xhttp2.open("GET", "../html/index.html", true); 
+
+					xhttp2.send();
 				}
 				return true; 
 			};
@@ -64,7 +68,7 @@
 
 <!-- Navigation -->
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top justify-content-center ">
-        <a href="/" class="navbar-brand d-flex w-20 mr-auto">Scatalog</a>
+        <a href="/" class="navbar-brand d-flex w-20 mr-auto">SCatalog</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -73,11 +77,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="index.html">HOME</a>
             </li>
+           
             <li class="nav-item">
-                <a class="nav-link" href="explore.html">EXPLORE</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="department.html">BY DEPARTMENT</a>
+                <a class="nav-link" href="department.html">ALL SCHOOLS</a>
             </li>
         </ul>
         <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
@@ -87,9 +89,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="dashboard.html">User Dashboard</a>
             </li>
-            <li class="nav-item active">
-                <div class="g-signin2" data-onsuccess="onSignIn"></div>
-            </li>
+            
             
         </ul>
     </div> 
@@ -138,17 +138,7 @@
 					<input type="text" class="form-control" id="major" placeholder="">
 				</div>
 			</div>
-			<!-- Preferred Rating Style -->
-			<div class="form-group row">
-				<label for="ratingStyle" class="col-4 col-form-label">Preferred Rating Style</label>
-				<div class="col-8">
-					<select class="form-control" id="ratingStyle">
-						<option value="0">Standard</option>
-						<option value="3">Try-Hard</option>
-						<option value="2">Slacker</option>
-					</select>
-				</div>
-			</div>
+			
 			<!-- submit -->
 			<div class="form-group row">
 				<input type="submit" class="btn btn-secondary" value ="submit" />
