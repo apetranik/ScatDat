@@ -18,7 +18,7 @@ public class Course {
 	
 	
 	public Course(String courseName, int courseId, String description, String prefix,
-			double enjoyment, double value, double workload, double difficulty, int type){
+			double enjoyment, double value, double workload, double difficulty, int type, int num){
 		this.courseName = courseName; 
 		this.courseId = courseId; 
 		this.description = description; 
@@ -28,7 +28,7 @@ public class Course {
 		profCourses = new HashMap<Name, ProfCourse>(); 
 		reviews = new ArrayList<Review>(); 
 		this.type = type; 
-		this.numUsers = 0; 
+		this.numUsers = num; 
 		
 	}
 	
