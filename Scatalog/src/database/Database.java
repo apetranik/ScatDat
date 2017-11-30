@@ -98,20 +98,20 @@ public class Database {
 			}
 
 			// Insert course into coursesTaken table
-			try {
-				ps = (PreparedStatement) conn
-						.prepareStatement("INSERT INTO courseTaken (userID, courseID) VALUES (?,?)");
+			ps = (PreparedStatement) conn
+					.prepareStatement("INSERT INTO courseTaken (userID, courseID) VALUES (?,?)");
 
-				ps.setInt(1, userID);
-				ps.setInt(2, courseID);
-
-				ps.executeUpdate();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-			finally {
-
+			ps.setInt(1, userID);
+			ps.setInt(2, courseID);
+			ps.executeUpdate();
+			// update numRegistered
+			Statement st = conn.createStatement();
+			st = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			ResultSet rs2 = st.executeQuery("SELECT * FROM course WHERE courseID='" + courseID + "'");
+			if(rs2.next()) {
+				int num = rs2.getInt("numRegistered");
+				rs2.updateInt("numRegistered", num+1);
+				rs2.updateRow();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
