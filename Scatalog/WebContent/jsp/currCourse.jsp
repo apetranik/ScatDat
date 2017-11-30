@@ -128,7 +128,6 @@
   			xhttp.send();
           };
           clientRead();
-          updateNum(); //change the number of review
     }
     
     
@@ -341,9 +340,7 @@ function onSignIn(googleUser) {
             <li class="nav-item">
                 <a class="nav-link" href="../html/dashboard.html">User Dashboard</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../html/login.html">Sign-In</a>
-            </li>
+            
             <li class="nav-item">
                 			<div class="g-signin2" data-onsuccess="onSignIn"></div>
             </li> 

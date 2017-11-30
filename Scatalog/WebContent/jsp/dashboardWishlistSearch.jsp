@@ -39,7 +39,7 @@
   				<div class ="row">
   					<div class = "col-md-10" data-target="#wishlistSearch">
 	   			 		<%=course.getPrefix() + " " + course.getCourseId() + ": " + course.getCourseName()  %>
-	   			 		<%=" Score: " + df.format(course.getOverallScore().getOverallRating()) %>
+	   			 		
 	   			 		<% String tmp = course.getPrefix(); 
 	   			 			tmp+= "-";
 	   			 			tmp+=course.getCourseId();

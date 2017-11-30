@@ -51,7 +51,7 @@
 													      		</a>
 													      		<a class="card-link" id="cards-stars" data-toggle="collapse" data-parent="#accordion<%=count2%>" data-target="#collapse<%=count2%>" href="javascript:void(0);" aria-expanded="false" aria-controls="collapse<%=count2%>">
 																<!-- This is where the stars goes -->
-																	<%=" Score: " + df.format(course.getOverallScore().getOverallRating()) %>
+																	<%=" Score: " + (course.getOverallScore().getOverallRating() == 0 ? "N/A" : df.format(course.getOverallScore().getOverallRating())) %>
 													      		</a>
 											   </div>
 													  		<div id="collapse<%=count2%>" class="collapse">
