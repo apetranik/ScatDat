@@ -66,7 +66,7 @@ public class QueryDepartments {
 								String prefix = courseInfo.getString("prefix");
 								String name = courseInfo.getString("title");
 								String description = courseInfo.getString("description");
-								department.addCourse(new Course(name, number, description, prefix, 0, 0, 0, 0, 0));
+								department.addCourse(new Course(name, number, description, prefix, 0, 0, 0, 0, 0, 0));
 							}
 							AllDepartments.add(department);
 						} catch(Exception e) {
