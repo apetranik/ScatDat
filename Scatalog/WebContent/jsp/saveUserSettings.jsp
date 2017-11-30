@@ -6,7 +6,7 @@
 	Database db = new Database();
 	User currentUser = (User)session.getAttribute("currentUser");
 	String email = currentUser.getEmail();
-	System.out.println("MEE1");
+	
 	String username = currentUser.getUsername();
 	String fname = (String)request.getParameter("fname");
 	String lname = (String)request.getParameter("lname");
