@@ -93,34 +93,35 @@
     </script>
     </head>
     <body>
-    <div class = "nav-bar">
-    		<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top justify-content-center ">
-        		<a href="/" class="navbar-brand d-flex w-20 mr-auto">Scatalog</a>
+   <div class = "nav-bar">
+    		<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top justify-content-center" style= "background-color: #b5b5b5; border-style: solid; border-bottom-width: .5px; border-left-width: 0px; border-right-width: 0px; border-top-width: 0px">
+        		<a href="/" class="navbar-brand d-flex w-20 mr-auto">SCatalog</a>
     			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
         			<span class="navbar-toggler-icon"></span>
     			</button>
     			<div class="navbar-collapse collapse" id="collapsingNavbar3">
         			<ul class="navbar-nav mr-auto w-100 justify-content-center">
-            			<li class="nav-item">
-                			<a class="nav-link" href="<%=request.getContextPath() + "/html/index.html"%>">HOME</a>
+            			<li class="nav-item active">
+                			<a class="nav-link" href="index.html">HOME</a>
             			</li>
+            			
             			<li class="nav-item">
-        					<a class="nav-link" id="userHello"></a>
-        				</li>
-            			<li class="nav-item">
-               			<a class="nav-link" href="<%=request.getContextPath() + "/html/department.html"%>">ALL SCHOOLS</a>
+               			<a class="nav-link" href="department.html">ALL SCHOOLS</a>
             			</li>
         			</ul>
         			<ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+        				<li class="nav-item">
+        					<a class="nav-link" id="userHello"></a>
+        				</li>
            			<li class="nav-item">
-                			<a class="nav-link" href="<%=request.getContextPath() + "/html/dashboard.html"%>">User Dashboard</a>
+                			<a class="nav-link" href="${pageContext.request.contextPath}/html/dashboard.html">User Dashboard</a>
            			</li>
             			<li class="nav-item">
-                			<div class="g-signin2" data-onsuccess="onSignIn"></div>
+                			<div class="g-signin2" id="signin" data-onsuccess="onSignIn"></div>
             			</li> 
             			<li class="nav-item">
-						<a class="nav-link" href="#" onclick="signOut();">Sign Out</a>
-					</li>
+						<a class="nav-link" href="#" id="signout" onclick="signOut();">Sign Out</a>
+					</li>   
         			</ul>
     			</div>
     		</nav>

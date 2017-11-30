@@ -25,20 +25,28 @@
 	function addUser() {
 		var xhttp = new XMLHttpRequest();
 		
-		xhttp.open("GET", "../jsp/addUser.jsp?email=" +  document.getElementById("email").value + "&fname=" + document.getElementById("fname").value + "&lname=" + document.getElementById("lname").value + "&classStanding=" + document.getElementById("classStanding").value + "&major=" + document.getElementById("major").value + "&ratingStyle=" + document.getElementById("ratingStyle").value, true); 
-
+		xhttp.open("GET", "../jsp/addUser.jsp?email=" +  document.getElementById("email").value + "&fname=" + document.getElementById("fname").value + "&lname=" + document.getElementById("lname").value + "&classStanding=" + document.getElementById("classStanding").value + "&major=" + document.getElementById("major").value, true); 
+		
 		xhttp.send();
 		xhttp.onreadystatechange = function addUser() {
 				if(this.readyState == 4 && this.status == 200) {
 					
 					var xhttp2 = new XMLHttpRequest();
-					
 					xhttp2.open("GET", "../html/index.html", true); 
 
 					xhttp2.send();
 				}
 				return true; 
 			};
+	}
+	
+	function setEmail() {
+		var xhttp = new XMLHttpRequest();
+		xhttp.open("GET", "../jsp/setEmail.jsp", false); 
+		xhttp.send(); 
+		document.getElementById("email").value = xhttp.responseText.trim(); 
+		document.getElementById("email").readOnly = true; 
+	
 	}
 	</script>
     <title>Scatalog</title>
@@ -64,7 +72,7 @@
     </style>
 
   </head>
-<body>
+<body onload="setEmail()">
 
 <!-- Navigation -->
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top justify-content-center ">
@@ -116,7 +124,7 @@
 			<div class="form-group row">
 				<label for="email" class="col-4 col-form-label">Email</label>
 				<div class="col-8">
-					<input type="text" class="form-control" id="email" value="Should be autofilled from gsign-in">
+					<input type="text" class="form-control" id="email" value="email">
 				</div>
 			</div>
 			<!-- Class Standing-->
@@ -141,7 +149,7 @@
 			
 			<!-- submit -->
 			<div class="form-group row">
-				<input type="submit" class="btn btn-secondary" value ="submit" />
+				<input type="submit" class="btn btn-secondary" value ="submit">
 			</div>
 		</form>	
 	</div>

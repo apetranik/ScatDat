@@ -23,7 +23,10 @@ try {
 PreparedStatement ps = null; 
 ResultSet rs = null;
 String password = "";
+
 String email = request.getParameter("email");
+session.setAttribute("email", email); 
+System.out.println(email);
 try {
 	ps = (PreparedStatement) conn.prepareStatement("SELECT * FROM user WHERE email=?");
 	ps.setString(1, email);
@@ -36,7 +39,6 @@ try {
 		System.out.println("Found user!");
 		//db db = new db();
 		User currentUser = db.queryUser(email);
-		System.out.println(currentUser.getName().getFname());
 		session.setAttribute("currentUser", currentUser);
 		session.setAttribute("sign", "signin");
 		%>0<%

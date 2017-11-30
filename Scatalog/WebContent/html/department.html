@@ -77,6 +77,15 @@
 		xhttp.open("GET", "../jsp/signOutUser.jsp", false); 
 		xhttp.send();
 	  }
+	
+	function goToCoursePage(courseInfo) { 
+		var xhttp = new XMLHttpRequest(); 
+			xhttp.open("GET", "../jsp/goToCoursePage.jsp?courseInfo=" +  courseInfo, true); 
+			xhttp.send(); 
+	  		xhttp.onreadystatechange = function changePage() {
+  			window.location.href = "../jsp/currCourse.jsp"; 
+  		};
+	}
     </script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -130,7 +139,9 @@
 		
 		<!-- Search Bar -->
 		<div class="col-md-8">
-			<div class="panel panel-default" id="accordion" role="tablist" aria-multiselectable="true"> </div>>
+			<div class="panel panel-default" id="accordion" role="tablist" aria-multiselectable="true"> 
+			<!--  ALL CONTENT -->
+			</div>
  		</div>
 		
            

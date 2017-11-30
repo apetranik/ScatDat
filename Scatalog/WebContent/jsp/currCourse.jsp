@@ -128,6 +128,7 @@
   			xhttp.send();
           };
           clientRead();
+          updateNum(); //change the number of review
     }
     
     
@@ -256,7 +257,8 @@
 			xhttp.send();
     }
     
-    function onSignIn(googleUser) {
+function onSignIn(googleUser) {
+		
 		var profile = googleUser.getBasicProfile();
 		document.getElementById("userHello").innerHTML = "Hello, "+ profile.getName()+ "!";
 		console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
@@ -265,6 +267,9 @@
 		console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
 	  	var xhttp = new XMLHttpRequest();
 		xhttp.open("GET", "../jsp/authUser.jsp?email=" +  profile.getEmail(), true); 
+		console.log(profile.getEmail());
+		
+		
 		xhttp.send();
 		xhttp.onreadystatechange = function updateResults() {
 				if(this.readyState == 4 && this.status == 200) {
@@ -275,7 +280,7 @@
 						window.location.href = "../html/login.html";
 					}
 					else {
-					
+						loadSignIn()
 					}
 				}
 		};
@@ -349,12 +354,23 @@
         </ul>
     </div>
     </nav>
-
+<%
+String rating = "";
+	
+	if(currCourse.getOverallScore().getOverallRating() > 0)
+	{
+		rating = df.format(currCourse.getOverallScore().getOverallRating());
+	}
+	else 
+	{
+		rating = "N/A";
+	}
+	%>
     <!-- Page Content -->
    <div class="container">
     <div class="row">
       <div class="col-lg-2" id="courseInfo"> 
-      	<span><h3><%=fullCourseName %></h3> <p> &nbsp;&nbsp; <%=df.format(currCourse.getOverallScore().getOverallRating())%> &nbsp;&nbsp; (<%=currReviewList.size() %> reviews)</p></span>
+      	<span><h3><%=fullCourseName %></h3> <p> &nbsp;&nbsp; <%=rating%> &nbsp;&nbsp; (<%=currReviewList.size() %> reviews)</p></span>
       </div>
       <div class="col-lg-10" id="info">
       	<p><%=currCourse.getDescription() %></p>

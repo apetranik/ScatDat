@@ -21,4 +21,8 @@ public class School {
 	{
 		return depts;
 	}
+	public String getName()
+	{
+		return name;
+	}
 }

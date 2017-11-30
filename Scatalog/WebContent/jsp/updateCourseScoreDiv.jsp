@@ -12,6 +12,8 @@
 	ArrayList<Review> currList = db.queryAllReview(courseId);
 	currCourse.setReviews(currList);
 	
+	
+	
 	if(currList.size()>0){
 		currCourse.updateOverallScore();
 		Score overall = currCourse.getOverallScore();
@@ -27,10 +29,20 @@
 	DecimalFormat df = new DecimalFormat("#0.0");
 	ArrayList<Course> courses = db.queryCourses(); //SQL Query
 	session.setAttribute("courses", courses);
+	String rating = "";
+	
+	if(currCourse.getOverallScore().getOverallRating() > 0)
+	{
+		rating = df.format(currCourse.getOverallScore().getOverallRating());
+	}
+	else 
+	{
+		rating = "N/A";
+	}
 	
 %>
 
 
-<span><h3><%=prefix%> <%=number %></h3> <p>&nbsp;&nbsp; <%=df.format(currCourse.getOverallScore().getOverallRating()) %> &nbsp;&nbsp; (<%=currList.size() %> reviews)</p></span>
+<span><h3><%=prefix%> <%=number %></h3> <p>&nbsp;&nbsp; <%=rating %> &nbsp;&nbsp; (<%=currList.size() %> reviews)</p></span>
 
 

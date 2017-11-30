@@ -30,7 +30,7 @@ public class Database {
 	public Database() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			conn =  DriverManager.getConnection("jdbc:mysql://localhost/scatdat?user=root&password=root&useSSL=false");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost/scatdat?user=root&password=root&useSSL=false");
 		} catch (SQLException sqle) {
 			System.out.println(sqle.getMessage());
 		} catch (ClassNotFoundException cnfe) {
@@ -44,7 +44,7 @@ public class Database {
 		// Try to insert user into user database table
 		try {
 			ps = (PreparedStatement) conn.prepareStatement(
-					"INSERT INTO user (email, username, classstanding, fname, lname, preferredRatingStyle, major) VALUES (?,?,?,?,?,?,?)");
+					"INSERT INTO user (email, username, classstanding, fname, lname, major) VALUES (?,?,?,?,?,?)");
 			String email = user.getEmail();
 			String username = user.getUsername();
 			String password = user.getUsername();
@@ -71,7 +71,7 @@ public class Database {
 			ps.setInt(3, classNum);
 			ps.setString(4, fname);
 			ps.setString(5, lname);
-			ps.setString(7, major);
+			ps.setString(6, major);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -98,8 +98,7 @@ public class Database {
 			}
 
 			// Insert course into coursesTaken table
-			ps = (PreparedStatement) conn
-					.prepareStatement("INSERT INTO courseTaken (userID, courseID) VALUES (?,?)");
+			ps = (PreparedStatement) conn.prepareStatement("INSERT INTO courseTaken (userID, courseID) VALUES (?,?)");
 
 			ps.setInt(1, userID);
 			ps.setInt(2, courseID);
@@ -108,9 +107,9 @@ public class Database {
 			Statement st = conn.createStatement();
 			st = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			ResultSet rs2 = st.executeQuery("SELECT * FROM course WHERE courseID='" + courseID + "'");
-			if(rs2.next()) {
+			if (rs2.next()) {
 				int num = rs2.getInt("numRegistered");
-				rs2.updateInt("numRegistered", num+1);
+				rs2.updateInt("numRegistered", num + 1);
 				rs2.updateRow();
 			}
 		} catch (SQLException e) {
@@ -119,6 +118,7 @@ public class Database {
 
 		}
 	}
+
 	public void addToUserWishlist(User user, Course course) {
 
 		// Select user from database
@@ -140,8 +140,7 @@ public class Database {
 
 			// Insert course into coursesTaken table
 			try {
-				ps = (PreparedStatement) conn
-						.prepareStatement("INSERT INTO wishlist (userID, courseID) VALUES (?,?)");
+				ps = (PreparedStatement) conn.prepareStatement("INSERT INTO wishlist (userID, courseID) VALUES (?,?)");
 
 				ps.setInt(1, userID);
 				ps.setInt(2, courseID);
@@ -161,14 +160,14 @@ public class Database {
 		}
 	}
 
-	public  void insertReview(Review review, int courseID) {
+	public void insertReview(Review review, int courseID) {
 		Score score = review.getScore();
 		double overallrating = score.getOverallRating();
 		double enjoyment = score.getEnjoyment();
 		double difficulty = score.getDifficulty();
 		double value = score.getValue();
 		double workload = score.getWorkload();
-		Date date = (Date)review.getDate();
+		Date date = (Date) review.getDate();
 		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 		System.out.println(sqlDate.toString());
 		String username = review.getUsername();
@@ -181,7 +180,7 @@ public class Database {
 			System.out.println(userID);
 
 		} catch (SQLException sqle) {
-			System.out.println("Get userid: "+sqle.getMessage());
+			System.out.println("Get userid: " + sqle.getMessage());
 		}
 		CourseTime courseTime = review.getCourseTime();
 		String term = courseTime.getTerm();
@@ -194,32 +193,33 @@ public class Database {
 			Statement st = conn.createStatement();
 			ResultSet rs = st
 					.executeQuery("SELECT * FROM professor WHERE fname='" + fname + "' AND lname='" + lname + "'");
-			Boolean empty = true; 
-			if(rs.next()) {
+			Boolean empty = true;
+			if (rs.next()) {
 				empty = false;
 			}
-			if(!empty) {
+			if (!empty) {
 				professorID = rs.getInt("professorID");
 				System.out.println(fname);
 				System.out.println(lname);
 				System.out.println("professor id is " + professorID);
-			}
-			else {
+			} else {
 				System.out.println("add a new professor");
 				try {
-					PreparedStatement ps = (PreparedStatement) conn.prepareStatement("INSERT INTO professor (fname, lname) VALUES (?,?)");
+					PreparedStatement ps = (PreparedStatement) conn
+							.prepareStatement("INSERT INTO professor (fname, lname) VALUES (?,?)");
 					ps.setString(1, fname);
 					ps.setString(2, lname);
 					ps.execute();
-					rs = st.executeQuery("SELECT * FROM professor WHERE fname='" + fname + "' AND lname='" + lname + "'");
+					rs = st.executeQuery(
+							"SELECT * FROM professor WHERE fname='" + fname + "' AND lname='" + lname + "'");
 					rs.next();
 					professorID = rs.getInt("professorID");
-				}catch(SQLException sqle) {
-					System.out.println("Get Professor insert professor problem: " +sqle.getMessage());
+				} catch (SQLException sqle) {
+					System.out.println("Get Professor insert professor problem: " + sqle.getMessage());
 				}
 			}
 		} catch (SQLException sqle) {
-			System.out.println("Get Professor: " +sqle.getMessage());
+			System.out.println("Get Professor: " + sqle.getMessage());
 		}
 		String emoji = review.getEmoji();
 		String comment = review.getReview();
@@ -267,7 +267,7 @@ public class Database {
 	//
 	// }
 
-	public  User queryUser(String email) {
+	public User queryUser(String email) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		User currentUser = null;
@@ -284,7 +284,7 @@ public class Database {
 				int classNum = rs.getInt("classstanding");
 				String major = rs.getString("major");
 				String username = rs.getString("username");
-				int preferredRatingStyle = rs.getInt("preferredRatingStyle");
+				//int preferredRatingStyle = rs.getInt("preferredRatingStyle");
 				Vector<Course> courseList = queryCourseTaken(username);
 				Set<Course> coursesTaken = new HashSet<Course>();
 				for (int i = 0; i < courseList.size(); i++) {
@@ -293,9 +293,9 @@ public class Database {
 
 				Vector<Course> coursesEvaluated = queryCourseEvaluated(userID);
 				Vector<Course> wishlist = queryWishlist(userID);
-				ScoreMap scoreMap = new ScoreMap(preferredRatingStyle);
+				ScoreMap scoreMap = new ScoreMap(0);
 				Vector<Badge> badges = new Vector();
-				badges.add(new Badge(preferredRatingStyle));
+			badges.add(new Badge(0));
 				String classStanding = "";
 				if (classNum == 0) {
 					classStanding = "Freshman";
@@ -320,7 +320,7 @@ public class Database {
 		try {
 			Statement st = conn.createStatement();
 			ResultSet rs = st.executeQuery("SELECT * FROM user");
-			while(rs.next()) {
+			while (rs.next()) {
 				String email = rs.getString("email");
 				int userID = rs.getInt("userID");
 				String fname = rs.getString("fname");
@@ -329,7 +329,7 @@ public class Database {
 				int classNum = rs.getInt("classstanding");
 				String major = rs.getString("major");
 				String username = rs.getString("username");
-				int preferredRatingStyle = rs.getInt("preferredRatingStyle");
+				//int preferredRatingStyle = rs.getInt("preferredRatingStyle");
 				Vector<Course> courseList = queryCourseTaken(username);
 				Set<Course> coursesTaken = new HashSet<Course>();
 				for (int i = 0; i < courseList.size(); i++) {
@@ -338,9 +338,9 @@ public class Database {
 
 				Vector<Course> coursesEvaluated = queryCourseEvaluated(userID);
 				Vector<Course> wishlist = queryWishlist(userID);
-				ScoreMap scoreMap = new ScoreMap(preferredRatingStyle);
+				ScoreMap scoreMap = new ScoreMap(0);
 				Vector<Badge> badges = new Vector();
-				badges.add(new Badge(preferredRatingStyle));
+				badges.add(new Badge(0));
 				String classStanding = "";
 				if (classNum == 0) {
 					classStanding = "Freshman";
@@ -354,14 +354,14 @@ public class Database {
 				users.add(new User(name, classStanding, email, badges, wishlist, coursesEvaluated, username,
 						coursesTaken, courseList, scoreMap, major));
 			}
-			
-		}catch(SQLException sqle) {
+
+		} catch (SQLException sqle) {
 			System.out.println(sqle.getMessage());
 		}
 		return users;
 	}
-	
-	public  Vector<Course> queryWishlist(int userID) {
+
+	public Vector<Course> queryWishlist(int userID) {
 		Vector<Course> courses = new Vector<Course>();
 		try {
 			Statement st = conn.createStatement();
@@ -395,7 +395,7 @@ public class Database {
 		return courses;
 	}
 
-	public  Vector<Course> queryCourseEvaluated(int userID) {
+	public Vector<Course> queryCourseEvaluated(int userID) {
 		Vector<Course> courses = new Vector<Course>();
 		try {
 			Statement st = conn.createStatement();
@@ -429,7 +429,7 @@ public class Database {
 		return courses;
 	}
 
-	public  String queryClassStanding(String username) {
+	public String queryClassStanding(String username) {
 		String name = username;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -458,7 +458,7 @@ public class Database {
 	}
 
 	//
-	public  Vector<Course> queryCourseTaken(String username) {
+	public Vector<Course> queryCourseTaken(String username) {
 		Vector<Course> courses = new Vector<Course>();
 		try {
 			Statement st = conn.createStatement();
@@ -495,9 +495,8 @@ public class Database {
 		}
 		return courses;
 	}
-	
-	
-	public  ArrayList<Course> queryCourses() {
+
+	public ArrayList<Course> queryCourses() {
 		ArrayList<Course> courses = new ArrayList<Course>();
 		ResultSet rs = null;
 		PreparedStatement ps = null;
@@ -532,7 +531,7 @@ public class Database {
 		return courses;
 	}
 
-	private  HashMap<Name, ProfCourse> queryProfCourseMap(int courseID) {
+	private HashMap<Name, ProfCourse> queryProfCourseMap(int courseID) {
 		HashMap<Name, ProfCourse> result = new HashMap<Name, ProfCourse>();
 		try {
 			Set<Integer> finishedProfessor = new HashSet<Integer>();
@@ -605,7 +604,7 @@ public class Database {
 
 	}
 
-	private  int queryNumOfRatings(int classID) {
+	private int queryNumOfRatings(int classID) {
 		int num = 0;
 		try {
 			ResultSet rs;
@@ -619,7 +618,7 @@ public class Database {
 		return num;
 	}
 
-	public  ArrayList<Review> queryAllReview(int classID) {
+	public ArrayList<Review> queryAllReview(int classID) {
 		ArrayList<Review> reviews = new ArrayList<Review>();
 		try {
 			Statement st = conn.createStatement();
@@ -640,7 +639,7 @@ public class Database {
 		return reviews;
 	}
 
-	public  int returnCourseID(String prefix, int number) {
+	public int returnCourseID(String prefix, int number) {
 		int courseID = 0;
 		try {
 			Statement st = conn.createStatement();
@@ -659,7 +658,7 @@ public class Database {
 	public Course returnCourse(String prefix, int number) {
 		ArrayList<Course> courses = queryCourses();
 		Course currCourse = null;
-		prefix = prefix.toUpperCase(); 
+		prefix = prefix.toUpperCase();
 		for (int i = 0; i < courses.size(); i++) {
 			currCourse = courses.get(i);
 			if (currCourse.getPrefix().equals(prefix) && currCourse.getCourseId() == number) {
@@ -669,12 +668,11 @@ public class Database {
 		return currCourse;
 
 	}
-	
+
 	public void updateScore(String prefix, int number, Score score) {
 		try {
 			Statement st = conn.createStatement();
-			st = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-	                   ResultSet.CONCUR_UPDATABLE);
+			st = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			ResultSet rs;
 			rs = st.executeQuery("SELECT * FROM course WHERE prefix='" + prefix + "' AND number=" + number);
 			double overall = score.getOverallRating();
@@ -683,28 +681,28 @@ public class Database {
 			double value = score.getValue();
 			double workload = score.getWorkload();
 			if (rs.next()) {
-				rs.updateDouble("overallSCore",overall);
-				rs.updateDouble("enjoyment",enjoyment);
-				rs.updateDouble("difficulty",difficulty);
-				rs.updateDouble("value",value);
-				rs.updateDouble("workload",workload);
+				rs.updateDouble("overallSCore", overall);
+				rs.updateDouble("enjoyment", enjoyment);
+				rs.updateDouble("difficulty", difficulty);
+				rs.updateDouble("value", value);
+				rs.updateDouble("workload", workload);
 				rs.updateRow();
 			}
-						
-		}catch (SQLException sqle) {
+
+		} catch (SQLException sqle) {
 			System.out.println(sqle.getMessage());
 		}
-				
+
 	}
-	
-	public void updateUserSettings(String username, int scoringStyle, String fname, String lname, int classStanding, String major, int privacy) {
+
+	public void updateUserSettings(String username, int scoringStyle, String fname, String lname, int classStanding,
+			String major, int privacy) {
 		try {
 			Statement st = conn.createStatement();
-			st = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-	                   ResultSet.CONCUR_UPDATABLE);
+			st = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			ResultSet rs;
 			rs = st.executeQuery("SELECT * FROM user WHERE username='" + username + "'");
-			if(rs.next()) {
+			if (rs.next()) {
 				rs.updateString("fname", fname);
 				rs.updateString("lname", lname);
 				rs.updateInt("prefferedRatingStyle", scoringStyle);
@@ -713,82 +711,82 @@ public class Database {
 				rs.updateInt("privacy", privacy);
 				rs.updateRow();
 			}
-		}catch(SQLException sqle) {
+		} catch (SQLException sqle) {
 			System.out.println(sqle.getMessage());
 		}
 	}
+
 	// second one with diff params
 	public void updateUserSettings(String username, String fname, String lname, int classStanding, String major) {
 		try {
 			Statement st = conn.createStatement();
-			st = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-	                   ResultSet.CONCUR_UPDATABLE);
+			st = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			ResultSet rs;
 			rs = st.executeQuery("SELECT * FROM user WHERE username='" + username + "'");
-			if(rs.next()) {
+			if (rs.next()) {
 				rs.updateString("fname", fname);
 				rs.updateString("lname", lname);
 				System.out.println("class: " + classStanding);
 				rs.updateInt("classstanding", classStanding);
 				rs.updateString("major", major);
-				
+
 				rs.updateRow();
 			}
-		}catch(SQLException sqle) {
+		} catch (SQLException sqle) {
 			System.out.println(sqle.getMessage());
 		}
 	}
-	
+
 	public ArrayList<Review> getSortList(String prefix, int number, int choice, int sort) {
 		ArrayList<Review> sortList = new ArrayList<>();
-		int classID = returnCourseID(prefix,number);
+		int classID = returnCourseID(prefix, number);
 		try {
 			Statement st = conn.createStatement();
 			ResultSet rs = null;
-			if(choice == 0) {
-				if(sort == 0) {
+			if (choice == 0) {
+				if (sort == 0) {
 					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
 							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY year DESC, term DESC");
-				}else if(sort == 1) {
+				} else if (sort == 1) {
 					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
 							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY overallScore DESC");
-				}else if(sort == 2) {
+				} else if (sort == 2) {
 					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
 							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY difficulty DESC");
-				}else if(sort == 3) {
+				} else if (sort == 3) {
 					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
 							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY value DESC");
-				}else if(sort == 4) {
+				} else if (sort == 4) {
 					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
 							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY enjoyment DESC");
-				}else if(sort == 5) {
+				} else if (sort == 5) {
 					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
 							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY workload DESC");
-				}else if(sort == 6) {
+				} else if (sort == 6) {
 					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
 							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY p.fname DESC, p.lname DESC");
 				}
 
-			}else if(choice == 1){
-				if(sort == 0) {
+			} else if (choice == 1) {
+				if (sort == 0) {
 					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
 							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY year ASC, term ASC");
-				}else if(sort == 1) {
+				} else if (sort == 1) {
 					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
 							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY overallScore ASC");
-				}else if(sort == 2) {
+				} else if (sort == 2) {
 					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
 							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY difficulty ASC");
-				}else if(sort == 3) {
+				} else if (sort == 3) {
 					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
 							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY value ASC");
-				}else if(sort == 4) {
+				} else if (sort == 4) {
 					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
 							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY enjoyment ASC");
-				}else if(sort == 5) {
+				} else if (sort == 5) {
 					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
 							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY workload ASC");
-				}else if(sort == 6) {
+				} else if (sort == 6) {
 					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
 							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY p.fname ASC, p.lname ASC");
 				}
@@ -853,7 +851,7 @@ public class Database {
 	// }
 
 	public void close() {
-		if(conn != null) {
+		if (conn != null) {
 			try {
 				conn.close();
 			} catch (SQLException e) {
@@ -862,7 +860,7 @@ public class Database {
 			}
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		Database db = new Database();
 		// db.queryCourses();

@@ -55,6 +55,7 @@
 		}
 	
 	function onSignIn(googleUser) {
+		
 		var profile = googleUser.getBasicProfile();
 		document.getElementById("userHello").innerHTML = "Hello, "+ profile.getName()+ "!";
 		console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
@@ -63,6 +64,9 @@
 		console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
 	  	var xhttp = new XMLHttpRequest();
 		xhttp.open("GET", "../jsp/authUser.jsp?email=" +  profile.getEmail(), true); 
+		console.log(profile.getEmail());
+		
+		
 		xhttp.send();
 		xhttp.onreadystatechange = function updateResults() {
 				if(this.readyState == 4 && this.status == 200) {
@@ -168,7 +172,9 @@
 	  		
 			<!-- Course Item -->	
 			<div class = "accordian">
-			<div class="panel panel-default" id="accordion" role="tablist" aria-multiselectable="true"> </div>
+				<div class="panel panel-default" id="accordion" role="tablist" aria-multiselectable="true"> 
+					<!-- THINGS GO HERE -->
+				</div>
 			</div>
 		</div>
 		<!-- Side Col Right -->
