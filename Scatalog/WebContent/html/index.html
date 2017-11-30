@@ -19,9 +19,7 @@
 		
 		
 		
-		document.body.onkeydown = function(e){
-			theElement.focus();	
-		}
+		
 		var textInput = document.getElementById("searchText"); 
   		// Init a timeout variable to be used below
   		var timeout = null;
@@ -99,20 +97,7 @@
   			window.location.href = "../jsp/currCourse.jsp"; 
   		};
 	}
-	function loadSignIn()
-	{
-		var sign = session.getAttribute("sign");
-		if(sign.equals("signin")) 
-		{
-			document.getElementById("signout").style.visibility = "hidden"; 
-			document.getElementById("signin").style.visibility = "show"; 
-		}
-		else if(sign.equals("signout"))
-		{
-			document.getElementById("signout").style.visibility = "show"; 
-			document.getElementById("signin").style.visibility = "hidden"; 
-		}
-	}
+	
 	</script>
     <title>Scatalog</title>
 
@@ -126,70 +111,6 @@
   	
      <!-- Custom styles for this template -->
     <link href="../css/style.css" rel="stylesheet">
-   	<script>
-   	function initialize() {
-			var theElement = document.getElementById("searchText");
-			theElement.addEventListener("focusout", function(){
-			    _this = this;
-			    setTimeout(function () {
-			        _this.focus();
-			    }, 0);
-			})
-			
-			var textInput = document.getElementById("searchText"); 
-  		// Init a timeout variable to be used below
-  		var timeout = null;
-  		// Listen for keystroke events
-  		textInput.oninput = function (e) {
-  		    // Clear the timeout if it has already been set.
-  		    // This will prevent the previous task from executing
-  		    // if it has been less than <MILLISECONDS>
-  		    clearTimeout(timeout);
-  		    // Make a new timeout set to go off in 800ms
-  		    timeout = setTimeout(function () {
-  		    	var searchText = document.getElementById("searchText").value; 
-  				//if(searchText.length > 0)
-  				//	document.getElementById("searchText").style.borderColor = "#4292f4"; 
-  				//else
-  					//document.getElementById("searchText").style.borderColor = "black"; 
-  				var xhttp = new XMLHttpRequest(); 
-  	  			xhttp.open("GET", "../jsp/homeSearch.jsp?searchText=" +  document.getElementById("searchText").value, true); 
-  	  			xhttp.send(); 
-  	  			xhttp.onreadystatechange = function updateResults() {
-  	  				if(this.readyState == 4 && this.status == 200) {
-  	  					document.getElementById("accordion").innerHTML = xhttp.responseText; 
-  	  					if(this.responseText.trim().length < 1 && searchText.length > 0)
-  	  						document.getElementById("searchText").style.borderColor = "#dc3545"; 
-  	  					else if(searchText.length > 0)
-  	  						document.getElementById("searchText").style.borderColor = "#4292f4"; 
-  	  					else 
-  	  						document.getElementById("searchText").style.borderColor = "black"; 
-  	  				}
-  	  			};
-  		    }, 200);
-  		};
-   	}
-  		
-		
-		 function onSuccess(googleUser) {
-		      console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
-		    }
-		    function onFailure(error) {
-		      console.log(error);
-		    }
-		    function renderButton() {
-		      gapi.signin2.render('my-signin2', {
-		        'scope': 'profile email',
-		        'width': 220,
-		        'height': 30,
-		        'longtitle': true,
-		        'theme': 'dark',
-		        'onsuccess': onSuccess,
-		        'onfailure': onFailure
-		      });
-		    } 
-		
-	</script>
 	<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
   </head>
 

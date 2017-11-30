@@ -386,7 +386,7 @@ public class Database {
 				int type = Integer.parseInt(rs.getString("type"));
 				int numUsers = rs.getInt("numRegistered");
 				courses.add(new Course(courseName, number, description, prefix, enjoyment, value, workload, difficulty,
-						type));
+						type, rs.getInt("numRegistered")));
 			}
 
 		} catch (SQLException sqle) {
@@ -420,7 +420,7 @@ public class Database {
 				int type = Integer.parseInt(rs.getString("type"));
 				int numUsers = rs.getInt("numRegistered");
 				courses.add(new Course(courseName, number, description, prefix, enjoyment, value, workload, difficulty,
-						type));
+						type, rs.getInt("numRegistered")));
 			}
 
 		} catch (SQLException sqle) {
@@ -487,7 +487,7 @@ public class Database {
 				int type = Integer.parseInt(rs.getString("type"));
 				int numUsers = rs.getInt("numRegistered");
 				courses.add(new Course(courseName, number, description, prefix, enjoyment, value, workload, difficulty,
-						type));
+						type, rs.getInt("numRegistered")));
 			}
 
 		} catch (SQLException sqle) {
@@ -523,7 +523,7 @@ public class Database {
 				// courses.add(new Course(courseName, number, description, numRatings, prefix,
 				// overallScore, profCourses, reviews, type, numUsers));
 				courses.add(new Course(courseName, number, description, prefix, enjoyment, value, workload, difficulty,
-						type));
+						type, rs.getInt("numRegistered")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

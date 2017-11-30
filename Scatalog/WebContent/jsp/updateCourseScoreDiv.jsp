@@ -25,8 +25,12 @@
 	}
 	
 	DecimalFormat df = new DecimalFormat("#0.0");
+	ArrayList<Course> courses = db.queryCourses(); //SQL Query
+	session.setAttribute("courses", courses);
 	
 %>
 
 
-<b><%=prefix%> <%=number %></b> &nbsp;&nbsp; <%=df.format(currCourse.getOverallScore().getOverallRating()) %> &nbsp;&nbsp; (<%=currList.size() %> reviews)
+<span><h3><%=prefix%> <%=number %></h3> <p>&nbsp;&nbsp; <%=df.format(currCourse.getOverallScore().getOverallRating()) %> &nbsp;&nbsp; (<%=currList.size() %> reviews)</p></span>
+
+
