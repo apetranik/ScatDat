@@ -221,6 +221,8 @@
     	  			sendStr += "&sort=" + 4;  
     	  		}else if(text == "Workload"){
     	  			sendStr += "&sort=" + 5;  
+    	  		}else if(text == "Professor"){
+    	  			sendStr += "&sort=" + 6;
     	  		}
     	  		
     	  		xhttp.open("GET", sendStr, false);
@@ -379,6 +381,7 @@
 	              <a id="Date" class="dropdown-item" name="sort" value="2" onclick="sortReview2()" href="#">Value</a>
 	              <a id="Date" class="dropdown-item" name="sort" value="2" onclick="sortReview2()" href="#">Enjoyment</a>
 	              <a id="Date" class="dropdown-item" name="sort" value="2" onclick="sortReview2()" href="#">Workload</a>
+	              <a id="Date" class="dropdown-item" name="sort" value="2" onclick="sortReview2()" href="#">Professor</a>
 	          	</div>
       		</div>
       	</div><!-- close col -->

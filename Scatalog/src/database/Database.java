@@ -764,6 +764,9 @@ public class Database {
 				}else if(sort == 5) {
 					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
 							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY workload DESC");
+				}else if(sort == 6) {
+					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
+							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY p.fname DESC, p.lname DESC");
 				}
 
 			}else if(choice == 1){
@@ -785,6 +788,9 @@ public class Database {
 				}else if(sort == 5) {
 					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
 							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY workload ASC");
+				}else if(sort == 6) {
+					rs = st.executeQuery("SELECT * FROM review r, user u, professor p WHERE courseID='" + classID
+							+ "' AND r.professorID=p.professorID AND r.userID=u.userID ORDER BY p.fname ASC, p.lname ASC");
 				}
 			}
 			while (rs.next()) {
